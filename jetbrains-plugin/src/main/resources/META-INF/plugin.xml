@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<idea-plugin>
+    <id>com.QOOCODE.jetbrains</id>
+    <name>QOOCODE</name>
+    <version>0.1.30</version>
+    <vendor email="QOOCODE@example.com" url="https://QOOCODE.example.com">QOOCODE Team</vendor>
+    
+    <description>
+        QOOCODE - AI-Powered Code Assistant for JetBrains IDEs
+        
+        Features:
+        - AI Chat Interface
+        - Code Analysis and Refactoring
+        - Git Integration
+        - Terminal Integration
+        - File Operations
+        - Search and Navigation
+        - Test Generation
+        - Documentation Generation
+    </description>
+    
+    <category>AI Tools</category>
+    
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.vcs</depends>
+    <depends>com.intellij.modules.terminal</depends>
+    
+    <extensionPoints>
+        <extensionPoint name="QOOCODE.tool" interface="QOOCODE.plugin.QOOCODETool"/>
+        <extensionPoint name="QOOCODE.command" interface="QOOCODE.plugin.QOOCODECommand"/>
+    </extensionPoints>
+    
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Application configuration -->
+        <applicationConfigurable instance="QOOCODE.plugin.QOOCODEConfigurable"/>
+        
+        <!-- Project settings -->
+        <projectConfigurable instance="QOOCODE.plugin.QOOCODEProjectConfigurable"/>
+        
+        <!-- Tool window factory -->
+        <toolWindowFactory implementation="QOOCODE.plugin.QOOCODEToolWindowFactory"/>
+        
+        <!-- Status bar widget -->
+        <StatusBarWidgetFactory id="QOOCODE.status" implementation="QOOCODE.plugin.QOOCODEStatusBarWidget"/>
+        
+        <!-- Editor actions -->
+        <actionGroup id="QOOCODE.Actions">
+            <action id="QOOCODE.Chat" 
+                    class="QOOCODE.plugin.actions.QOOCODEChatAction"
+                    text="QOOCODE Chat"
+                    description="Open QOOCODE chat interface">
+                <add-to-group group-id="ToolsMenu" anchor="last"/>
+                <add-to-group group-id="MainToolbar" anchor="last"/>
+                <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta shift o"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift o"/>
+            </action>
+            
+            <action id="QOOCODE.AnalyzeFile"
+                    class="QOOCODE.plugin.actions.QOOCODEAnalyzeAction"
+                    text="Analyze with QOOCODE"
+                    description="Analyze current file with QOOCODE">
+                <add-to-group group-id="CodeMenu" anchor="last"/>
+            </action>
+            
+            <action id="QOOCODE.Explain"
+                    class="QOOCODE.plugin.actions.QOOCODEExplainAction"
+                    text="Explain Code"
+                    description="Explain selected code">
+                <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            </action>
+            
+            <action id="QOOCODE.Refactor"
+                    class="QOOCODE.plugin.actions.QOOCODERefactorAction"
+                    text="Refactor with QOOCODE"
+                    description="Refactor selected code">
+                <add-to-group group-id="RefactoringMenu" anchor="last"/>
+            </action>
+            
+            <action id="QOOCODE.GenerateTest"
+                    class="QOOCODE.plugin.actions.QOOCODEGenerateTestAction"
+                    text="Generate Test"
+                    description="Generate test for selected code">
+                <add-to-group group-id="NewGroup" anchor="last"/>
+            </action>
+            
+            <separator/>
+            
+            <action id="QOOCODE.Settings"
+                    class="QOOCODE.plugin.actions.QOOCODESettingsAction"
+                    text="QOOCODE Settings"
+                    description="Configure QOOCODE settings">
+                <add-to-group group-id="PreferencesMenu" anchor="last"/>
+            </action>
+        </actionGroup>
+        
+        <!-- Notifications -->
+        <notificationGroup id="QOOCODE.notifications" displayType="BALLOON"/>
+        
+        <!-- File icons -->
+        <fileIconProvider implementation="QOOCODE.plugin.QOOCODEFileIconProvider"/>
+        
+        <!-- Quick fixes -->
+        <intentionAction>
+            <category>QOOCODE</category>
+            <class>QOOCODE.plugin.intentions.QOOCODEQuickFix</class>
+        </intentionAction>
+    </extensions>
+    
+    <actions>
+        <!-- Main toolbar action -->
+        <action id="QOOCODE.main.action" class="QOOCODE.plugin.actions.QOOCODEMainAction"
+                text="QOOCODE" description="QOOCODE AI Assistant">
+            <add-to-group group-id="MainToolbar" anchor="after" relative-to-action="ToolbarMainAction"/>
+        </action>
+    </actions>
+    
+    <properties>
+        <property name="QOOCODE.api.url" value="http://localhost:8080"/>
+        <property name="QOOCODE.api.key" value=""/>
+        <property name="QOOCODE.auto.start" value="false"/>
+        <property name="QOOCODE.telemetry.enabled" value="true"/>
+    </properties>
+    
+    <changeNotes>
+        <![CDATA[
+        <version 0.1.30>
+            - Initial JetBrains plugin release
+            - Chat interface
+            - Code analysis
+            - Git integration
+            - Terminal integration
+            - File operations
+            - Search and navigation
+        </version>
+        ]]>
+    </changeNotes>
+</idea-plugin>

@@ -1,277 +1,220 @@
-﻿# QooCode
+﻿<div align="center">
 
-<div align="center">
+# qoocode
 
-**开源 AI 编码助手 - 类 Claude Code 的命令行工具**
+**开源 AI 编程助手 - 终端中的智能代码助手**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Bun](https://img.shields.io/badge/Bun-1.3-green.svg)](https://bun.sh/)
-[![Test](https://img.shields.io/badge/Test-124%20Tests-brightgreen.svg)]()
-[![Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen.svg)]()
+[![Test](https://img.shields.io/badge/Tests-124%20passed-brightgreen.svg)](./src)
+[![GitHub Stars](https://img.shields.io/github/stars/qoobots/qoocode?style=social)](https://github.com/qoobots/qoocode)
 
-[English](./open-code/README_en.md) | 简体中文
+**English** | [中文](./README.md)
+
+🚀 在终端中为你提供 AI 驱动的代码辅助，支持 OpenAI、DeepSeek 等所有兼容 OpenAI API 的模型。
+
+[快速开始](#-快速开始) • [特性](#-特性) • [安装](#-安装) • [文档](#-文档) • [贡献](#-贡献)
 
 </div>
 
 ---
 
-## ✨ 项目亮点
+## ✨ 特性
 
-🚀 **强大的 AI 编码能力** - 59 个核心工具 + 63 个斜杠命令，覆盖代码开发的全生命周期
+### 🤖 智能AI交互
+- 支持 OpenAI、DeepSeek、Anthropic 等所有兼容 OpenAI API 的模型
+- 智能代码分析和解释
+- 自动代码重构建议
 
-🎯 **多模型支持** - 兼容 OpenAI、DeepSeek 及任何 OpenAI API 兼容模型
+### 📁 完整文件操作
+- 读取、创建、编辑、删除文件
+- 目录结构分析和管理
+- 批量文件操作
 
-💻 **全平台 IDE 集成** - VS Code 扩展 + JetBrains 插件，无缝衔接你的开发环境
+### 🔍 强大的搜索能力
+- Grep 全文搜索
+- Glob 文件模式匹配
+- 符号搜索和代码导航
 
-🔌 **MCP 协议支持** - Model Context Protocol 客户端，可扩展的工具生态系统
+### 💻 Git 集成
+- 提交、分支、差异管理
+- 提交历史查看
+- Worktree 支持
 
-⚡ **高性能** - 并行预取、API 预连接、智能缓存，响应速度快如闪电
+### 🌐 网络功能
+- 网页内容抓取
+- API 调用
+- 网络搜索
 
-🛡️ **安全可靠** - JWT 认证、权限管理、操作审计
+### 🛡️ 安全特性
+- 23 种 Bash 安全检查
+- 命令替换检测
+- 危险命令阻止
 
-## 📖 项目说明
+### 🎨 现代化界面
+- 基于 Ink/React 的终端 UI
+- 流式响应输出
+- 主题切换支持
 
-**QooCode** 是一个功能强大的开源 AI 编码助手 CLI 工具，通过逆向分析 Claude Code 的架构设计独立开发完成。本项目不包含任何 Claude Code 的原始源代码，旨在提供一个合法合规、功能全面的开源替代方案。
+---
 
-### 与 Claude Code 对比
+## 📦 安装
 
-| 特性 | Claude Code | QooCode |
-|------|-------------|----------|
-| 源代码 | 专有软件 | 100% 独立开发 |
-| 许可证 | 专有 | MIT 开源 |
-| API 支持 | 仅 Claude | OpenAI/DeepSeek/本地模型 |
-| 核心工具 | 59 个 | 59 个 ✅ |
-| 斜杠命令 | 63 个 | 63 个 ✅ |
-| IDE 集成 | VS Code | VS Code + JetBrains |
-| 可扩展性 | 封闭 | 开放 MCP + 技能系统 |
+### 前置要求
+
+- [Bun](https://bun.sh/) 1.3+ 或 Node.js 18+
+- OpenAI 兼容的 API 密钥
+
+### 方式一：使用 Bun（推荐）
+
+```bash
+# 安装
+bun install -g qoocode
+
+# 运行
+qoocode
+```
+
+### 方式二：使用 npm
+
+```bash
+npm install -g qoocode
+qoocode
+```
+
+### 方式三：从源码构建
+
+```bash
+# 克隆仓库
+git clone https://github.com/qoobots/qoocode.git
+cd qoocode
+
+# 安装依赖
+bun install
+
+# 开发模式
+bun run dev
+
+# 构建发布版本（JS bundle）
+bun run build
+./dist/qoocode
+
+# 编译为独立的 exe 可执行文件
+bun run build:compile
+./qoocode.exe
+```
 
 ---
 
 ## 🚀 快速开始
 
-### 环境要求
-
-| 要求 | 版本 |
-|------|------|
-| Node.js | ≥ 18.0.0 |
-| Bun | ≥ 1.2.0 (推荐) |
-| Git | 最新版 |
-
-### 安装
-
-```bash
-# 方式一：下载二进制 (推荐)
-# 访问 https://github.com/your-org/qoocode/releases 下载对应平台的二进制文件
-
-# 方式二：从源码构建
-git clone https://github.com/your-org/qoocode.git
-cd qoocode/open-code
-bun install
-bun run build:compile
-
-# 方式三：开发模式
-bun install
-bun run dev
-```
-
-### 配置
+### 1. 配置 API 密钥
 
 ```bash
 # Linux/macOS
 export OPENAI_API_KEY="your-api-key"
-export OPENAI_BASE_URL="https://api.deepseek.com/v1"
-export OPENAI_MODEL="deepseek-chat"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"  # 可选
 
 # Windows (PowerShell)
 $env:OPENAI_API_KEY="your-api-key"
 $env:OPENAI_BASE_URL="https://api.deepseek.com/v1"
-$env:OPENAI_MODEL="deepseek-chat"
+
+# Windows (CMD)
+set OPENAI_API_KEY=your-api-key
 ```
 
-### 运行
+### 2. 启动程序
 
 ```bash
-# 交互式对话
 qoocode
+```
 
-# 或带参数运行
-qoocode --api-key your-key --model deepseek-chat
+### 3. 开始对话
+
+```
+qoocode > 分析当前项目结构
+qoocode > 帮我创建一个新组件
+qoocode > 查看这个函数的实现
 ```
 
 ---
 
-## 🛠️ 核心能力
+## 📖 使用示例
 
-### 59 个核心工具
-
-| 类别 | 数量 | 工具列表 |
-|------|------|----------|
-| **文件操作** | 9 | FileRead, FileWrite, FileEdit, CopyFile, MoveFile, DeleteFile, DirectoryRead, DirectoryWrite, DirectoryEdit |
-| **Git 操作** | 7 | GitCommit, GitDiff, GitLog, GitBranch, GitStatus, GitTag, GitStash |
-| **代码搜索** | 5 | Grep, Glob, LSP, SymbolSearch, FindReferences |
-| **Web 能力** | 4 | WebFetch, WebSearch, APICall, CurlTool |
-| **测试支持** | 4 | RunTests, TestCoverage, TestWatch, TestGeneration |
-| **高级特性** | 30 | GotoDefinition, NotebookEdit, Agent, Brief, Config, CopyClip, Terminal, Resume, Todo, AutoEdit, BatchEdit... |
-
-### 63 个斜杠命令
+### 代码分析和解释
 
 ```
-# Git 命令
-/commit, /review, /diff, /branch, /merge, /stash, /tag
+> 解释这个函数的作用
+```
 
-# 开发命令
-/test, /build, /run, /debug, /lint, /format, /benchmark
+### 文件操作
 
-# 代码命令
-/edit, /delete, /copy, /move, /create, /rename
-/explain, /refactor, /optimize, /security, /doc
+```
+> 创建一个 React 组件，放在 src/components/UserProfile.tsx
+```
 
-# 搜索命令
-/search, /find, /grep, /glob, /symbols
+### Git 操作
 
-# Web 命令
-/web, /fetch, /api, /curl
+```
+> 查看最近的提交
+> 帮我创建一个新分支
+> 比较 main 和 develop 的差异
+```
 
-# MCP 命令
-/mcp, /tools, /skills, /agents
+### 代码搜索
 
-# 配置命令
-/config, /env, /settings, /model, /cost
+```
+> 在 src 目录下搜索 "useState"
+> 找出所有未使用的导入
+```
 
-# 会话命令
-/session, /resume, /export, /import, /plan
+### 运行测试
 
-# 基础命令
-/help, /clear, /exit, /status, /stats, /usage
+```
+> 运行所有测试
+> 查看测试覆盖率
 ```
 
 ---
 
-## 💡 使用示例
+## 🛠️ 核心工具
 
-### 智能代码开发
+| 类别 | 工具 | 描述 |
+|------|------|------|
+| **文件** | FileRead, FileWrite, FileEdit, Copy, Move, Delete | 文件操作 |
+| **目录** | DirectoryRead, DirectoryWrite, DirectoryEdit | 目录管理 |
+| **搜索** | Grep, Glob, SymbolSearch | 代码搜索 |
+| **Git** | GitCommit, GitDiff, GitLog, GitBranch, Worktree | Git操作 |
+| **网络** | WebFetch, WebSearch, APICall | 网络功能 |
+| **测试** | RunTests, TestCoverage | 测试支持 |
+| **导航** | LSP, GotoDefinition, FindReferences | 代码导航 |
+| **高级** | Agent, Brief, AskUser, Skill, Speech | 智能工具 |
 
-```
-You: 帮我创建一个用户认证的 REST API
+---
 
-Assistant: 正在分析项目结构...
-  ✓ 检测到 Express 项目
-  ✓ 现有路由: /api/users
-  ✓ 数据库: PostgreSQL
-
-正在创建文件...
-  [FileWrite] src/api/auth/login.ts      - 登录接口
-  [FileWrite] src/api/auth/register.ts   - 注册接口
-  [FileWrite] src/api/auth/refresh.ts    - Token 刷新
-  [FileWrite] src/middleware/auth.ts     - 认证中间件
-  [FileEdit] src/routes.ts - 添加路由
-  [FileWrite] tests/auth.test.ts - 测试用例
-  [Bash] 运行测试...
-  ✓ 12 tests passed
-```
-
-### IDE 集成
-
-**VS Code 扩展**
-
-```bash
-# 安装 VS Code 扩展
-code --install-extension qoocode.qoocode-extension
-
-# 快捷键
-Ctrl+Shift+P → QooCode: Start
-Ctrl+Shift+A → 代码分析
-Ctrl+Shift+E → 代码解释
-```
-
-**JetBrains 插件**
-
-```bash
-# 在 IntelliJ/PyCharm 中
-Settings → Plugins → Marketplace → 搜索 "QooCode"
-```
+## 📚 文档
 
 ### 斜杠命令
 
-```
-/test src/utils          # 运行测试
-/search "async function" # 搜索代码
-/git "commit -m 'fix'"   # Git 提交
-/web "React best practices" # 网络搜索
-/explain src/api/        # 解释代码
-/refactor "优化性能"      # 重构建议
-```
-
----
-
-## 🏗️ 项目架构
-
-```
-open-code/
-├── src/
-│   ├── main.tsx                  # CLI 入口
-│   ├── App.tsx                   # 主应用组件
-│   ├── query.ts                  # 对话引擎
-│   ├── tools/                    # 59 个核心工具
-│   │   ├── BashTool/
-│   │   ├── FileReadTool/
-│   │   ├── FileWriteTool/
-│   │   ├── FileEditTool/
-│   │   ├── GrepTool/
-│   │   ├── GlobTool/
-│   │   ├── GitCommitTool/
-│   │   ├── GitDiffTool/
-│   │   ├── GitLogTool/
-│   │   ├── WebFetchTool/
-│   │   ├── WebSearchTool/
-│   │   └── ... (45+ more)
-│   ├── services/
-│   │   ├── api/                 # API 适配层
-│   │   ├── cache/               # 智能缓存
-│   │   ├── hook/                # Hook 系统
-│   │   ├── mcp/                # MCP 客户端
-│   │   ├── auth/                # JWT 认证
-│   │   ├── skills/              # 技能系统
-│   │   └── telemetry/           # 遥测系统
-│   ├── state/                   # 状态管理
-│   ├── types/                   # 类型定义
-│   └── utils/                   # 工具函数
-├── vscode-extension/             # VS Code 扩展
-├── jetbrains-plugin/            # JetBrains 插件
-├── tests/                       # 测试文件 (124 tests)
-├── package.json
-├── tsconfig.json
-└── vitest.config.ts
-```
-
-### 技术栈
-
-| 技术 | 用途 |
+| 命令 | 功能 |
 |------|------|
-| **Bun** | JavaScript 运行时 |
-| **TypeScript 5.7** | 类型安全 |
-| **React 18** | UI 组件 |
-| **Ink 5** | 终端 UI |
-| **Vitest** | 测试框架 |
-| **Zod** | 类型验证 |
-| **Commander** | CLI 框架 |
+| `/help` | 显示帮助 |
+| `/clear` | 清空对话 |
+| `/model` | 切换模型 |
+| `/plan` | 进入计划模式 |
+| `/session` | 会话管理 |
+| `/commit` | Git 提交 |
+| `/test` | 运行测试 |
+| `/config` | 配置管理 |
 
----
+完整命令列表请查看[命令文档](./src/commands.ts)。
 
-## 🔧 配置
+### 配置
 
-### 配置文件
-
-```bash
-# Linux/macOS
-~/.qoocode/config.json
-
-# Windows
-%USERPROFILE%\.qoocode\config.json
-```
-
-### 配置格式
+配置文件位置：
+- Linux/macOS: `~/.qoocode/config.json`
+- Windows: `%USERPROFILE%\.qoocode\config.json`
 
 ```json
 {
@@ -279,16 +222,7 @@ open-code/
   "baseUrl": "https://api.deepseek.com/v1",
   "model": "deepseek-chat",
   "temperature": 0.7,
-  "maxTokens": 8192,
-  "timeoutMs": 60000,
-  "cache": {
-    "enabled": true,
-    "ttlSeconds": 3600
-  },
-  "hooks": {
-    "preCommand": [],
-    "postCommand": []
-  }
+  "maxTokens": 8192
 }
 ```
 
@@ -297,10 +231,9 @@ open-code/
 | 变量 | 描述 | 默认值 |
 |------|------|--------|
 | `OPENAI_API_KEY` | API 密钥 | - |
-| `OPENAI_BASE_URL` | API 地址 | `https://api.deepseek.com/v1` |
-| `OPENAI_MODEL` | 模型名称 | `deepseek-chat` |
-| `QOOCODE_DEBUG` | 调试模式 | `false` |
-| `QOOCODE_CONFIG` | 配置文件路径 | `~/.qoocode/config.json` |
+| `OPENAI_BASE_URL` | API 地址 | OpenAI |
+| `OPENAI_MODEL` | 模型名称 | gpt-4 |
+| `qoocode_DEBUG` | 调试模式 | false |
 
 ---
 
@@ -310,105 +243,125 @@ open-code/
 # 运行所有测试
 bun test
 
-# 监视模式
+# 监听模式
 bun run test:watch
 
-# 覆盖率报告
+# 生成覆盖率报告
 bun run test:coverage
 ```
 
-**测试覆盖**: 85%+ (124 个测试用例)
-
 ---
 
-## ⚖️ 法律声明
+## 📂 项目结构
 
-- ✅ 本项目为独立开发成果，不包含 Claude Code 的任何源代码
-- ✅ 仅参考公开的 Source Map 结构进行架构设计
-- ✅ 采用 MIT 开源许可证，欢迎贡献和使用
-- ⚠️ 请勿用于侵犯 Anthropic 权益的用途
-- ⚠️ 不得声称与 Anthropic 有官方关系
+```
+qoocode/
+├── src/
+│   ├── main.tsx              # 入口文件
+│   ├── query.ts              # 对话循环
+│   ├── commands.ts            # 63个斜杠命令
+│   ├── tools/                # 59个核心工具
+│   │   ├── BashTool/
+│   │   ├── FileReadTool/
+│   │   ├── GitCommitTool/
+│   │   └── ...
+│   ├── services/             # 服务层
+│   │   ├── api/             # API适配
+│   │   ├── session/         # 会话管理
+│   │   ├── compact/         # 上下文压缩
+│   │   └── memory/          # Memory系统
+│   └── components/          # UI组件
+├── vscode-extension/        # VS Code扩展
+├── jetbrains-plugin/        # JetBrains插件
+├── tests/                   # 测试文件
+└── package.json
+```
 
 ---
 
 ## 🤝 贡献
 
-欢迎贡献代码！
+欢迎贡献代码！请阅读以下指南：
 
-```bash
-# 1. Fork 并克隆
-git clone https://github.com/your-org/QOOCODE.git
+### 开发流程
 
-# 2. 创建特性分支
-git checkout -b feature/amazing-feature
+1. **Fork** 本仓库
+2. **克隆** 你的 Fork
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/qoocode.git
+   cd qoocode
+   ```
+3. **创建** 功能分支
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+4. **开发** 你的功能
+5. **测试** 确保通过
+   ```bash
+   bun test
+   ```
+6. **提交** 你的更改
+   ```bash
+   git commit -m 'feat: add amazing feature'
+   ```
+7. **推送** 到你的 Fork
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+8. 创建 **Pull Request**
 
-# 3. 开发并测试
-bun test
-bun run dev
+### 代码规范
 
-# 4. 提交 (遵循 conventional commits)
-git commit -m 'feat: add amazing feature'
+- 使用 TypeScript
+- 遵循 ESLint 规则
+- 添加测试用例
+- 更新相关文档
 
-# 5. 推送并创建 PR
-git push origin feature/amazing-feature
-```
+### 报告问题
 
-### 提交规范
-
-```
-<type>(<scope>): <subject>
-
-类型:
-  feat:   新功能
-  fix:    Bug 修复
-  docs:   文档更新
-  style:  代码格式
-  refactor: 重构
-  test:   添加测试
-  chore:  维护工作
-```
+请使用 [GitHub Issues](https://github.com/qoobots/qoocode/issues) 报告 Bug 或请求功能。
 
 ---
 
-## ❓ 常见问题
+## ❓ FAQ
 
 **Q: 支持哪些模型？**
-A: 支持任何 OpenAI API 兼容模型，包括 GPT-4、Claude、DeepSeek、本地模型等。
+A: 支持所有兼容 OpenAI API 的模型，包括 GPT-4、Claude、DeepSeek 等。
 
-**Q: 如何定价？**
-A: QooCode 本身免费，只需支付所选 API 的调用费用。
+**Q: 如何获取 API 密钥？**
+A: 从 OpenAI、DeepSeek 或其他支持 OpenAI 兼容 API 的服务商获取。
+
+**Q: 支持 Windows 吗？**
+A: 支持！支持 Windows、macOS 和 Linux。
 
 **Q: 可以离线使用吗？**
-A: 可以，只需运行本地 LLM 服务器（如 Ollama）并配置 OpenAI 兼容 API。
-
-**Q: 代码会被发送到外部服务器吗？**
-A: 只有你明确请求的代码片段会发送到 API，默认不发送任何遥测数据。
+A: 需要 API 密钥来调用远程模型，暂不支持本地模型。
 
 ---
 
 ## 📄 许可证
 
-[MIT License](./LICENSE)
+本项目采用 [MIT 许可证](./LICENSE)。
+
+---
 
 ## 🙏 致谢
 
-- [Claude Code](https://claude.ai/code) - 架构灵感
-- [Ink](https://github.com/vadimdemedes/ink) - 终端 UI
-- [OpenAI](https://openai.com/) - AI 模型
-- [DeepSeek](https://deepseek.com/) - DeepSeek 模型
+- [Ink](https://github.com/vadimdemedes/ink) - React for CLI
 - [Bun](https://bun.sh/) - JavaScript 运行时
+- [Zod](https://zod.dev/) - TypeScript 模式验证
+- [Vitest](https://vitest.dev/) - 测试框架
 
 ---
 
 ## 📬 联系方式
 
-- GitHub Issues: [https://github.com/your-org/qoocode/issues](https://github.com/your-org/qoocode/issues)
-- 讨论区: [https://github.com/your-org/qoocode/discussions](https://github.com/your-org/qoocode/discussions)
+- GitHub Issues: [https://github.com/qoocode-dev/qoocode/issues](https://github.com/qoocode-dev/qoocode/issues)
 
 ---
 
 <div align="center">
 
-**如果这个项目对你有帮助，请给我们一个 ⭐ Star！**
+**如果这个项目对你有帮助，请给它一个 ⭐！**
 
 </div>

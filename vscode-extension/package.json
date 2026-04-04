@@ -1,0 +1,382 @@
+﻿{
+  "name": "qoocode",
+  "displayName": "QooCode",
+  "description": "AI-powered coding assistant - Terminal-based coding assistant with advanced features",
+  "version": "0.1.23",
+  "publisher": "qoocode",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "AI",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "ai",
+    "coding",
+    "assistant",
+    "qoocode"
+  ],
+  "activationEvents": [
+    "onCommand:qoocode.start",
+    "onCommand:qoocode.chat",
+    "onCommand:qoocode.config",
+    "onCommand:qoocode.analyze",
+    "onCommand:qoocode.review",
+    "onCommand:qoocode.complete",
+    "onView:qoocode.explorer",
+    "workspaceContains:**/.qoocode/**"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "qoocode.start",
+        "title": "QooCode: Start",
+        "category": "QooCode",
+        "description": "Start QooCode AI coding assistant",
+        "enablement": "workspaceFolderCount > 0"
+      },
+      {
+        "command": "qoocode.chat",
+        "title": "QooCode: Chat",
+        "category": "QooCode",
+        "description": "Open QooCode chat panel"
+      },
+      {
+        "command": "qoocode.config",
+        "title": "QooCode: Configure",
+        "category": "QooCode",
+        "description": "Open QooCode configuration"
+      },
+      {
+        "command": "qoocode.stop",
+        "title": "QooCode: Stop",
+        "category": "QooCode",
+        "description": "Stop the current QooCode session"
+      },
+      {
+        "command": "qoocode.restart",
+        "title": "QooCode: Restart",
+        "category": "QooCode",
+        "description": "Restart QooCode session"
+      },
+      {
+        "command": "qoocode.status",
+        "title": "QooCode: Status",
+        "category": "QooCode",
+        "description": "Show QooCode status"
+      },
+      {
+        "command": "qoocode.quickChat",
+        "title": "QooCode: Quick Chat",
+        "category": "QooCode",
+        "description": "Quick chat with QooCode"
+      },
+      {
+        "command": "qoocode.explain",
+        "title": "QooCode: Explain Code",
+        "category": "QooCode",
+        "description": "Explain selected code"
+      },
+      {
+        "command": "qoocode.fix",
+        "title": "QooCode: Fix Error",
+        "category": "QooCode",
+        "description": "Fix selected error"
+      },
+      {
+        "command": "qoocode.refactor",
+        "title": "QooCode: Refactor",
+        "category": "QooCode",
+        "description": "Refactor selected code"
+      },
+      {
+        "command": "qoocode.analyze",
+        "title": "QooCode: Analyze",
+        "category": "QooCode",
+        "description": "Analyze current file with QooCode",
+        "enablement": "workspaceFolderCount > 0"
+      },
+      {
+        "command": "qoocode.review",
+        "title": "QooCode: Review",
+        "category": "QooCode",
+        "description": "Review current file with QooCode",
+        "enablement": "workspaceFolderCount > 0"
+      },
+      {
+        "command": "qoocode.complete",
+        "title": "QooCode: Complete",
+        "category": "QooCode",
+        "description": "Get AI code completion"
+      },
+      {
+        "command": "qoocode.clear",
+        "title": "QooCode: Clear Chat",
+        "category": "QooCode",
+        "description": "Clear QooCode chat history"
+      },
+      {
+        "command": "qoocode.output",
+        "title": "QooCode: Show Output",
+        "category": "QooCode",
+        "description": "Show QooCode output channel"
+      },
+      {
+        "command": "qoocode.welcome",
+        "title": "QooCode: Welcome",
+        "category": "QooCode",
+        "description": "Show QooCode welcome view"
+      },
+      {
+        "command": "qoocode.git",
+        "title": "QooCode: Git Review",
+        "category": "QooCode",
+        "description": "Review git changes with QooCode"
+      },
+      {
+        "command": "qoocode.commit",
+        "title": "QooCode: Suggest Commit",
+        "category": "QooCode",
+        "description": "Suggest commit message for changes"
+      },
+      {
+        "command": "qoocode.test",
+        "title": "QooCode: Run Tests",
+        "category": "QooCode",
+        "description": "Run tests with QooCode analysis"
+      },
+      {
+        "command": "qoocode.snippets",
+        "title": "QooCode: Snippets",
+        "category": "QooCode",
+        "description": "Show code snippets"
+      },
+      {
+        "command": "qoocode.remote",
+        "title": "QooCode: Remote Connect",
+        "category": "QooCode",
+        "description": "Connect to remote QooCode session"
+      },
+      {
+        "command": "qoocode.gallery",
+        "title": "QooCode: Extension Gallery",
+        "category": "QooCode",
+        "description": "Browse QooCode extensions"
+      },
+      {
+        "command": "qoocode.analytics",
+        "title": "QooCode: Analytics",
+        "category": "QooCode",
+        "description": "Show usage analytics"
+      },
+      {
+        "command": "qoocode.floating",
+        "title": "QooCode: Floating Panel",
+        "category": "QooCode",
+        "description": "Show floating action panel"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "qoocode.explorer",
+          "title": "QooCode",
+          "icon": "resources/qoocode-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "qoocode.explorer": [
+        {
+          "id": "qoocode.chat",
+          "name": "Chat",
+          "type": "webview"
+        }
+      ]
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "qoocode.start",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "qoocode.chat"
+        },
+        {
+          "command": "qoocode.config"
+        },
+        {
+          "command": "qoocode.stop"
+        },
+        {
+          "command": "qoocode.restart"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "qoocode.explain",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "qoocode.fix",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "qoocode.refactor",
+          "when": "editorHasSelection"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "qoocode.chat",
+          "when": "view == QOOCODE.chat",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "qoocode",
+      "properties": {
+        "qoocode.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for AI provider (OPENAI_API_KEY or ANTHROPIC_API_KEY)"
+        },
+        "qoocode.model": {
+          "type": "string",
+          "default": "deepseek-chat",
+          "description": "Default model to use"
+        },
+        "qoocode.maxTokens": {
+          "type": "number",
+          "default": 8192,
+          "description": "Maximum tokens per response"
+        },
+        "qoocode.temperature": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Temperature for responses"
+        },
+        "qoocode.autoStart": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto-start QooCode when opening workspace"
+        },
+        "qoocode.showNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show notifications"
+        },
+        "qoocode.terminalLocation": {
+          "type": "string",
+          "enum": ["bottom", "right", "left"],
+          "default": "bottom",
+          "description": "Terminal location for QooCode"
+        },
+        "qoocode.theme": {
+          "type": "string",
+          "enum": ["auto", "light", "dark"],
+          "default": "auto",
+          "description": "Theme for QooCode UI"
+        },
+        "qoocode.speechEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable speech synthesis"
+        },
+        "qoocode.voiceInputEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable voice input"
+        },
+        "qoocode.autoCompact": {
+          "type": "boolean",
+          "default": true,
+          "description": "Auto-compact context when reaching limits"
+        },
+        "qoocode.maxContextTokens": {
+          "type": "number",
+          "default": 200000,
+          "description": "Maximum context tokens before compacting"
+        },
+        "qoocode.safeMode": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable safe mode for command execution"
+        }
+      }
+    },
+    "problemMatchers": [
+      {
+        "name": "qoocode-error",
+        "owner": "qoocode",
+        "fileLocation": "relative",
+        "pattern": {
+          "regexp": "^\\[qoocode\\] Error: (.+)$",
+          "message": 1
+        },
+        "severity": "error"
+      }
+    ],
+    "resourceLabelFormatters": [
+      {
+        "uriScheme": "qoocode",
+        "displayUri": "${authority}${path}",
+        "Separators": "/"
+      }
+    ],
+    "languages": [
+      {
+        "id": "qoocode-output",
+        "displayName": "QooCode Output"
+      }
+    ],
+    "terminal": [
+      {
+        "id": "qoocode",
+        "title": "QooCode",
+        "icon": "resources/qoocode-icon.svg"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "qoocode.start",
+        "key": "ctrl+shift+o",
+        "mac": "cmd+shift+o",
+        "when": "workspaceFolderCount > 0"
+      },
+      {
+        "command": "qoocode.chat",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "workspaceFolderCount > 0"
+      },
+      {
+        "command": "qoocode.quickChat",
+        "key": "ctrl+shift+/",
+        "mac": "cmd+shift+/",
+        "when": "editorHasSelection"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "typescript": "^5.3.3"
+  }
+}

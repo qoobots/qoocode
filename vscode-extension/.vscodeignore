@@ -1,0 +1,22 @@
+# VS Code Extension
+
+Extension for OpenCode AI coding assistant.
+
+## Files to include
+
+```
+*
+!src/**
+!package.json
+!README.md
+```
+
+## Files to exclude
+
+```
+src/test
+out/test
+node_modules
+.git
+.vscode-test/**
+```
