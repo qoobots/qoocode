@@ -1,9 +1,9 @@
-﻿/**
- * QOOCODE Kotlin Integration
+/**
+ * qoocode Kotlin Integration
  * Kotlin-specific features
  */
 
-package QOOCODE.plugin
+package qoocode.plugin
 
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.project.*
@@ -14,8 +14,8 @@ import com.intellij.openapi.diagnostic.*
 /**
  * Kotlin-specific code analysis
  */
-class QOOCODEKotlinIntegration(private val project: Project) {
-    private val logger = Logger.getInstance(QOOCODEKotlinIntegration::class.java)
+class QooCodeKotlinIntegration(private val project: Project) {
+    private val logger = Logger.getInstance(QooCodeKotlinIntegration::class.java)
     
     /**
      * Analyze Kotlin file

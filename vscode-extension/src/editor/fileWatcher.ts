@@ -1,17 +1,17 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * File watcher and event handling
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODEFileWatcher {
+export class QoocodeFileWatcher {
   private fileWatcher: vscode.FileSystemWatcher | undefined;
-  private config: QOOCODEConfig;
+  private config: QoocodeConfig;
   private context: vscode.ExtensionContext;
 
-  constructor(context: vscode.ExtensionContext, config: QOOCODEConfig) {
+  constructor(context: vscode.ExtensionContext, config: QoocodeConfig) {
     this.context = context;
     this.config = config;
     this.registerWatcher();
@@ -41,13 +41,13 @@ export class QOOCODEFileWatcher {
     // Show notification for large files
     if (document.lineCount > 500) {
       const choice = await vscode.window.showInformationMessage(
-        `File "${uri.fsPath.split(/[/\\]/).pop()}" has ${document.lineCount} lines. Would you like QOOCODE to review it?`,
+        `File "${uri.fsPath.split(/[/\\]/).pop()}" has ${document.lineCount} lines. Would you like qoocode to review it?`,
         'Review',
         'Ignore'
       );
 
       if (choice === 'Review') {
-        vscode.commands.executeCommand('QOOCODE.review', uri);
+        vscode.commands.executeCommand('qoocode.review', uri);
       }
     }
   }
@@ -57,11 +57,11 @@ export class QOOCODEFileWatcher {
   }
 }
 
-export class QOOCODEDocumentManager {
-  private config: QOOCODEConfig;
+export class QoocodeDocumentManager {
+  private config: QoocodeConfig;
   private recentDocuments: vscode.Uri[] = [];
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
     this.registerHandlers();
   }

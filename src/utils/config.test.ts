@@ -1,5 +1,5 @@
 ﻿import { describe, it, expect, vi, beforeEach, afterEach, beforeEach as beforeAll, afterEach as afterAll } from 'vitest'
-import { resolveConfig, saveConfig, type QOOCODEConfig } from './config'
+import { resolveConfig, saveConfig, type QoocodeConfig } from './config'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import os from 'node:os'
@@ -65,7 +65,7 @@ describe('Config Management', () => {
       delete process.env.OPENAI_API_KEY
       
       // Temporarily remove apiKey from config file
-      const configPath = path.join(os.homedir(), '.QOOCODE', 'config.json')
+      const configPath = path.join(os.homedir(), '.qoocode', 'config.json')
       let originalConfig: string | null = null
       try {
         originalConfig = await fs.readFile(configPath, 'utf-8')
@@ -121,7 +121,7 @@ describe('Config Management', () => {
 
   describe('saveConfig', () => {
     it('should save configuration to file', async () => {
-      const configToSave: Partial<QOOCODEConfig> = {
+      const configToSave: Partial<QoocodeConfig> = {
         apiKey: 'saved-key',
         model: 'saved-model',
         baseUrl: 'https://saved.com',
@@ -147,7 +147,7 @@ describe('Config Management', () => {
     })
 
     it('should create config directory if it does not exist', () => {
-      const config: Partial<QOOCODEConfig> = { apiKey: 'test' }
+      const config: Partial<QoocodeConfig> = { apiKey: 'test' }
       expect(() => saveConfig(config)).not.toThrow()
     })
   })
@@ -177,7 +177,7 @@ describe('Config Management', () => {
     it('should require valid API key', async () => {
       process.env.OPENAI_API_KEY = ''
       // Also clear apiKey from config file
-      const configPath = path.join(os.homedir(), '.QOOCODE', 'config.json')
+      const configPath = path.join(os.homedir(), '.qoocode', 'config.json')
       let originalConfig: string | null = null
       try {
         originalConfig = await fs.readFile(configPath, 'utf-8')

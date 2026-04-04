@@ -78,7 +78,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Code Review',
     description: 'Review code for issues, bugs, and improvements',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['review', 'quality', 'analysis'],
     category: 'code',
     source: 'builtin',
@@ -92,7 +92,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Git Helper',
     description: 'Helper for common Git operations',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['git', 'version-control', 'commits'],
     category: 'git',
     source: 'builtin',
@@ -106,7 +106,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Test Generator',
     description: 'Generate unit tests for code',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['testing', 'generation', 'vitest'],
     category: 'testing',
     source: 'builtin',
@@ -120,7 +120,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Documentation Generator',
     description: 'Generate documentation from code',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['documentation', 'readme', 'generation'],
     category: 'documentation',
     source: 'builtin',
@@ -134,7 +134,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Memory Review',
     description: 'Review and organize auto-memory entries',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['memory', 'organization'],
     category: 'automation',
     source: 'builtin',
@@ -148,7 +148,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Code Verifier',
     description: 'Verify code changes by running the app',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['verification', 'testing', 'validation'],
     category: 'testing',
     source: 'builtin',
@@ -162,7 +162,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Code Simplifier',
     description: 'Simplify complex code while preserving functionality',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['refactoring', 'simplification', 'clean-code'],
     category: 'refactoring',
     source: 'builtin',
@@ -176,7 +176,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Stuck Helper',
     description: 'Help when you are stuck on a problem',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['help', 'debugging', 'problem-solving'],
     category: 'other',
     source: 'builtin',
@@ -190,7 +190,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Batch Processor',
     description: 'Process multiple files or tasks in batch',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['batch', 'automation', 'bulk'],
     category: 'automation',
     source: 'builtin',
@@ -204,7 +204,7 @@ const BUILTIN_CATALOG: SkillCatalogEntry[] = [
     name: 'Keybindings Helper',
     description: 'Show and manage keyboard shortcuts',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['keybindings', 'shortcuts', 'keyboard'],
     category: 'other',
     source: 'builtin',
@@ -222,7 +222,7 @@ class SkillCatalog {
   private catalogDir: string
 
   constructor() {
-    this.catalogDir = path.join(process.cwd(), '.QOOCODE', 'skills')
+    this.catalogDir = path.join(process.cwd(), '.qoocode', 'skills')
     this.loadLocalSkills()
   }
 

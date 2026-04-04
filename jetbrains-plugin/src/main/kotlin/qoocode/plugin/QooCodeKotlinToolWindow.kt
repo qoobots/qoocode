@@ -1,8 +1,8 @@
-﻿/**
- * QOOCODE Kotlin Tool Window
+/**
+ * qoocode Kotlin Tool Window
  */
 
-package QOOCODE.plugin
+package qoocode.plugin
 
 import com.intellij.openapi.project.*
 import com.intellij.openapi.ui.*
@@ -12,7 +12,7 @@ import javax.swing.*
 /**
  * Kotlin-focused tool window content
  */
-class QOOCODEKotlinToolWindow(project: Project) {
+class QooCodeKotlinToolWindow(project: Project) {
     private val mainPanel: SimpleToolWindowPanel
     private val tree: Tree
     
@@ -33,7 +33,7 @@ class QOOCODEKotlinToolWindow(project: Project) {
 
 class SimpleTreeStructure : TreeStructure {
     override fun getRootElement(): Any {
-        return TreeNode("QOOCODE")
+        return TreeNode("QooCode")
     }
 }
 

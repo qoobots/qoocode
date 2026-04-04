@@ -36598,7 +36598,7 @@ function getModelCost(model) {
   }
   return { input: 0.001, output: 0.003 };
 }
-var DEFAULT_MODEL = "deepseek-chat", DEFAULT_OPENAI_BASE_URL = "https://api.deepseek.com/v1", DEFAULT_MAX_TOKENS = 8192, DEFAULT_TEMPERATURE = 1, DEFAULT_TIMEOUT_MS = 120000, MODEL_COSTS, APP_NAME = "qoocode", APP_VERSION = "0.1.0", CONFIG_DIR_NAME = ".QOOCODE", CONFIG_FILE_NAME = "config.json";
+var DEFAULT_MODEL = "deepseek-chat", DEFAULT_OPENAI_BASE_URL = "https://api.deepseek.com/v1", DEFAULT_MAX_TOKENS = 8192, DEFAULT_TEMPERATURE = 1, DEFAULT_TIMEOUT_MS = 120000, MODEL_COSTS, APP_NAME = "qoocode", APP_VERSION = "0.1.0", CONFIG_DIR_NAME = ".qoocode", CONFIG_FILE_NAME = "config.json";
 var init_defaults = __esm(() => {
   MODEL_COSTS = {
     "deepseek-chat": { input: 0.00014, output: 0.00028 },
@@ -43135,7 +43135,7 @@ async function fetchUrl(url) {
     const response = await fetch(url, {
       signal: controller.signal,
       headers: {
-        "User-Agent": "QOOCODE/1.0",
+        "User-Agent": "qoocode/1.0",
         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
       }
     });
@@ -44072,7 +44072,7 @@ async function searchDuckDuckGo(query, maxResults) {
   try {
     const response = await fetch(url, {
       headers: {
-        "User-Agent": "QOOCODE/1.0"
+        "User-Agent": "qoocode/1.0"
       }
     });
     if (!response.ok) {
@@ -47171,7 +47171,7 @@ class MCPClient {
         protocolVersion: "2024-11-05",
         capabilities: {},
         clientInfo: {
-          name: "QOOCODE",
+          name: "qoocode",
           version: "0.1.4"
         }
       });
@@ -49441,7 +49441,7 @@ var init_TeamCreateTool = __esm(() => {
         ...prev,
         teamContext: {
           teamName: finalTeamName,
-          teamFilePath: `.QOOCODE/teams/${finalTeamName}.json`,
+          teamFilePath: `.qoocode/teams/${finalTeamName}.json`,
           leadAgentId,
           teammates: {
             [leadAgentId]: {
@@ -49459,7 +49459,7 @@ var init_TeamCreateTool = __esm(() => {
       return {
         data: {
           team_name: finalTeamName,
-          team_file_path: `.QOOCODE/teams/${finalTeamName}.json`,
+          team_file_path: `.qoocode/teams/${finalTeamName}.json`,
           lead_agent_id: leadAgentId
         },
         content: `
@@ -50683,7 +50683,7 @@ var init_skillManager = __esm(() => {
       name: "Code Review",
       description: "Review code for issues, bugs, and improvements",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["code", "review", "quality"],
       triggers: ["review", "review code", "check code"],
       actions: [
@@ -50705,7 +50705,7 @@ var init_skillManager = __esm(() => {
       name: "Git Helper",
       description: "Helper for common Git operations",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["git", "version-control"],
       triggers: ["git", "git commit", "git push", "git branch"],
       actions: [
@@ -50726,7 +50726,7 @@ var init_skillManager = __esm(() => {
       name: "Test Generator",
       description: "Generate unit tests for code",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["testing", "code-generation"],
       triggers: ["test", "generate test", "write test"],
       actions: [
@@ -50748,7 +50748,7 @@ var init_skillManager = __esm(() => {
       name: "Documentation Generator",
       description: "Generate documentation from code",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["documentation", "code-generation"],
       triggers: ["doc", "document", "generate docs", "readme"],
       actions: [
@@ -50768,9 +50768,9 @@ var init_skillManager = __esm(() => {
     {
       id: "remember",
       name: "Memory Review",
-      description: "Review and organize auto-memory entries. Propose promotions to QOOCODE.md, or detect outdated/duplicate entries.",
+      description: "Review and organize auto-memory entries. Propose promotions to qoocode.md, or detect outdated/duplicate entries.",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["memory", "organization"],
       triggers: ["remember", "organize memory", "memory review"],
       actions: [
@@ -50780,7 +50780,7 @@ var init_skillManager = __esm(() => {
           async execute(_input, _context) {
             return {
               success: true,
-              output: "Memory review: Would analyze QOOCODE.md and auto-memory for organization opportunities."
+              output: "Memory review: Would analyze qoocode.md and auto-memory for organization opportunities."
             };
           }
         }
@@ -50791,7 +50791,7 @@ var init_skillManager = __esm(() => {
       name: "Code Verifier",
       description: "Verify a code change does what it should by running the app",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["verification", "testing", "validation"],
       triggers: ["verify", "test this", "check works"],
       actions: [
@@ -50812,7 +50812,7 @@ var init_skillManager = __esm(() => {
       name: "Code Simplifier",
       description: "Simplify complex code while preserving functionality",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["refactoring", "simplification"],
       triggers: ["simplify", "refactor", "make simpler"],
       actions: [
@@ -50833,7 +50833,7 @@ var init_skillManager = __esm(() => {
       name: "Stuck Helper",
       description: "Help when you are stuck on a problem",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["help", "debugging", "problem-solving"],
       triggers: ["stuck", "help me", "not working"],
       actions: [
@@ -50854,7 +50854,7 @@ var init_skillManager = __esm(() => {
       name: "Batch Processor",
       description: "Process multiple files or tasks in batch",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["batch", "automation", "bulk"],
       triggers: ["batch", "process all", "bulk"],
       actions: [
@@ -50875,7 +50875,7 @@ var init_skillManager = __esm(() => {
       name: "Keybindings Helper",
       description: "Show and manage keyboard shortcuts",
       version: "1.0.0",
-      author: "QOOCODE",
+      author: "qoocode",
       tags: ["keybindings", "shortcuts", "keyboard"],
       triggers: ["keybindings", "shortcuts", "keyboard"],
       actions: [
@@ -58396,7 +58396,7 @@ function getOpenAIClient(config) {
     timeout: config.timeoutMs,
     maxRetries: 2,
     defaultHeaders: {
-      "User-Agent": `QOOCODE/0.1.0`
+      "User-Agent": `qoocode/0.1.0`
     }
   });
   return clientInstance;
@@ -60215,7 +60215,7 @@ async function loadRegistry() {
   return {};
 }
 async function saveRegistry(registry2) {
-  const configDir = resolve3(process.cwd(), ".QOOCODE");
+  const configDir = resolve3(process.cwd(), ".qoocode");
   const configPath = join12(configDir, PLUGIN_REGISTRY_FILE);
   if (!existsSync14(configDir)) {
     await mkdir8(configDir, { recursive: true });
@@ -60304,7 +60304,7 @@ function getPluginManager() {
   }
   return pluginManager;
 }
-var PLUGIN_REGISTRY_FILE = ".QOOCODE/plugins.json", pluginManager = null, pluginService_default;
+var PLUGIN_REGISTRY_FILE = ".qoocode/plugins.json", pluginManager = null, pluginService_default;
 var init_pluginService = __esm(() => {
   pluginService_default = PluginManager;
 });
@@ -66065,7 +66065,7 @@ async function checkDependencies() {
     name: "Bun Runtime",
     status: bunExists ? "ok" : "error",
     message: bunExists ? `Found: ${getRuntimeVersion()}` : "Not found",
-    details: bunExists ? "Required for running QOOCODE" : "Install Bun from https://bun.sh"
+    details: bunExists ? "Required for running qoocode" : "Install Bun from https://bun.sh"
   });
   const gitExists = await commandExists("git");
   items.push({
@@ -66114,12 +66114,12 @@ async function checkEnvironment() {
     message: process.cwd()
   });
   try {
-    const configPath = join4(process.cwd(), "QOOCODE.json");
+    const configPath = join4(process.cwd(), "qoocode.json");
     await readFile9(configPath, "utf-8");
     items.push({
       name: "Config File",
       status: "ok",
-      message: "Found: QOOCODE.json"
+      message: "Found: qoocode.json"
     });
   } catch {
     items.push({
@@ -66159,7 +66159,7 @@ async function checkConfiguration() {
 async function getInstallationInfo() {
   const items = [];
   items.push({
-    name: "QOOCODE Version",
+    name: "qoocode Version",
     status: "ok",
     message: getVersion()
   });
@@ -66207,7 +66207,7 @@ ${result2.category}:`);
     }
   };
   lines.push("\u2550".repeat(50));
-  lines.push("  QOOCODE System Diagnostics");
+  lines.push("  qoocode System Diagnostics");
   lines.push("\u2550".repeat(50));
   formatResult(diagnostics.installation);
   formatResult(diagnostics.dependencies);
@@ -66697,8 +66697,8 @@ import { readFile as readFile10, writeFile as writeFile5, mkdir as mkdir5 } from
 import { existsSync as existsSync10 } from "fs";
 import { resolve as resolve2, join as join5 } from "path";
 import { execSync as execSync5 } from "child_process";
-var PROJECT_HOOKS_FILE = ".QOOCODE/settings.json";
-var PERSONAL_HOOKS_FILE = ".QOOCODE/settings.local.json";
+var PROJECT_HOOKS_FILE = ".qoocode/settings.json";
+var PERSONAL_HOOKS_FILE = ".qoocode/settings.local.json";
 function createDefaultConfig() {
   return {
     hooks: [],
@@ -66740,7 +66740,7 @@ class HooksManager {
   }
   getFilePath(source) {
     const base2 = source === "project" ? process.cwd() : process.env.HOME || process.env.USERPROFILE;
-    return source === "project" ? resolve2(base2, PROJECT_HOOKS_FILE) : join5(base2, ".QOOCODE", "settings.local.json");
+    return source === "project" ? resolve2(base2, PROJECT_HOOKS_FILE) : join5(base2, ".qoocode", "settings.local.json");
   }
   async getAllHooks() {
     await this.load();
@@ -66896,8 +66896,8 @@ var hooksCmd = {
     /hooks add Stop "*" "echo 'Turn complete'"
   
   Hooks are stored in:
-    Project: .QOOCODE/settings.json
-    Personal: ~/.QOOCODE/settings.local.json`;
+    Project: .qoocode/settings.json
+    Personal: ~/.qoocode/settings.local.json`;
     }
     if (subcommand === "list" || subcommand === "ls") {
       const hooks = await hookManager.getAllHooks();
@@ -67053,7 +67053,7 @@ var upgradeCmd = {
   async execute(args) {
     const parts = args.trim().split(/\s+/);
     const subcommand = parts[0]?.toLowerCase();
-    const packageName = parts[1] || "QOOCODE";
+    const packageName = parts[1] || "qoocode";
     if (!subcommand || subcommand === "help") {
       return `  Upgrade Command
   
@@ -67065,8 +67065,8 @@ var upgradeCmd = {
     /upgrade help       - Show this help
   
   Examples:
-    /upgrade check      - Check QOOCODE for updates
-    /upgrade install    - Update QOOCODE to latest
+    /upgrade check      - Check qoocode for updates
+    /upgrade install    - Update qoocode to latest
     /upgrade check <pkg> - Check a specific package`;
     }
     if (subcommand === "check" || subcommand === "info") {
@@ -67092,10 +67092,10 @@ var upgradeCmd = {
       const result2 = performNpmUpdate(packageName);
       return result2.message;
     }
-    if (subcommand === "self" || subcommand === "QOOCODE") {
+    if (subcommand === "self" || subcommand === "qoocode") {
       const info = checkNpmUpdate(packageName);
       if (!info.updateAvailable) {
-        return `QOOCODE is already on the latest version (${info.current}).`;
+        return `qoocode is already on the latest version (${info.current}).`;
       }
       const result2 = performNpmUpdate(packageName);
       return result2.message;
@@ -68617,7 +68617,7 @@ function getMemoryService() {
 // src/commands/memory/memory.ts
 var memory = {
   name: "memory",
-  description: "Manage QOOCODE memory files with typed taxonomy",
+  description: "Manage qoocode memory files with typed taxonomy",
   type: "local",
   usage: "memory [list|create|delete|show] [options]",
   async execute(args) {
@@ -68884,7 +68884,7 @@ class CacheService {
   constructor(options = {}) {
     this.ttl = options.ttl ?? DEFAULT_TTL;
     this.maxSize = options.maxSize ?? DEFAULT_MAX_SIZE;
-    this.cacheDir = options.directory ?? join10(homedir2(), ".QOOCODE", "cache");
+    this.cacheDir = options.directory ?? join10(homedir2(), ".qoocode", "cache");
   }
   generateKey(toolName, input) {
     const data = JSON.stringify({ tool: toolName, input });
@@ -69008,7 +69008,7 @@ function getCacheStats2() {
 import { readFile as readFile13, writeFile as writeFile8, mkdir as mkdir7, rm as rm3, readdir as readdir6 } from "fs/promises";
 import { join as join11, dirname as dirname2 } from "path";
 import { homedir as homedir3 } from "os";
-var STORAGE_DIR = join11(homedir3(), ".QOOCODE", "tool-results");
+var STORAGE_DIR = join11(homedir3(), ".qoocode", "tool-results");
 
 class ToolResultStorage {
   initialized = false;
@@ -69372,7 +69372,7 @@ async function performUpdate() {
 }
 function getUpdateInfo() {
   return `
-\uD83D\uDD04 QOOCODE \u66F4\u65B0\u4FE1\u606F
+\uD83D\uDD04 qoocode \u66F4\u65B0\u4FE1\u606F
 
 \u5F53\u524D\u7248\u672C: ${CURRENT_VERSION}
 npm \u5305\u540D: ${PACKAGE_NAME}
@@ -69405,7 +69405,7 @@ function formatStats(stats) {
   const lines = [
     "",
     "  \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557",
-    "  \u2551           QOOCODE Think Back - Session Analysis         \u2551",
+    "  \u2551           qoocode Think Back - Session Analysis         \u2551",
     "  \u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563",
     "  \u2551                                                           \u2551",
     `  \u2551   Sessions Analyzed: ${stats.totalSessions.toString().padEnd(26)}\u2551`,
@@ -69455,7 +69455,7 @@ var thinkbackCommand = {
     /thinkback stats        Show detailed statistics
     /thinkback help         Show this help
 
-  This command analyzes your QOOCODE usage history including:
+  This command analyzes your qoocode usage history including:
   - Session statistics
   - Most used tools
   - Programming languages
@@ -69517,7 +69517,7 @@ function formatInsights(data) {
   const lines = [
     "",
     "  \u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510",
-    "  \u2502           QOOCODE Insights - Usage Analysis             \u2502",
+    "  \u2502           qoocode Insights - Usage Analysis             \u2502",
     "  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
     "",
     `  \uD83D\uDCCA Overview`,
@@ -69581,7 +69581,7 @@ var insightsCommand = {
     /insights tools     Show detailed tool usage
     /insights help      Show this help
 
-  This command provides insights into your QOOCODE usage:
+  This command provides insights into your qoocode usage:
   - Session statistics
   - Tool usage patterns
   - Language distribution
@@ -69664,11 +69664,11 @@ class RemoteSessionService extends EventEmitter6 {
   }
   async initializeTmux(session) {
     const { config, id } = session;
-    const sessionName = config.sessionName || `QOOCODE-${id}`;
-    const socketPath = `/tmp/QOOCODE-${id}.sock`;
+    const sessionName = config.sessionName || `qoocode-${id}`;
+    const socketPath = `/tmp/qoocode-${id}.sock`;
     await this.execCommand("tmux", [
       "-L",
-      `QOOCODE-${id}`,
+      `qoocode-${id}`,
       "new-session",
       "-d",
       "-s",
@@ -69679,7 +69679,7 @@ class RemoteSessionService extends EventEmitter6 {
     if (config.size) {
       await this.execCommand("tmux", [
         "-L",
-        `QOOCODE-${id}`,
+        `qoocode-${id}`,
         "resize-window",
         "-t",
         sessionName,
@@ -69694,7 +69694,7 @@ class RemoteSessionService extends EventEmitter6 {
   }
   async initializeITerm2(session) {
     const { config, id } = session;
-    const scriptPath = `/tmp/QOOCODE-iterm-${id}.sh`;
+    const scriptPath = `/tmp/qoocode-iterm-${id}.sh`;
     const script = `#!/bin/bash
 osascript -e 'tell application "iTerm2"
   activate
@@ -69724,7 +69724,7 @@ end tell'`;
     if (config.backend === "tmux") {
       await this.execCommand("tmux", [
         "-L",
-        `QOOCODE-${sessionId}`,
+        `qoocode-${sessionId}`,
         "send-keys",
         "-t",
         config.sessionName,
@@ -69748,7 +69748,7 @@ end tell'`;
     if (config.backend === "tmux") {
       await this.execCommand("tmux", [
         "-L",
-        `QOOCODE-${sessionId}`,
+        `qoocode-${sessionId}`,
         "resize-window",
         "-t",
         config.sessionName,
@@ -69774,7 +69774,7 @@ end tell'`;
     if (config.backend === "tmux") {
       const output = await this.execCommand("tmux", [
         "-L",
-        `QOOCODE-${sessionId}`,
+        `qoocode-${sessionId}`,
         "capture-pane",
         "-t",
         config.sessionName,
@@ -69795,7 +69795,7 @@ end tell'`;
     if (config.backend === "tmux") {
       const proc = spawn4("tmux", [
         "-L",
-        `QOOCODE-${sessionId}`,
+        `qoocode-${sessionId}`,
         "pipe-pane",
         "-t",
         config.sessionName,
@@ -69852,7 +69852,7 @@ end tell'`;
     if (config.backend === "tmux") {
       await this.execCommand("tmux", [
         "-L",
-        `QOOCODE-${sessionId}`,
+        `qoocode-${sessionId}`,
         "kill-session",
         "-t",
         config.sessionName
@@ -70575,7 +70575,7 @@ var clearCmd = {
 var exitCmd = {
   name: "exit",
   aliases: ["quit", "q"],
-  description: "Exit QOOCODE",
+  description: "Exit qoocode",
   type: "local",
   execute() {
     return "__EXIT__";
@@ -70836,7 +70836,7 @@ Use /mcp help for available commands`;
 var pluginCmd = {
   name: "plugin",
   aliases: ["plugins"],
-  description: "Manage QOOCODE plugins",
+  description: "Manage qoocode plugins",
   type: "local",
   async execute(args) {
     const parts = args.trim().split(/\s+/);
@@ -70858,8 +70858,8 @@ var pluginCmd = {
   
   Example:
     /plugin list
-    /plugin install @QOOCODE/plugin-example
-    /plugin uninstall @QOOCODE/plugin-example`;
+    /plugin install @qoocode/plugin-example
+    /plugin uninstall @qoocode/plugin-example`;
     }
     if (subcommand === "list" || subcommand === "ls") {
       const plugins = await manager.getInstalledPlugins();
@@ -70884,7 +70884,7 @@ Use /plugin install <package> to install a plugin.`;
       if (!pluginName) {
         return `Usage: /plugin install <npm-package>
 
-Example: /plugin install @QOOCODE/plugin-example`;
+Example: /plugin install @qoocode/plugin-example`;
       }
       const result2 = await manager.installPlugin(pluginName);
       return result2.message;
@@ -70893,7 +70893,7 @@ Example: /plugin install @QOOCODE/plugin-example`;
       if (!pluginName) {
         return `Usage: /plugin uninstall <plugin-name>
 
-Example: /plugin uninstall @QOOCODE/plugin-example`;
+Example: /plugin uninstall @qoocode/plugin-example`;
       }
       const result2 = await manager.uninstallPlugin(pluginName);
       return result2.message;
@@ -70906,7 +70906,7 @@ Example: /plugin uninstall @QOOCODE/plugin-example`;
       if (!pluginName) {
         return `Usage: /plugin search <search-term>
 
-Example: /plugin search QOOCODE`;
+Example: /plugin search qoocode`;
       }
       return `Searching npm for "${pluginName}"...
 
@@ -70967,7 +70967,7 @@ var skillsCmd = {
     /skills uninstall <name> - Remove a skill
     /skills update <name> - Update a skill
     
-  Skills are specialized capabilities that extend QOOCODE's functionality.`;
+  Skills are specialized capabilities that extend qoocode's functionality.`;
     }
     return `__SKILLS_COMMAND__:${args}`;
   }
@@ -71019,7 +71019,7 @@ var workspaceCmd = {
 var configCmd = {
   name: "config",
   aliases: ["cfg"],
-  description: "Manage QOOCODE configuration",
+  description: "Manage qoocode configuration",
   type: "local",
   execute(args) {
     if (!args.trim()) {
@@ -71030,7 +71030,7 @@ var configCmd = {
     /config reset      - Reset to default configuration
     /config list       - List all config keys and values
     
-  Configuration affects QOOCODE's behavior.`;
+  Configuration affects qoocode's behavior.`;
     }
     return `__CONFIG_COMMAND__:${args}`;
   }
@@ -71136,7 +71136,7 @@ var settingsCmd = {
     /settings set <key> <value> - Set a setting
     /settings reset      - Reset to default settings
     
-  Settings control QOOCODE's behavior and appearance.`;
+  Settings control qoocode's behavior and appearance.`;
     }
     return `__SETTINGS_COMMAND__:${args}`;
   }
@@ -71445,10 +71445,10 @@ var compactCmd = {
 };
 var initCmd = {
   name: "init",
-  description: "Initialize QOOCODE.md project documentation",
+  description: "Initialize qoocode.md project documentation",
   type: "prompt",
   async execute(args) {
-    const initPrompt = `Analyze this codebase and create QOOCODE.md file(s) to help future sessions work more effectively.
+    const initPrompt = `Analyze this codebase and create qoocode.md file(s) to help future sessions work more effectively.
 
 Steps:
 1. Explore the project structure - read package.json, README, config files, etc.
@@ -71457,9 +71457,9 @@ Steps:
    - Project architecture and structure
    - Code style conventions
    - Required environment setup
-3. Create a QOOCODE.md file at the project root with essential information
+3. Create a qoocode.md file at the project root with essential information
 
-The QOOCODE.md should include:
+The qoocode.md should include:
 - Commands for building, testing, and linting
 - High-level architecture overview
 - Important conventions and rules
@@ -71644,7 +71644,7 @@ var mockLimitsCmd = {
 };
 var updateCmd = {
   name: "update",
-  description: "Check for updates or update QOOCODE",
+  description: "Check for updates or update qoocode",
   type: "local",
   async execute(args) {
     const parts = args.trim().split(/\s+/);
@@ -71652,7 +71652,7 @@ var updateCmd = {
     if (action === "check" || action === "info") {
       const updateInfo = await checkForUpdates();
       const lines = [
-        "\uD83D\uDD04 QOOCODE Update Check",
+        "\uD83D\uDD04 qoocode Update Check",
         "========================",
         "",
         `Current Version: ${updateInfo.currentVersion}`,
@@ -71663,9 +71663,9 @@ var updateCmd = {
         lines.push(`\u2728 ${updateInfo.message}`);
         lines.push("");
         lines.push("To update, run:");
-        lines.push("  npm update -g QOOCODE-cli");
+        lines.push("  npm update -g qoocode-cli");
         lines.push("  # or");
-        lines.push("  bun update -g QOOCODE-cli");
+        lines.push("  bun update -g qoocode-cli");
       } else {
         lines.push(`\u2705 ${updateInfo.message || "Already up to date!"}`);
       }
@@ -71703,7 +71703,7 @@ var updateCmd = {
         case "success":
           lines.push(`\u2705 Successfully updated to version ${result2.version}`);
           lines.push("");
-          lines.push("Please restart QOOCODE to use the new version.");
+          lines.push("Please restart qoocode to use the new version.");
           break;
         case "up_to_date":
           lines.push("\u2705 Already up to date!");
@@ -71712,13 +71712,13 @@ var updateCmd = {
           lines.push("\u274C No permissions to update.");
           lines.push("");
           lines.push("Try running with sudo:");
-          lines.push("  sudo npm update -g QOOCODE-cli");
+          lines.push("  sudo npm update -g qoocode-cli");
           break;
         case "install_failed":
           lines.push("\u274C Update failed.");
           lines.push("");
           lines.push("You can try updating manually:");
-          lines.push("  npm update -g QOOCODE-cli");
+          lines.push("  npm update -g qoocode-cli");
           break;
         default:
           lines.push(`Status: ${result2.status}`);
@@ -72040,7 +72040,7 @@ function REPL() {
             dispatch({ type: "ADD_MESSAGE", message: createUserMessage(trimmed) });
             dispatch({
               type: "ADD_MESSAGE",
-              message: { role: "assistant", content: "Exiting QOOCODE..." }
+              message: { role: "assistant", content: "Exiting qoocode..." }
             });
             setTimeout(() => exit(), 100);
           } else if (typeof result2 === "string" && result2.startsWith("__CHANGE_MODEL__:")) {
@@ -72156,7 +72156,7 @@ ${index + 1}. **${entry.model}**
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(Text, {
             bold: true,
             color: "blue",
-            children: "QOOCODE v0.1.0"
+            children: "qoocode v0.1.0"
           }, undefined, false, undefined, this),
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(Text, {
             dimColor: true,
@@ -72177,7 +72177,7 @@ ${index + 1}. **${entry.model}**
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(Text, {
             color: "cyan",
             bold: true,
-            children: "Welcome to QOOCODE!"
+            children: "Welcome to qoocode!"
           }, undefined, false, undefined, this),
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(Text, {
             dimColor: true,
@@ -72430,7 +72430,7 @@ function WindowsREPL() {
         children: /* @__PURE__ */ jsx_dev_runtime4.jsxDEV(Text, {
           bold: true,
           children: [
-            "QOOCODE v0.1.0 \u2014 AI Coding Assistant (",
+            "qoocode v0.1.0 \u2014 AI Coding Assistant (",
             state.config.model,
             ")"
           ]
@@ -72439,7 +72439,7 @@ function WindowsREPL() {
       /* @__PURE__ */ jsx_dev_runtime4.jsxDEV(Box_default, {
         padding: 1,
         children: /* @__PURE__ */ jsx_dev_runtime4.jsxDEV(Text, {
-          children: "Welcome to QOOCODE! Type a message to start, or use /help for commands."
+          children: "Welcome to qoocode! Type a message to start, or use /help for commands."
         }, undefined, false, undefined, this)
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime4.jsxDEV(Box_default, {

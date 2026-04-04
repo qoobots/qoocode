@@ -1,10 +1,10 @@
 ﻿import OpenAI from 'openai'
-import type { QOOCODEConfig } from '../utils/config.js'
+import type { QoocodeConfig } from '../utils/config.js'
 import { classifyOpenAIError, type APIError } from '../../types/errors.js'
 
 let clientInstance: OpenAI | null = null
 
-export function getOpenAIClient(config: QOOCODEConfig): OpenAI {
+export function getOpenAIClient(config: QoocodeConfig): OpenAI {
   if (clientInstance) return clientInstance
 
   clientInstance = new OpenAI({
@@ -13,7 +13,7 @@ export function getOpenAIClient(config: QOOCODEConfig): OpenAI {
     timeout: config.timeoutMs,
     maxRetries: 2,
     defaultHeaders: {
-      'User-Agent': `QOOCODE/0.1.0`,
+      'User-Agent': `qoocode/0.1.0`,
     },
   })
 
@@ -25,7 +25,7 @@ export function resetClient(): void {
 }
 
 export async function createStreamChatCompletion(
-  config: QOOCODEConfig,
+  config: QoocodeConfig,
   params: {
     messages: OpenAI.Chat.ChatCompletionMessageParam[]
     tools?: OpenAI.Chat.ChatCompletionTool[]
@@ -72,7 +72,7 @@ export async function createStreamChatCompletion(
 }
 
 export async function createChatCompletion(
-  config: QOOCODEConfig,
+  config: QoocodeConfig,
   params: {
     messages: OpenAI.Chat.ChatCompletionMessageParam[]
     tools?: OpenAI.Chat.ChatCompletionTool[]

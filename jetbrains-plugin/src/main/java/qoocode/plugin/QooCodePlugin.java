@@ -1,9 +1,9 @@
-﻿/**
- * QOOCODE JetBrains Plugin
+/**
+ * qoocode JetBrains Plugin
  * Main Plugin Entry Point
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.project.*;
@@ -20,36 +20,36 @@ import org.jetbrains.annotations.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class QOOCODEPlugin implements ApplicationComponent {
-    private static final Logger LOG = Logger.getInstance(QOOCODEPlugin.class);
+public class QooCodePlugin implements ApplicationComponent {
+    private static final Logger LOG = Logger.getInstance(QooCodePlugin.class);
     private Project project;
     private ToolWindow toolWindow;
-    private QOOCODEChatPanel chatPanel;
+    private QooCodeChatPanel chatPanel;
 
-    public QOOCODEPlugin(@NotNull Project project) {
+    public QooCodePlugin(@NotNull Project project) {
         this.project = project;
     }
 
     @Override
     public void initComponent() {
-        LOG.info("QOOCODE Plugin initializing...");
+        LOG.info("QooCode Plugin initializing...");
         
         // Register tool window
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
         if (toolWindowManager != null) {
-            toolWindow = toolWindowManager.getToolWindow("QOOCODE");
+            toolWindow = toolWindowManager.getToolWindow("QooCode");
             if (toolWindow == null) {
                 toolWindow = toolWindowManager.registerToolWindow(
-                    "QOOCODE",
+                    "QooCode",
                     true,
                     ToolWindowAnchor.RIGHT,
                     project,
                     true
                 );
-                toolWindow.setTitle("QOOCODE Chat");
+                toolWindow.setTitle("QooCode Chat");
                 
                 // Create and set content
-                chatPanel = new QOOCODEChatPanel(project);
+                chatPanel = new QooCodeChatPanel(project);
                 toolWindow.getComponent().add(chatPanel.getContent());
                 
                 // Set icon
@@ -57,12 +57,12 @@ public class QOOCODEPlugin implements ApplicationComponent {
             }
         }
         
-        LOG.info("QOOCODE Plugin initialized successfully");
+        LOG.info("QooCode Plugin initialized successfully");
     }
 
     @Override
     public void disposeComponent() {
-        LOG.info("QOOCODE Plugin disposing...");
+        LOG.info("QooCode Plugin disposing...");
         if (toolWindow != null) {
             toolWindow.remove();
         }
@@ -71,18 +71,18 @@ public class QOOCODEPlugin implements ApplicationComponent {
     @Override
     @NotNull
     public String getComponentName() {
-        return "QOOCODEPlugin";
+        return "QooCodePlugin";
     }
 
     /**
      * Get the chat panel instance
      */
-    public QOOCODEChatPanel getChatPanel() {
+    public QooCodeChatPanel getChatPanel() {
         return chatPanel;
     }
 
     /**
-     * Show the QOOCODE tool window
+     * Show the QooCode tool window
      */
     public void showToolWindow() {
         if (toolWindow != null) {
@@ -91,7 +91,7 @@ public class QOOCODEPlugin implements ApplicationComponent {
     }
 
     /**
-     * Hide the QOOCODE tool window
+     * Hide the QooCode tool window
      */
     public void hideToolWindow() {
         if (toolWindow != null) {

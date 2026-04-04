@@ -1,13 +1,13 @@
-﻿/**
- * QOOCODE Tool Interface
+/**
+ * qoocode Tool Interface
  * Extension point for adding custom tools
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import javax.swing.*;
 
-public interface QOOCODETool {
+public interface QooCodeTool {
     /**
      * Get tool name
      */

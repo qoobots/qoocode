@@ -1,18 +1,18 @@
-﻿/**
- * QOOCODE VS Code Extension
+/**
+ * qoocode VS Code Extension
  * Workspace manager
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODEWorkspaceManager {
-  private config: QOOCODEConfig;
+export class QoocodeWorkspaceManager {
+  private config: QoocodeConfig;
   private outputChannel: vscode.OutputChannel;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.outputChannel = vscode.window.createOutputChannel('QOOCODE');
+    this.outputChannel = vscode.window.createOutputChannel('qoocode');
   }
 
   /**
@@ -109,36 +109,36 @@ interface WorkspaceConfig {
   hasMultipleFolders: boolean;
 }
 
-export class QOOCODETaskProvider implements vscode.TaskProvider {
-  private config: QOOCODEConfig;
+export class QoocodeTaskProvider implements vscode.TaskProvider {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
   provideTasks(token?: vscode.CancellationToken): vscode.ProviderResult<vscode.Task[]> {
     const tasks: vscode.Task[] = [];
 
-    // QOOCODE: Analyze Task
+    // qoocode: Analyze Task
     const analyzeTask = new vscode.Task(
-      { type: 'QOOCODE', task: 'analyze' },
+      { type: 'qoocode', task: 'analyze' },
       vscode.TaskScope.Workspace,
-      'Analyze with QOOCODE',
-      'QOOCODE',
-      new vscode.ShellExecution('QOOCODE analyze'),
+      'Analyze with qoocode',
+      'qoocode',
+      new vscode.ShellExecution('qoocode analyze'),
       '$qoocode'
     );
     analyzeTask.group = vscode.TaskGroup.Build;
     analyzeTask.isBackground = false;
     tasks.push(analyzeTask);
 
-    // QOOCODE: Review Task
+    // qoocode: Review Task
     const reviewTask = new vscode.Task(
-      { type: 'QOOCODE', task: 'review' },
+      { type: 'qoocode', task: 'review' },
       vscode.TaskScope.Workspace,
-      'Review with QOOCODE',
-      'QOOCODE',
-      new vscode.ShellExecution('QOOCODE review'),
+      'Review with qoocode',
+      'qoocode',
+      new vscode.ShellExecution('qoocode review'),
       '$qoocode'
     );
     reviewTask.group = vscode.TaskGroup.Build;

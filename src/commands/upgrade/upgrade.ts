@@ -61,7 +61,7 @@ export const upgradeCmd: Command = {
   async execute(args: string) {
     const parts = args.trim().split(/\s+/)
     const subcommand = parts[0]?.toLowerCase()
-    const packageName = parts[1] || 'QOOCODE'
+    const packageName = parts[1] || 'qoocode'
     
     // Show help
     if (!subcommand || subcommand === 'help') {
@@ -75,8 +75,8 @@ export const upgradeCmd: Command = {
     /upgrade help       - Show this help
   
   Examples:
-    /upgrade check      - Check QOOCODE for updates
-    /upgrade install    - Update QOOCODE to latest
+    /upgrade check      - Check qoocode for updates
+    /upgrade install    - Update qoocode to latest
     /upgrade check <pkg> - Check a specific package`
     }
     
@@ -111,11 +111,11 @@ export const upgradeCmd: Command = {
     }
     
     // Self-upgrade (default)
-    if (subcommand === 'self' || subcommand === 'QOOCODE') {
+    if (subcommand === 'self' || subcommand === 'qoocode') {
       const info = checkNpmUpdate(packageName)
       
       if (!info.updateAvailable) {
-        return `QOOCODE is already on the latest version (${info.current}).`
+        return `qoocode is already on the latest version (${info.current}).`
       }
       
       const result = performNpmUpdate(packageName)

@@ -1,10 +1,10 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Chat provider for tree view
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
 export interface ChatMessage {
   id: string;
@@ -13,23 +13,23 @@ export interface ChatMessage {
   timestamp: number;
 }
 
-export class QOOCODEChatProvider implements vscode.TreeDataProvider<ChatTreeItem> {
+export class QoocodeChatProvider implements vscode.TreeDataProvider<ChatTreeItem> {
   private messages: ChatMessage[] = [];
   private _onDidChangeTreeData = new vscode.EventEmitter<ChatTreeItem | undefined>();
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
   private webviewPanel: vscode.WebviewPanel | undefined;
   private context: vscode.ExtensionContext;
-  private config: QOOCODEConfig;
+  private config: QoocodeConfig;
 
-  constructor(context: vscode.ExtensionContext, config: QOOCODEConfig) {
+  constructor(context: vscode.ExtensionContext, config: QoocodeConfig) {
     this.context = context;
     this.config = config;
 
     // Add welcome message
     this.addMessage({
       type: 'assistant',
-      content: 'Hello! I\'m QOOCODE, your AI coding assistant. How can I help you today?',
+      content: 'Hello! I\'m qoocode, your AI coding assistant. How can I help you today?',
       timestamp: Date.now()
     });
   }
@@ -72,7 +72,7 @@ export class QOOCODEChatProvider implements vscode.TreeDataProvider<ChatTreeItem
           msg.type,
           vscode.TreeItemCollapsibleState.None,
           {
-            command: 'QOOCODE.showMessage',
+            command: 'qoocode.showMessage',
             title: 'Show Message',
             arguments: [msg]
           }
@@ -116,8 +116,8 @@ export class QOOCODEChatProvider implements vscode.TreeDataProvider<ChatTreeItem
     }
 
     this.webviewPanel = vscode.window.createWebviewPanel(
-      'QOOCODE.chat',
-      'QOOCODE Chat',
+      'qoocode.chat',
+      'qoocode Chat',
       vscode.ViewColumn.One,
       {
         enableScripts: true,
@@ -146,7 +146,7 @@ export class QOOCODEChatProvider implements vscode.TreeDataProvider<ChatTreeItem
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QOOCODE Chat</title>
+  <title>qoocode Chat</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -202,7 +202,7 @@ export class QOOCODEChatProvider implements vscode.TreeDataProvider<ChatTreeItem
 <body>
   <div id="messages"></div>
   <div class="input-area">
-    <textarea id="input" placeholder="Ask QOOCODE..."></textarea>
+    <textarea id="input" placeholder="Ask qoocode..."></textarea>
     <button onclick="sendMessage()">Send</button>
   </div>
   <script>
@@ -274,7 +274,7 @@ export class ChatTreeItem extends vscode.TreeItem {
   }
 
   private getIcon(): vscode.Uri | undefined {
-    const extPath = vscode.extensions.getExtension('QOOCODE.QOOCODE')?.extensionPath;
+    const extPath = vscode.extensions.getExtension('qoocode.qoocode')?.extensionPath;
     if (!extPath) return undefined;
 
     switch (this.messageType) {

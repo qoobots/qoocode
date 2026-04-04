@@ -1,4 +1,4 @@
-﻿// Skill system for QOOCODE
+﻿// Skill system for qoocode
 import { z } from 'zod'
 
 // Skill definition
@@ -96,7 +96,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Code Review',
     description: 'Review code for issues, bugs, and improvements',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['code', 'review', 'quality'],
     triggers: ['review', 'review code', 'check code'],
     actions: [
@@ -118,7 +118,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Git Helper',
     description: 'Helper for common Git operations',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['git', 'version-control'],
     triggers: ['git', 'git commit', 'git push', 'git branch'],
     actions: [
@@ -139,7 +139,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Test Generator',
     description: 'Generate unit tests for code',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['testing', 'code-generation'],
     triggers: ['test', 'generate test', 'write test'],
     actions: [
@@ -161,7 +161,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Documentation Generator',
     description: 'Generate documentation from code',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['documentation', 'code-generation'],
     triggers: ['doc', 'document', 'generate docs', 'readme'],
     actions: [
@@ -182,9 +182,9 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
   {
     id: 'remember',
     name: 'Memory Review',
-    description: 'Review and organize auto-memory entries. Propose promotions to QOOCODE.md, or detect outdated/duplicate entries.',
+    description: 'Review and organize auto-memory entries. Propose promotions to qoocode.md, or detect outdated/duplicate entries.',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['memory', 'organization'],
     triggers: ['remember', 'organize memory', 'memory review'],
     actions: [
@@ -194,7 +194,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
         async execute(_input: unknown, _context: SkillContext): Promise<SkillResult> {
           return {
             success: true,
-            output: 'Memory review: Would analyze QOOCODE.md and auto-memory for organization opportunities.',
+            output: 'Memory review: Would analyze qoocode.md and auto-memory for organization opportunities.',
           }
         },
       },
@@ -205,7 +205,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Code Verifier',
     description: 'Verify a code change does what it should by running the app',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['verification', 'testing', 'validation'],
     triggers: ['verify', 'test this', 'check works'],
     actions: [
@@ -226,7 +226,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Code Simplifier',
     description: 'Simplify complex code while preserving functionality',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['refactoring', 'simplification'],
     triggers: ['simplify', 'refactor', 'make simpler'],
     actions: [
@@ -247,7 +247,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Stuck Helper',
     description: 'Help when you are stuck on a problem',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['help', 'debugging', 'problem-solving'],
     triggers: ['stuck', 'help me', 'not working'],
     actions: [
@@ -268,7 +268,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Batch Processor',
     description: 'Process multiple files or tasks in batch',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['batch', 'automation', 'bulk'],
     triggers: ['batch', 'process all', 'bulk'],
     actions: [
@@ -289,7 +289,7 @@ const BUILT_IN_SKILLS: SkillDefinition[] = [
     name: 'Keybindings Helper',
     description: 'Show and manage keyboard shortcuts',
     version: '1.0.0',
-    author: 'QOOCODE',
+    author: 'qoocode',
     tags: ['keybindings', 'shortcuts', 'keyboard'],
     triggers: ['keybindings', 'shortcuts', 'keyboard'],
     actions: [

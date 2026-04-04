@@ -1,8 +1,8 @@
-﻿/**
- * QOOCODE Status Bar Widget
+/**
+ * qoocode Status Bar Widget
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import com.intellij.openapi.project.*;
 import com.intellij.openapi.wm.*;
@@ -14,19 +14,19 @@ import org.jetbrains.annotations.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class QOOCODEStatusBarWidget implements StatusBarWidget {
-    private static final Logger LOG = Logger.getInstance(QOOCODEStatusBarWidget.class);
+public class QooCodeStatusBarWidget implements StatusBarWidget {
+    private static final Logger LOG = Logger.getInstance(QooCodeStatusBarWidget.class);
     
     private final Project project;
     private boolean connected = false;
     
-    public QOOCODEStatusBarWidget(Project project) {
+    public QooCodeStatusBarWidget(Project project) {
         this.project = project;
     }
     
     @Override
     public @NotNull String ID() {
-        return "QOOCODE.status";
+        return "QooCode.status";
     }
     
     @Override
@@ -36,12 +36,12 @@ public class QOOCODEStatusBarWidget implements StatusBarWidget {
     
     @Override
     public void install(@NotNull StatusBar statusBar) {
-        LOG.info("Installing QOOCODE status bar widget");
+        LOG.info("Installing QooCode status bar widget");
     }
     
     @Override
     public void dispose() {
-        LOG.info("Disposing QOOCODE status bar widget");
+        LOG.info("Disposing QooCode status bar widget");
     }
     
     public void setConnected(boolean connected) {
@@ -51,12 +51,12 @@ public class QOOCODEStatusBarWidget implements StatusBarWidget {
     private class Presentation implements StatusBarWidgetPresentation {
         @Override
         public @Nullable String getText() {
-            return connected ? "QOOCODE: Connected" : "QOOCODE: Ready";
+            return connected ? "QooCode: Connected" : "QooCode: Ready";
         }
         
         @Override
         public @Nullable String getToolTipText() {
-            return connected ? "QOOCODE is connected to the server" : "Click to start QOOCODE";
+            return connected ? "QooCode is connected to the server" : "Click to start QooCode";
         }
         
         @Override
@@ -69,10 +69,10 @@ public class QOOCODEStatusBarWidget implements StatusBarWidget {
         @Override
         public @Nullable Consumer<MouseEvent> getClickConsumer() {
             return event -> {
-                // Open QOOCODE tool window
+                // Open QooCode tool window
                 ToolWindowManager manager = ToolWindowManager.getInstance(project);
                 if (manager != null) {
-                    ToolWindow toolWindow = manager.getToolWindow("QOOCODE");
+                    ToolWindow toolWindow = manager.getToolWindow("QooCode");
                     if (toolWindow != null) {
                         toolWindow.show();
                     }
@@ -82,15 +82,15 @@ public class QOOCODEStatusBarWidget implements StatusBarWidget {
     }
 }
 
-class QOOCODEStatusBarWidgetFactory implements StatusBarWidgetFactory {
+class QooCodeStatusBarWidgetFactory implements StatusBarWidgetFactory {
     @Override
     public @NotNull String getId() {
-        return "QOOCODE.status";
+        return "QooCode.status";
     }
     
     @Override
     public @NotNull String getDisplayName() {
-        return "QOOCODE Status";
+        return "QooCode Status";
     }
     
     @Override
@@ -100,7 +100,7 @@ class QOOCODEStatusBarWidgetFactory implements StatusBarWidgetFactory {
     
     @Override
     public StatusBarWidget createWidget(@NotNull Project project) {
-        return new QOOCODEStatusBarWidget(project);
+        return new QooCodeStatusBarWidget(project);
     }
     
     @Override

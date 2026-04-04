@@ -1,18 +1,18 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Debug integration
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODEDebugAdapterTracker implements vscode.DebugAdapterTracker {
+export class QoocodeDebugAdapterTracker implements vscode.DebugAdapterTracker {
   private outputChannel: vscode.OutputChannel;
-  private config: QOOCODEConfig;
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.outputChannel = vscode.window.createOutputChannel('QOOCODE Debug');
+    this.outputChannel = vscode.window.createOutputChannel('qoocode Debug');
   }
 
   onWillStartSession(): void {
@@ -55,24 +55,24 @@ export class QOOCODEDebugAdapterTracker implements vscode.DebugAdapterTracker {
   }
 }
 
-export class QOOCODEDebugAdapterTrackerFactory implements vscode.DebugAdapterTrackerFactory {
-  private config: QOOCODEConfig;
+export class QoocodeDebugAdapterTrackerFactory implements vscode.DebugAdapterTrackerFactory {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
   createDebugAdapterTracker(
     session: vscode.DebugSession
   ): vscode.ProviderResult<vscode.DebugAdapterTracker> {
-    return new QOOCODEDebugAdapterTracker(this.config);
+    return new QoocodeDebugAdapterTracker(this.config);
   }
 }
 
-export class QOOCODEDebugConfigurationProvider implements vscode.DebugConfigurationProvider {
-  private config: QOOCODEConfig;
+export class QoocodeDebugConfigurationProvider implements vscode.DebugConfigurationProvider {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
@@ -81,7 +81,7 @@ export class QOOCODEDebugConfigurationProvider implements vscode.DebugConfigurat
     config: vscode.DebugConfiguration,
     token?: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.DebugConfiguration> {
-    // Add QOOCODE-specific debug configurations
+    // Add qoocode-specific debug configurations
     if (!config.type && !config.request && !config.name) {
       // Show a picker to choose debug type
       vscode.window.showQuickPick([
@@ -102,16 +102,16 @@ export class QOOCODEDebugConfigurationProvider implements vscode.DebugConfigurat
   }
 
   private async createDebugConfig(type: string, folder?: vscode.WorkspaceFolder): Promise<void> {
-    // Use QOOCODE to help create debug configuration
+    // Use qoocode to help create debug configuration
     const prompt = `Create a debug configuration for ${type} in VS Code`;
     
     vscode.window.showInformationMessage(
-      `QOOCODE: Would you like help creating a ${type} debug configuration?`,
+      `qoocode: Would you like help creating a ${type} debug configuration?`,
       'Yes',
       'No'
     ).then(async (choice) => {
       if (choice === 'Yes') {
-        vscode.commands.executeCommand('QOOCODE.chat', prompt);
+        vscode.commands.executeCommand('qoocode.chat', prompt);
       }
     });
   }
@@ -124,7 +124,7 @@ export class QOOCODEDebugConfigurationProvider implements vscode.DebugConfigurat
       {
         type: 'node',
         request: 'launch',
-        name: 'QOOCODE: Node.js',
+        name: 'qoocode: Node.js',
         program: '${workspaceFolder}/${file}',
         skipFiles: ['<node_internals>/**']
       }
@@ -134,10 +134,10 @@ export class QOOCODEDebugConfigurationProvider implements vscode.DebugConfigurat
   }
 }
 
-export class QOOCODEBreakpointAnalyzer {
-  private config: QOOCODEConfig;
+export class QoocodeBreakpointAnalyzer {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 

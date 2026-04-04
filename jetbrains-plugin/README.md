@@ -1,6 +1,6 @@
-﻿# QOOCODE JetBrains Plugin
+﻿# qoocode JetBrains Plugin
 
-QOOCODE AI-powered code assistant plugin for JetBrains IDEs.
+qoocode AI-powered code assistant plugin for JetBrains IDEs.
 
 ## Features
 
@@ -36,7 +36,7 @@ QOOCODE AI-powered code assistant plugin for JetBrains IDEs.
 
 1. Open JetBrains IDE
 2. Go to Settings > Plugins
-3. Search for "QOOCODE"
+3. Search for "qoocode"
 4. Click Install
 
 ### From Source
@@ -50,13 +50,13 @@ QOOCODE AI-powered code assistant plugin for JetBrains IDEs.
 
 ### API Settings
 
-1. Open Settings > Tools > QOOCODE
+1. Open Settings > Tools > qoocode
 2. Configure API URL and API Key
 3. Select your preferred AI model
 
 ### General Settings
 
-- Auto-start: Start QOOCODE when opening a project
+- Auto-start: Start qoocode when opening a project
 - Telemetry: Enable anonymous usage statistics
 - Theme: Choose light/dark appearance
 
@@ -66,24 +66,24 @@ QOOCODE AI-powered code assistant plugin for JetBrains IDEs.
 
 | Action | Windows/Linux | macOS |
 |--------|---------------|-------|
-| Open QOOCODE | `Ctrl+Shift+O` | `Cmd+Shift+O` |
+| Open qoocode | `Ctrl+Shift+O` | `Cmd+Shift+O` |
 
 ### Chat Interface
 
-1. Press `Ctrl+Shift+O` to open QOOCODE
+1. Press `Ctrl+Shift+O` to open qoocode
 2. Type your question or request
 3. Press `Enter` to send
 
 ### Code Analysis
 
 1. Open a file in the editor
-2. Right-click > "Analyze with QOOCODE"
+2. Right-click > "Analyze with qoocode"
 3. View AI-generated analysis
 
 ### Quick Actions
 
 - **Explain**: Select code > Right-click > "Explain Code"
-- **Refactor**: Select code > Right-click > "Refactor with QOOCODE"
+- **Refactor**: Select code > Right-click > "Refactor with qoocode"
 - **Test**: Select code > Right-click > "Generate Test"
 
 ## Architecture
@@ -91,30 +91,30 @@ QOOCODE AI-powered code assistant plugin for JetBrains IDEs.
 ```
 src/
 ├── main/
-│   ├── java/QOOCODE/plugin/
-│   │   ├── QOOCODEPlugin.java        # Main plugin entry
-│   │   ├── QOOCODEChatPanel.java      # Chat UI
-│   │   ├── QOOCODEToolWindowFactory.java
-│   │   ├── QOOCODEConfig.java         # Settings
-│   │   ├── QOOCODEConfigurable.java   # Settings UI
-│   │   ├── QOOCODEStatusBarWidget.java
+│   ├── java/qoocode/plugin/
+│   │   ├── QooCodePlugin.java        # Main plugin entry
+│   │   ├── QooCodeChatPanel.java      # Chat UI
+│   │   ├── QooCodeToolWindowFactory.java
+│   │   ├── QooCodeConfig.java         # Settings
+│   │   ├── QooCodeConfigurable.java   # Settings UI
+│   │   ├── QooCodeStatusBarWidget.java
 │   │   └── actions/                    # Actions
-│   │       ├── QOOCODEMainAction.java
-│   │       ├── QOOCODEChatAction.java
-│   │       ├── QOOCODEAnalyzeAction.java
-│   │       ├── QOOCODEExplainAction.java
-│   │       ├── QOOCODERefactorAction.java
-│   │       ├── QOOCODEGenerateTestAction.java
-│   │       └── QOOCODESettingsAction.java
-│   └── kotlin/QOOCODE/plugin/
-│       └── QOOCODEKotlinIntegration.kt
+│   │       ├── QooCodeMainAction.java
+│   │       ├── QooCodeChatAction.java
+│   │       ├── QooCodeAnalyzeAction.java
+│   │       ├── QooCodeExplainAction.java
+│   │       ├── QooCodeRefactorAction.java
+│   │       ├── QooCodeGenerateTestAction.java
+│   │       └── QooCodeSettingsAction.java
+│   └── kotlin/qoocode/plugin/
+│       └── QooCodeKotlinIntegration.kt
 └── resources/META-INF/
     └── plugin.xml                       # Plugin configuration
 ```
 
 ## API Integration
 
-The plugin integrates with the QOOCODE API:
+The plugin integrates with the qoocode API:
 
 ```java
 // Configuration
@@ -164,9 +164,9 @@ chatPanel.addMessage(new ChatMessage(MessageRole.USER, "Hello"));
 
 ## License
 
-MIT License
+Apache License 2.0
 
 ## Support
 
-- GitHub Issues: https://github.com/QOOCODE/QOOCODE/issues
-- Documentation: https://QOOCODE.example.com/docs
+- GitHub Issues: https://github.com/qoobots/qoocode/issues
+- Documentation: https://qoocode.example.com/docs

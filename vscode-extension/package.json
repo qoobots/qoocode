@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "qoocode",
   "displayName": "QooCode",
   "description": "AI-powered coding assistant - Terminal-based coding assistant with advanced features",
@@ -233,7 +233,7 @@
       "view/title": [
         {
           "command": "qoocode.chat",
-          "when": "view == QOOCODE.chat",
+          "when": "view == qoocode.chat",
           "group": "navigation"
         }
       ]

@@ -1,11 +1,11 @@
-﻿/**
- * QOOCODE Command Interface
+/**
+ * qoocode Command Interface
  * Extension point for adding custom commands
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
-public interface QOOCODECommand {
+public interface QooCodeCommand {
     /**
      * Get command name
      */

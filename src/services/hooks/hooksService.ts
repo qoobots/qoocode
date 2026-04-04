@@ -36,8 +36,8 @@ export interface HooksConfig {
 }
 
 // Hooks config file locations
-const PROJECT_HOOKS_FILE = '.QOOCODE/settings.json'
-const PERSONAL_HOOKS_FILE = '.QOOCODE/settings.local.json'
+const PROJECT_HOOKS_FILE = '.qoocode/settings.json'
+const PERSONAL_HOOKS_FILE = '.qoocode/settings.local.json'
 
 /**
  * Default hooks config
@@ -102,7 +102,7 @@ class HooksManager {
     const base = source === 'project' ? process.cwd() : process.env.HOME || process.env.USERPROFILE
     return source === 'project' 
       ? resolve(base, PROJECT_HOOKS_FILE)
-      : join(base, '.QOOCODE', 'settings.local.json')
+      : join(base, '.qoocode', 'settings.local.json')
   }
   
   /**

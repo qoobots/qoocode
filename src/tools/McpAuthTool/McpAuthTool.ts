@@ -148,7 +148,7 @@ export function createMcpAuthTool(
         // 5. Update the server's tools
 
         // For now, we simulate returning an auth URL
-        const authUrl = `${config.authUrl}/authorize?server=${encodeURIComponent(serverName)}&client=QOOCODE`
+        const authUrl = `${config.authUrl}/authorize?server=${encodeURIComponent(serverName)}&client=qoocode`
 
         // Simulate background completion (in production this would be async)
         void (async () => {

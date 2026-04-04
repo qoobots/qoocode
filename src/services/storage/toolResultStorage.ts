@@ -36,7 +36,7 @@ export interface ToolResultStats {
   newestTimestamp?: number
 }
 
-const STORAGE_DIR = join(homedir(), '.QOOCODE', 'tool-results')
+const STORAGE_DIR = join(homedir(), '.qoocode', 'tool-results')
 
 class ToolResultStorage {
   private initialized = false

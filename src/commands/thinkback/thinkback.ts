@@ -39,7 +39,7 @@ function formatStats(stats: SessionStats): string {
   const lines: string[] = [
     '',
     '  ╔═══════════════════════════════════════════════════════════╗',
-    '  ║           QOOCODE Think Back - Session Analysis         ║',
+    '  ║           qoocode Think Back - Session Analysis         ║',
     '  ╠═══════════════════════════════════════════════════════════╣',
     '  ║                                                           ║',
     `  ║   Sessions Analyzed: ${stats.totalSessions.toString().padEnd(26)}║`,
@@ -99,7 +99,7 @@ export const thinkbackCommand: Command = {
     /thinkback stats        Show detailed statistics
     /thinkback help         Show this help
 
-  This command analyzes your QOOCODE usage history including:
+  This command analyzes your qoocode usage history including:
   - Session statistics
   - Most used tools
   - Programming languages

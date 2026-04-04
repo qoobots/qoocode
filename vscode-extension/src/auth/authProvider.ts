@@ -1,11 +1,11 @@
 ﻿/**
- * QOOCODE JWT Authentication Provider
- * Provides JWT-based authentication for QOOCODE IDE integration
+ * qoocode JWT Authentication Provider
+ * Provides JWT-based authentication for qoocode IDE integration
  */
 
 import * as vscode from 'vscode';
 import * as crypto from 'crypto';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
 export interface TokenPayload {
   sub: string;        // Subject (user ID)
@@ -30,8 +30,8 @@ export interface AuthState {
   expiresAt?: number;
 }
 
-export class QOOCODEAuthProvider {
-  private config: QOOCODEConfig;
+export class QoocodeAuthProvider {
+  private config: QoocodeConfig;
   private context: vscode.ExtensionContext;
   private currentToken: AuthToken | undefined;
   private refreshTimer: NodeJS.Timeout | undefined;
@@ -39,7 +39,7 @@ export class QOOCODEAuthProvider {
 
   public readonly onStateChanged = this.stateChangedEmitter.event;
 
-  constructor(context: vscode.ExtensionContext, config: QOOCODEConfig) {
+  constructor(context: vscode.ExtensionContext, config: QoocodeConfig) {
     this.context = context;
     this.config = config;
     this.loadStoredToken();
@@ -50,7 +50,7 @@ export class QOOCODEAuthProvider {
    */
   private async loadStoredToken(): Promise<void> {
     try {
-      const stored = await this.context.secrets.get('QOOCODE.auth.token');
+      const stored = await this.context.secrets.get('qoocode.auth.token');
       if (stored) {
         this.currentToken = JSON.parse(stored);
         if (this.currentToken && this.currentToken.expiresAt > Date.now()) {
@@ -69,7 +69,7 @@ export class QOOCODEAuthProvider {
    */
   private async saveToken(token: AuthToken): Promise<void> {
     try {
-      await this.context.secrets.store('QOOCODE.auth.token', JSON.stringify(token));
+      await this.context.secrets.store('qoocode.auth.token', JSON.stringify(token));
       this.currentToken = token;
       this.scheduleRefresh();
     } catch (error) {
@@ -82,7 +82,7 @@ export class QOOCODEAuthProvider {
    */
   private async clearToken(): Promise<void> {
     try {
-      await this.context.secrets.delete('QOOCODE.auth.token');
+      await this.context.secrets.delete('qoocode.auth.token');
       this.currentToken = undefined;
       if (this.refreshTimer) {
         clearTimeout(this.refreshTimer);
@@ -169,7 +169,7 @@ export class QOOCODEAuthProvider {
 
       const payload: TokenPayload = {
         sub: userId,
-        iss: 'QOOCODE',
+        iss: 'qoocode',
         exp: now + expiresIn,
         iat: now,
         permissions: this.config.get('auth.permissions') || ['default']
@@ -258,7 +258,7 @@ export class QOOCODEAuthProvider {
 
       const payload: TokenPayload = {
         sub: userId,
-        iss: 'QOOCODE',
+        iss: 'qoocode',
         exp: now + expiresIn,
         iat: now,
         permissions: this.config.get('auth.permissions') || ['default']

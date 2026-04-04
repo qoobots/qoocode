@@ -1,9 +1,9 @@
-﻿/**
- * QOOCODE Project Configurable
+/**
+ * qoocode Project Configurable
  * Project-level settings UI
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import com.intellij.openapi.options.*;
 import com.intellij.openapi.project.*;
@@ -12,36 +12,36 @@ import org.jetbrains.annotations.*;
 
 import javax.swing.*;
 
-public class QOOCODEProjectConfigurable implements Configurable {
+public class QooCodeProjectConfigurable implements Configurable {
     private JPanel mainPanel;
     private JCheckBox enableProjectCheck;
     private JCheckBox autoAnalyzeCheck;
     private JTextField projectApiKeyField;
     
     private final Project project;
-    private final QOOCODEConfig config;
+    private final QooCodeConfig config;
     
-    public QOOCODEProjectConfigurable(Project project) {
+    public QooCodeProjectConfigurable(Project project) {
         this.project = project;
-        this.config = new QOOCODEConfig();
+        this.config = new QooCodeConfig();
     }
     
     @Override
     @NotNull
     public String getDisplayName() {
-        return "QOOCODE (Project)";
+        return "QooCode (Project)";
     }
     
     @Override
     public String getHelpTopic() {
-        return "settings.QOOCODE.project";
+        return "settings.QooCode.project";
     }
     
     @Override
     public JComponent createComponent() {
         mainPanel = new JPanel(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         
-        enableProjectCheck = new JCheckBox("Enable QOOCODE for this project");
+        enableProjectCheck = new JCheckBox("Enable qoocode for this project");
         autoAnalyzeCheck = new JCheckBox("Auto-analyze files on save");
         projectApiKeyField = new JTextField(30);
         

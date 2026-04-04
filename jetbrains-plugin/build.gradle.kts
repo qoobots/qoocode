@@ -4,7 +4,7 @@
     id("org.jetbrains.kotlin.jvm") version "1.8.20"
 }
 
-group = "com.QOOCODE"
+group = "com.qoocode"
 version = "0.1.30"
 
 repositories {
@@ -17,7 +17,7 @@ dependencies {
 }
 
 intellij {
-    pluginName.set("QOOCODE")
+    pluginName.set("qoocode")
     version.set("2023.1.2")
     type.set("IC")
     

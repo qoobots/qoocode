@@ -1,9 +1,9 @@
-﻿/**
- * QOOCODE Analyze Action
- * Analyze current file with QOOCODE
+/**
+ * qoocode Analyze Action
+ * Analyze current file with QooCode
  */
 
-package QOOCODE.plugin.actions;
+package qoocode.plugin.actions;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.project.*;
@@ -12,13 +12,13 @@ import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.vfs.*;
 import com.intellij.openapi.diagnostic.*;
 import com.intellij.openapi.wm.*;
-import QOOCODE.plugin.QOOCODEChatPanel;
+import qoocode.plugin.QooCodeChatPanel;
 import org.jetbrains.annotations.*;
 
 import java.io.*;
 
-public class QOOCODEAnalyzeAction extends AnAction {
-    private static final Logger LOG = Logger.getLogger(QOOCODEAnalyzeAction.class);
+public class QooCodeAnalyzeAction extends AnAction {
+    private static final Logger LOG = Logger.getLogger(QooCodeAnalyzeAction.class);
     
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
@@ -39,16 +39,16 @@ public class QOOCODEAnalyzeAction extends AnAction {
         // Show tool window and send analysis request
         ToolWindowManager manager = ToolWindowManager.getInstance(project);
         if (manager != null) {
-            ToolWindow toolWindow = manager.getToolWindow("QOOCODE");
+            ToolWindow toolWindow = manager.getToolWindow("QooCode");
             if (toolWindow != null) {
                 toolWindow.show();
                 
                 // Get chat panel and send message
-                Object userData = toolWindow.getUserData(QOOCODEChatPanel.class);
-                if (userData instanceof QOOCODEChatPanel) {
-                    QOOCODEChatPanel chatPanel = (QOOCODEChatPanel) userData;
-                    chatPanel.addMessage(new QOOCODEChatPanel.ChatMessage(
-                        QOOCODEChatPanel.MessageRole.ASSISTANT,
+                Object userData = toolWindow.getUserData(QooCodeChatPanel.class);
+                if (userData instanceof QooCodeChatPanel) {
+                    QooCodeChatPanel chatPanel = (QooCodeChatPanel) userData;
+                    chatPanel.addMessage(new QooCodeChatPanel.ChatMessage(
+                        QooCodeChatPanel.MessageRole.ASSISTANT,
                         "Analyzing your code...\n\n" +
                         "File has " + document.getLineCount() + " lines.\n" +
                         "I'll analyze the code structure, potential issues, and suggestions."

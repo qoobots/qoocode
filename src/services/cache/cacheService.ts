@@ -43,7 +43,7 @@ class CacheService {
   constructor(options: CacheOptions = {}) {
     this.ttl = options.ttl ?? DEFAULT_TTL
     this.maxSize = options.maxSize ?? DEFAULT_MAX_SIZE
-    this.cacheDir = options.directory ?? join(homedir(), '.QOOCODE', 'cache')
+    this.cacheDir = options.directory ?? join(homedir(), '.qoocode', 'cache')
   }
 
   /**

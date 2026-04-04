@@ -1,5 +1,5 @@
 ﻿/**
- * Plugin Service - Manages QOOCODE plugins
+ * Plugin Service - Manages qoocode plugins
  */
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
@@ -21,7 +21,7 @@ export interface InstalledPlugin extends PluginConfig {
 }
 
 // Plugin registry stored in config
-const PLUGIN_REGISTRY_FILE = '.QOOCODE/plugins.json'
+const PLUGIN_REGISTRY_FILE = '.qoocode/plugins.json'
 
 /**
  * Load plugin registry
@@ -43,7 +43,7 @@ async function loadRegistry(): Promise<Record<string, InstalledPlugin>> {
  * Save plugin registry
  */
 async function saveRegistry(registry: Record<string, InstalledPlugin>): Promise<void> {
-  const configDir = resolve(process.cwd(), '.QOOCODE')
+  const configDir = resolve(process.cwd(), '.qoocode')
   const configPath = join(configDir, PLUGIN_REGISTRY_FILE)
   
   // Ensure directory exists

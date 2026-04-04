@@ -1,18 +1,18 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Git integration
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODEGitIntegration {
-  private config: QOOCODEConfig;
+export class QoocodeGitIntegration {
+  private config: QoocodeConfig;
   private statusBarItem: vscode.StatusBarItem;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.statusBarItem = vscode.window.createStatusBarItem('QOOCODE.git', vscode.StatusBarAlignment.Left, 90);
+    this.statusBarItem = vscode.window.createStatusBarItem('qoocode.git', vscode.StatusBarAlignment.Left, 90);
     this.initialize();
   }
 
@@ -63,11 +63,11 @@ export class QOOCODEGitIntegration {
     }
 
     this.statusBarItem.show();
-    this.statusBarItem.command = 'QOOCODE.git';
+    this.statusBarItem.command = 'qoocode.git';
   }
 
   /**
-   * Get git diff for QOOCODE review
+   * Get git diff for qoocode review
    */
   async getGitDiff(): Promise<string> {
     const gitExtension = vscode.extensions.getExtension('vscode.git');
@@ -113,8 +113,8 @@ export class QOOCODEGitIntegration {
       return '';
     }
 
-    // Send to QOOCODE for message generation
-    vscode.commands.executeCommand('QOOCODE.chat', 
+    // Send to qoocode for message generation
+    vscode.commands.executeCommand('qoocode.chat', 
       `Suggest a commit message for these changes:\n${diff}`
     );
 
@@ -122,7 +122,7 @@ export class QOOCODEGitIntegration {
   }
 
   /**
-   * Review changes with QOOCODE
+   * Review changes with qoocode
    */
   async reviewChanges(): Promise<void> {
     const diff = await this.getGitDiff();
@@ -132,7 +132,7 @@ export class QOOCODEGitIntegration {
       return;
     }
 
-    vscode.commands.executeCommand('QOOCODE.chat', 
+    vscode.commands.executeCommand('qoocode.chat', 
       `Review these git changes:\n${diff}`
     );
   }
@@ -142,11 +142,11 @@ export class QOOCODEGitIntegration {
   }
 }
 
-export class QOOCODEGitDecorationProvider implements vscode.DecorationProvider {
-  private config: QOOCODEConfig;
+export class QoocodeGitDecorationProvider implements vscode.DecorationProvider {
+  private config: QoocodeConfig;
   private decorationType: vscode.TextEditorDecorationType;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
     this.decorationType = vscode.window.createTextEditorDecorationType({
       isWholeLine: true,
@@ -165,10 +165,10 @@ export class QOOCODEGitDecorationProvider implements vscode.DecorationProvider {
   }
 }
 
-export class QOOCODEGitLensProvider {
-  private config: QOOCODEConfig;
+export class QoocodeGitLensProvider {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 

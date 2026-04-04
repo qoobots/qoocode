@@ -1,10 +1,10 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Marketplace integration
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
 export interface Extension {
   id: string;
@@ -24,16 +24,16 @@ export interface ExtensionCategory {
   description: string;
 }
 
-export class QOOCODEMarketplaceProvider {
-  private config: QOOCODEConfig;
+export class QoocodeMarketplaceProvider {
+  private config: QoocodeConfig;
   private outputChannel: vscode.OutputChannel;
   private cache: Map<string, Extension[]> = new Map();
   private cacheTime: Map<string, number> = new Map();
   private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.outputChannel = vscode.window.createOutputChannel('QOOCODE Marketplace');
+    this.outputChannel = vscode.window.createOutputChannel('qoocode Marketplace');
   }
 
   /**
@@ -69,14 +69,14 @@ export class QOOCODEMarketplaceProvider {
   private mockSearch(query: string): Extension[] {
     return [
       {
-        id: 'QOOCODE.extension.example',
+        id: 'qoocode.extension.example',
         name: 'Example Extension',
         description: `Extensions matching: ${query}`,
-        author: 'QOOCODE',
+        author: 'qoocode',
         version: '1.0.0',
         downloadCount: 1000,
         rating: 4.5,
-        tags: ['QOOCODE', 'extension', query]
+        tags: ['qoocode', 'extension', query]
       }
     ];
   }
@@ -87,20 +87,20 @@ export class QOOCODEMarketplaceProvider {
   async getFeatured(): Promise<Extension[]> {
     return [
       {
-        id: 'QOOCODE.featured.ai-review',
+        id: 'qoocode.featured.ai-review',
         name: 'AI Code Review',
         description: 'Advanced AI-powered code review',
-        author: 'QOOCODE',
+        author: 'qoocode',
         version: '1.0.0',
         downloadCount: 5000,
         rating: 4.8,
         tags: ['ai', 'review', 'quality']
       },
       {
-        id: 'QOOCODE.featured.security',
+        id: 'qoocode.featured.security',
         name: 'Security Scanner',
         description: 'AI-powered security vulnerability detection',
-        author: 'QOOCODE',
+        author: 'qoocode',
         version: '1.0.0',
         downloadCount: 3000,
         rating: 4.6,
@@ -170,10 +170,10 @@ export class QOOCODEMarketplaceProvider {
   }
 }
 
-export class QOOCODEExtensionGallery {
-  private marketplace: QOOCODEMarketplaceProvider;
+export class QoocodeExtensionGallery {
+  private marketplace: QoocodeMarketplaceProvider;
 
-  constructor(marketplace: QOOCODEMarketplaceProvider) {
+  constructor(marketplace: QoocodeMarketplaceProvider) {
     this.marketplace = marketplace;
   }
 
@@ -182,8 +182,8 @@ export class QOOCODEExtensionGallery {
    */
   async showGallery(): Promise<void> {
     const panel = vscode.window.createWebviewPanel(
-      'QOOCODE.gallery',
-      'QOOCODE Extension Gallery',
+      'qoocode.gallery',
+      'qoocode Extension Gallery',
       vscode.ViewColumn.One,
       { enableScripts: true }
     );
@@ -224,7 +224,7 @@ export class QOOCODEExtensionGallery {
   </style>
 </head>
 <body>
-  <h1>🎨 QOOCODE Extension Gallery</h1>
+  <h1>🎨 qoocode Extension Gallery</h1>
   <div class="featured">
     <h2>Featured Extensions</h2>
     ${featured.map(ext => `

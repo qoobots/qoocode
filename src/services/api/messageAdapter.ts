@@ -52,7 +52,7 @@ export function zodSchemaToOpenAIParams(
 }
 
 /**
- * Convert QOOCODE Tool to OpenAI ChatCompletionTool format
+ * Convert qoocode Tool to OpenAI ChatCompletionTool format
  */
 export function toolToOpenAITool(tool: Tool): OpenAI.Chat.ChatCompletionTool {
   return {

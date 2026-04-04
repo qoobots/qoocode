@@ -106,7 +106,7 @@ const clearCmd: Command = {
 const exitCmd: Command = {
   name: 'exit',
   aliases: ['quit', 'q'],
-  description: 'Exit QOOCODE',
+  description: 'Exit qoocode',
   type: 'local',
   execute() {
     // This will be handled by the REPL component directly
@@ -405,7 +405,7 @@ Examples:
 const pluginCmd: Command = {
   name: 'plugin',
   aliases: ['plugins'],
-  description: 'Manage QOOCODE plugins',
+  description: 'Manage qoocode plugins',
   type: 'local',
   async execute(args: string) {
     const parts = args.trim().split(/\s+/)
@@ -431,8 +431,8 @@ const pluginCmd: Command = {
   
   Example:
     /plugin list
-    /plugin install @QOOCODE/plugin-example
-    /plugin uninstall @QOOCODE/plugin-example`
+    /plugin install @qoocode/plugin-example
+    /plugin uninstall @qoocode/plugin-example`
     }
     
     // List plugins
@@ -457,7 +457,7 @@ const pluginCmd: Command = {
     // Install plugin
     if (subcommand === 'install' || subcommand === 'add') {
       if (!pluginName) {
-        return 'Usage: /plugin install <npm-package>\n\nExample: /plugin install @QOOCODE/plugin-example'
+        return 'Usage: /plugin install <npm-package>\n\nExample: /plugin install @qoocode/plugin-example'
       }
       
       const result = await manager.installPlugin(pluginName)
@@ -467,7 +467,7 @@ const pluginCmd: Command = {
     // Uninstall plugin
     if (subcommand === 'uninstall' || subcommand === 'remove' || subcommand === 'rm') {
       if (!pluginName) {
-        return 'Usage: /plugin uninstall <plugin-name>\n\nExample: /plugin uninstall @QOOCODE/plugin-example'
+        return 'Usage: /plugin uninstall <plugin-name>\n\nExample: /plugin uninstall @qoocode/plugin-example'
       }
       
       const result = await manager.uninstallPlugin(pluginName)
@@ -483,7 +483,7 @@ const pluginCmd: Command = {
     // Search plugins (basic npm search)
     if (subcommand === 'search') {
       if (!pluginName) {
-        return 'Usage: /plugin search <search-term>\n\nExample: /plugin search QOOCODE'
+        return 'Usage: /plugin search <search-term>\n\nExample: /plugin search qoocode'
       }
       
       return `Searching npm for "${pluginName}"...\n\nNote: For full search results, please use:\n  npm search ${pluginName}`
@@ -544,7 +544,7 @@ const skillsCmd: Command = {
     /skills uninstall <name> - Remove a skill
     /skills update <name> - Update a skill
     
-  Skills are specialized capabilities that extend QOOCODE's functionality.`
+  Skills are specialized capabilities that extend qoocode's functionality.`
     }
     return `__SKILLS_COMMAND__:${args}`
   },
@@ -600,7 +600,7 @@ const workspaceCmd: Command = {
 const configCmd: Command = {
   name: 'config',
   aliases: ['cfg'],
-  description: 'Manage QOOCODE configuration',
+  description: 'Manage qoocode configuration',
   type: 'local',
   execute(args: string) {
     if (!args.trim()) {
@@ -611,7 +611,7 @@ const configCmd: Command = {
     /config reset      - Reset to default configuration
     /config list       - List all config keys and values
     
-  Configuration affects QOOCODE's behavior.`
+  Configuration affects qoocode's behavior.`
     }
     return `__CONFIG_COMMAND__:${args}`
   },
@@ -726,7 +726,7 @@ const settingsCmd: Command = {
     /settings set <key> <value> - Set a setting
     /settings reset      - Reset to default settings
     
-  Settings control QOOCODE's behavior and appearance.`
+  Settings control qoocode's behavior and appearance.`
     }
     return `__SETTINGS_COMMAND__:${args}`
   },
@@ -1071,12 +1071,12 @@ const compactCmd: Command = {
 
 const initCmd: Command = {
   name: 'init',
-  description: 'Initialize QOOCODE.md project documentation',
+  description: 'Initialize qoocode.md project documentation',
   type: 'prompt',
   async execute(args: string) {
     // This is a prompt-type command that triggers AI analysis
     // The actual implementation will be handled by the AI with this prompt
-    const initPrompt = `Analyze this codebase and create QOOCODE.md file(s) to help future sessions work more effectively.
+    const initPrompt = `Analyze this codebase and create qoocode.md file(s) to help future sessions work more effectively.
 
 Steps:
 1. Explore the project structure - read package.json, README, config files, etc.
@@ -1085,9 +1085,9 @@ Steps:
    - Project architecture and structure
    - Code style conventions
    - Required environment setup
-3. Create a QOOCODE.md file at the project root with essential information
+3. Create a qoocode.md file at the project root with essential information
 
-The QOOCODE.md should include:
+The qoocode.md should include:
 - Commands for building, testing, and linting
 - High-level architecture overview
 - Important conventions and rules
@@ -1300,7 +1300,7 @@ const mockLimitsCmd: Command = {
 
 const updateCmd: Command = {
   name: 'update',
-  description: 'Check for updates or update QOOCODE',
+  description: 'Check for updates or update qoocode',
   type: 'local',
   async execute(args: string) {
     const parts = args.trim().split(/\s+/)
@@ -1311,7 +1311,7 @@ const updateCmd: Command = {
       const updateInfo = await checkForUpdates()
 
       const lines = [
-        '🔄 QOOCODE Update Check',
+        '🔄 qoocode Update Check',
         '========================',
         '',
         `Current Version: ${updateInfo.currentVersion}`,
@@ -1323,9 +1323,9 @@ const updateCmd: Command = {
         lines.push(`✨ ${updateInfo.message}`)
         lines.push('')
         lines.push('To update, run:')
-        lines.push('  npm update -g QOOCODE-cli')
+        lines.push('  npm update -g qoocode-cli')
         lines.push('  # or')
-        lines.push('  bun update -g QOOCODE-cli')
+        lines.push('  bun update -g qoocode-cli')
       } else {
         lines.push(`✅ ${updateInfo.message || 'Already up to date!'}`)
       }
@@ -1371,7 +1371,7 @@ const updateCmd: Command = {
         case 'success':
           lines.push(`✅ Successfully updated to version ${result.version}`)
           lines.push('')
-          lines.push('Please restart QOOCODE to use the new version.')
+          lines.push('Please restart qoocode to use the new version.')
           break
         case 'up_to_date':
           lines.push('✅ Already up to date!')
@@ -1380,13 +1380,13 @@ const updateCmd: Command = {
           lines.push('❌ No permissions to update.')
           lines.push('')
           lines.push('Try running with sudo:')
-          lines.push('  sudo npm update -g QOOCODE-cli')
+          lines.push('  sudo npm update -g qoocode-cli')
           break
         case 'install_failed':
           lines.push('❌ Update failed.')
           lines.push('')
           lines.push('You can try updating manually:')
-          lines.push('  npm update -g QOOCODE-cli')
+          lines.push('  npm update -g qoocode-cli')
           break
         default:
           lines.push(`Status: ${result.status}`)

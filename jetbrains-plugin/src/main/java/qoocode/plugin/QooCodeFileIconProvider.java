@@ -1,8 +1,8 @@
-﻿/**
- * QOOCODE File Icon Provider
+/**
+ * qoocode File Icon Provider
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import com.intellij.openapi.project.*;
 import com.intellij.openapi.vfs.*;
@@ -12,12 +12,12 @@ import org.jetbrains.annotations.*;
 
 import javax.swing.*;
 
-public class QOOCODEFileIconProvider implements FileIconProvider {
+public class QooCodeFileIconProvider implements FileIconProvider {
     @Override
     public Icon getIcon(@NotNull VirtualFile file, 
                         int flags, 
                         @Nullable Project project) {
-        // Could provide custom icons for QOOCODE-related files
+        // Could provide custom icons for qoocode-related files
         // For now, return null to use default icons
         return null;
     }

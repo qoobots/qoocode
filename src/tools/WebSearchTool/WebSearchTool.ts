@@ -24,7 +24,7 @@ async function searchDuckDuckGo(query: string, maxResults: number): Promise<Sear
   try {
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'QOOCODE/1.0',
+        'User-Agent': 'qoocode/1.0',
       },
     })
 

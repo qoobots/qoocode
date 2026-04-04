@@ -1,35 +1,35 @@
 ﻿/**
- * QOOCODE VS Code Extension
- * Terminal manager for QOOCODE sessions
+ * qoocode VS Code Extension
+ * Terminal manager for qoocode sessions
  */
 
 import * as vscode from 'vscode';
 import { spawn, ChildProcess } from 'child_process';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 import * as path from 'path';
 
-export class QOOCODETerminalManager implements vscode.TerminalProfileProvider {
+export class QoocodeTerminalManager implements vscode.TerminalProfileProvider {
   private activeTerminal: vscode.Terminal | undefined;
   private activeProcess: ChildProcess | undefined;
-  private config: QOOCODEConfig;
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
     this.registerProfileProvider();
   }
 
   private registerProfileProvider(): void {
-    vscode.window.registerTerminalProfileProvider('QOOCODE', this);
+    vscode.window.registerTerminalProfileProvider('qoocode', this);
   }
 
   provideTerminalProfile(token: vscode.CancellationToken): vscode.ProviderResult<vscode.TerminalProfile> {
     return {
       options: {
-        name: 'QOOCODE',
+        name: 'qoocode',
         iconPath: vscode.Uri.joinPath(
           vscode.Uri.file(this.getExtensionPath()),
           'resources',
-          'QOOCODE-icon.svg'
+          'qoocode-icon.svg'
         )
       }
     } as vscode.TerminalProfile;
@@ -58,23 +58,23 @@ export class QOOCODETerminalManager implements vscode.TerminalProfileProvider {
 
     // Create terminal
     const terminal = vscode.window.createTerminal({
-      name: 'QOOCODE',
+      name: 'qoocode',
       location: viewColumn,
       iconPath: vscode.Uri.joinPath(
         vscode.Uri.file(this.getExtensionPath()),
         'resources',
-        'QOOCODE-icon.svg'
+        'qoocode-icon.svg'
       )
     });
 
     this.activeTerminal = terminal;
 
-    // Get QOOCODE binary path
-    const QOOCODEPath = this.findQOOCODEBinary();
+    // Get qoocode binary path
+    const QoocodePath = this.findQoocodeBinary();
 
-    // Start QOOCODE
+    // Start qoocode
     terminal.sendText(`cd "${workspacePath}"`);
-    terminal.sendText(QOOCODEPath);
+    terminal.sendText(QoocodePath);
 
     // Show terminal
     terminal.show();
@@ -87,19 +87,19 @@ export class QOOCODETerminalManager implements vscode.TerminalProfileProvider {
     return terminal;
   }
 
-  private findQOOCODEBinary(): string {
-    // Try to find QOOCODE binary in common locations
+  private findQoocodeBinary(): string {
+    // Try to find qoocode binary in common locations
     const possiblePaths = [
-      'QOOCODE',  // If installed globally
+      'qoocode',  // If installed globally
       path.join(this.getExtensionPath(), '..', 'dist', 'main.js'),
-      path.join(process.env.HOME || '', '.QOOCODE', 'bin', 'QOOCODE'),
-      path.join(process.env.APPDATA || '', 'QOOCODE', 'bin', 'QOOCODE')
+      path.join(process.env.HOME || '', '.qoocode', 'bin', 'qoocode'),
+      path.join(process.env.APPDATA || '', 'qoocode', 'bin', 'qoocode')
     ];
 
     for (const p of possiblePaths) {
       try {
         // Check if file exists (only for non-global paths)
-        if (!p.includes('QOOCODE') || p.includes('/') || p.includes('\\')) {
+        if (!p.includes('qoocode') || p.includes('/') || p.includes('\\')) {
           const fs = require('fs');
           if (fs.existsSync(p)) {
             return p;
@@ -111,11 +111,11 @@ export class QOOCODETerminalManager implements vscode.TerminalProfileProvider {
     }
 
     // Default to global command
-    return 'QOOCODE';
+    return 'qoocode';
   }
 
   private getExtensionPath(): string {
-    const ext = vscode.extensions.getExtension('QOOCODE.QOOCODE');
+    const ext = vscode.extensions.getExtension('qoocode.qoocode');
     return ext?.extensionPath || '';
   }
 

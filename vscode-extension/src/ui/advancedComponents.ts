@@ -1,20 +1,20 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Advanced UI Components
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
 /**
  * Floating action panel
  */
-export class QOOCODEFloatingPanel {
+export class QoocodeFloatingPanel {
   private panel: vscode.WebviewPanel | undefined;
-  private config: QOOCODEConfig;
+  private config: QoocodeConfig;
   private context: vscode.ExtensionContext;
 
-  constructor(context: vscode.ExtensionContext, config: QOOCODEConfig) {
+  constructor(context: vscode.ExtensionContext, config: QoocodeConfig) {
     this.context = context;
     this.config = config;
   }
@@ -29,8 +29,8 @@ export class QOOCODEFloatingPanel {
     }
 
     this.panel = vscode.window.createWebviewPanel(
-      'QOOCODE.floating',
-      'QOOCODE Actions',
+      'qoocode.floating',
+      'qoocode Actions',
       {
         viewColumn: vscode.ViewColumn.Two,
         preserveFocus: true
@@ -91,10 +91,10 @@ export class QOOCODEFloatingPanel {
 /**
  * Quick picker with AI suggestions
  */
-export class QOOCODEQuickPicker {
-  private config: QOOCODEConfig;
+export class QoocodeQuickPicker {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
@@ -143,11 +143,11 @@ export class QOOCODEQuickPicker {
 /**
  * Code snippet manager
  */
-export class QOOCODESnippetManager {
-  private config: QOOCODEConfig;
+export class QoocodeSnippetManager {
+  private config: QoocodeConfig;
   private snippets: Map<string, Snippet> = new Map();
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
     this.loadDefaultSnippets();
   }
@@ -239,14 +239,14 @@ interface Snippet {
 /**
  * Activity bar widget
  */
-export class QOOCODEActivityBarWidget {
-  private config: QOOCODEConfig;
+export class QoocodeActivityBarWidget {
+  private config: QoocodeConfig;
   private statusItem: vscode.StatusBarItem;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
     this.statusItem = vscode.window.createStatusBarItem(
-      'QOOCODE.activity',
+      'qoocode.activity',
       vscode.StatusBarAlignment.Left,
       80
     );
@@ -258,25 +258,25 @@ export class QOOCODEActivityBarWidget {
   update(status: ActivityStatus): void {
     switch (status.type) {
       case 'idle':
-        this.statusItem.text = '$(circle-outline) QOOCODE';
+        this.statusItem.text = '$(circle-outline) qoocode';
         this.statusItem.color = undefined;
         break;
       case 'working':
-        this.statusItem.text = '$(sync~spin) QOOCODE';
+        this.statusItem.text = '$(sync~spin) qoocode';
         this.statusItem.color = '#89d185';
         break;
       case 'thinking':
-        this.statusItem.text = '$(light-bulb) QOOCODE';
+        this.statusItem.text = '$(light-bulb) qoocode';
         this.statusItem.color = '#dcdcaa';
         break;
       case 'error':
-        this.statusItem.text = '$(error) QOOCODE';
+        this.statusItem.text = '$(error) qoocode';
         this.statusItem.color = '#f14c4c';
         break;
     }
 
-    this.statusItem.tooltip = status.message || 'QOOCODE';
-    this.statusItem.command = 'QOOCODE.chat';
+    this.statusItem.tooltip = status.message || 'qoocode';
+    this.statusItem.command = 'qoocode.chat';
     this.statusItem.show();
   }
 
@@ -293,10 +293,10 @@ interface ActivityStatus {
 /**
  * Mini map integration
  */
-export class QOOCODEMiniMapEnhancement {
-  private config: QOOCODEConfig;
+export class QoocodeMiniMapEnhancement {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 

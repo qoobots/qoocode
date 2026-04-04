@@ -198,7 +198,7 @@ export function REPL() {
               dispatch({ type: 'ADD_MESSAGE', message: createUserMessage(trimmed) })
               dispatch({
                 type: 'ADD_MESSAGE',
-                message: { role: 'assistant', content: 'Exiting QOOCODE...' },
+                message: { role: 'assistant', content: 'Exiting qoocode...' },
               })
               // Give a small delay for the message to show before exiting
               setTimeout(() => exit(), 100)
@@ -317,7 +317,7 @@ export function REPL() {
       {/* Header */}
       <Box borderStyle="double" borderColor="blue" paddingX={1} marginBottom={1}>
         <Text bold color="blue">
-          QOOCODE v0.1.0
+          qoocode v0.1.0
         </Text>
         <Text dimColor>{' '}— AI Coding Assistant ({state.config.model})</Text>
       </Box>
@@ -325,7 +325,7 @@ export function REPL() {
       {/* Welcome */}
       {state.messages.length === 0 && !state.isQuerying && (
         <Box flexDirection="column" marginBottom={1} paddingX={1}>
-          <Text color="cyan" bold>Welcome to QOOCODE!</Text>
+          <Text color="cyan" bold>Welcome to qoocode!</Text>
           <Text dimColor>Type a message to start, or use /help for commands.</Text>
           <Text dimColor>Press Ctrl+C to exit.</Text>
         </Box>

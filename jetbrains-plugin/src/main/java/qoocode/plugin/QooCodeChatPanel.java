@@ -1,9 +1,9 @@
-﻿/**
- * QOOCODE Chat Panel
+/**
+ * qoocode Chat Panel
  * Main chat interface for JetBrains IDE
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import com.intellij.openapi.project.*;
 import com.intellij.openapi.ui.*;
@@ -20,7 +20,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
-public class QOOCODEChatPanel {
+public class QooCodeChatPanel {
     private final Project project;
     private JPanel mainPanel;
     private JPanel headerPanel;
@@ -35,7 +35,7 @@ public class QOOCODEChatPanel {
     private DefaultListModel<String> messagesModel;
     private List<ChatMessage> messages;
     
-    public QOOCODEChatPanel(@NotNull Project project) {
+    public QooCodeChatPanel(@NotNull Project project) {
         this.project = project;
         this.messages = new ArrayList<>();
         this.messagesModel = new DefaultListModel<>();
@@ -74,7 +74,7 @@ public class QOOCODEChatPanel {
         header.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
         
         // Title
-        JLabel titleLabel = new JLabel("QOOCODE Chat");
+        JLabel titleLabel = new JLabel("QooCode Chat");
         titleLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
         titleLabel.setForeground(Color.WHITE);
         header.add(titleLabel, BorderLayout.WEST);
@@ -203,7 +203,7 @@ public class QOOCODEChatPanel {
     private String generateResponse(String input) {
         // Simple response generation
         if (input.toLowerCase().contains("hello") || input.toLowerCase().contains("hi")) {
-            return "Hello! I'm QOOCODE, your AI coding assistant. How can I help you today?";
+            return "Hello! I'm QooCode, your AI coding assistant. How can I help you today?";
         }
         if (input.toLowerCase().contains("help")) {
             return "I can help you with:\n" +

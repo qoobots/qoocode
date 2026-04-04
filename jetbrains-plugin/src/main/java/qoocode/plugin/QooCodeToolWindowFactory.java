@@ -1,8 +1,8 @@
-﻿/**
- * QOOCODE Tool Window Factory
+/**
+ * qoocode Tool Window Factory
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import com.intellij.openapi.project.*;
 import com.intellij.openapi.wm.*;
@@ -12,18 +12,18 @@ import org.jetbrains.annotations.*;
 
 import javax.swing.*;
 
-public class QOOCODEToolWindowFactory implements ToolWindowFactory {
-    private static final Logger LOG = Logger.getInstance(QOOCODEToolWindowFactory.class);
+public class QooCodeToolWindowFactory implements ToolWindowFactory {
+    private static final Logger LOG = Logger.getInstance(QooCodeToolWindowFactory.class);
     
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        LOG.info("Creating QOOCODE tool window content");
+        LOG.info("Creating QooCode tool window content");
         
-        QOOCODEChatPanel chatPanel = new QOOCODEChatPanel(project);
+        QooCodeChatPanel chatPanel = new QooCodeChatPanel(project);
         toolWindow.getComponent().add(chatPanel.getContent());
         
         // Store reference for later use
-        toolWindow.putUserData(QOOCODEChatPanel.class, chatPanel);
+        toolWindow.putUserData(QooCodeChatPanel.class, chatPanel);
     }
     
     @Override

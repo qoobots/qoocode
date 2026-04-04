@@ -1,6 +1,6 @@
 ﻿import React, { createContext, useContext, useReducer, type ReactNode, type Dispatch } from 'react'
 import type { Message, SessionCost, StreamEvent } from '../types/message.js'
-import type { QOOCODEConfig } from '../utils/config.js'
+import type { QoocodeConfig } from '../utils/config.js'
 
 // ============================================================
 // AppState
@@ -18,7 +18,7 @@ export type AppState = {
   isQuerying: boolean
   streamingText: string
   activeToolCalls: Map<string, { name: string; arguments: string }>
-  config: QOOCODEConfig
+  config: QoocodeConfig
   error: string | null
   todos: TodoItem[]  // Todo list for tracking tasks
 }
@@ -34,7 +34,7 @@ export type AppAction =
   | { type: 'ADD_TOOL_CALL'; toolCallId: string; name: string }
   | { type: 'UPDATE_TOOL_CALL_ARGS'; toolCallId: string; argsDelta: string }
   | { type: 'REMOVE_TOOL_CALL'; toolCallId: string }
-  | { type: 'SET_CONFIG'; config: QOOCODEConfig }
+  | { type: 'SET_CONFIG'; config: QoocodeConfig }
   | { type: 'SET_ERROR'; error: string | null }
   | { type: 'CLEAR_MESSAGES' }
   | { type: 'SET_TODOS'; todos: TodoItem[] }  // Set the entire todo list
@@ -47,7 +47,7 @@ export type AppAction =
 // Initial State
 // ============================================================
 
-export function createInitialState(config: QOOCODEConfig): AppState {
+export function createInitialState(config: QoocodeConfig): AppState {
   return {
     messages: [],
     cost: { totalCostUSD: 0, totalTokens: 0, entries: [] },
@@ -142,7 +142,7 @@ export function AppProvider({
   config,
   children,
 }: {
-  config: QOOCODEConfig
+  config: QoocodeConfig
   children: ReactNode
 }) {
   const [state, dispatch] = useReducer(appReducer, config, createInitialState)

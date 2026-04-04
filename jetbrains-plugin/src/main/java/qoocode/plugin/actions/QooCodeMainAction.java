@@ -1,22 +1,22 @@
-﻿/**
- * QOOCODE Main Action
+/**
+ * qoocode Main Action
  * Main toolbar action
  */
 
-package QOOCODE.plugin.actions;
+package qoocode.plugin.actions;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.project.*;
 import com.intellij.openapi.ui.*;
 import com.intellij.openapi.wm.*;
 import com.intellij.openapi.diagnostic.*;
-import QOOCODE.plugin.QOOCODEChatPanel;
+import qoocode.plugin.QooCodeChatPanel;
 import org.jetbrains.annotations.*;
 
 import javax.swing.*;
 
-public class QOOCODEMainAction extends AnAction {
-    private static final Logger LOG = Logger.getInstance(QOOCODEMainAction.class);
+public class QooCodeMainAction extends AnAction {
+    private static final Logger LOG = Logger.getInstance(QooCodeMainAction.class);
     
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
@@ -26,19 +26,19 @@ public class QOOCODEMainAction extends AnAction {
             return;
         }
         
-        LOG.info("Opening QOOCODE");
+        LOG.info("Opening QooCode");
         
         ToolWindowManager manager = ToolWindowManager.getInstance(project);
         if (manager != null) {
-            ToolWindow toolWindow = manager.getToolWindow("QOOCODE");
+            ToolWindow toolWindow = manager.getToolWindow("QooCode");
             if (toolWindow != null) {
                 toolWindow.show();
                 toolWindow.activate(null);
             } else {
                 // If tool window doesn't exist, show a message
                 Messages.showInfoMessage(
-                    "QOOCODE is being initialized. Please try again.",
-                    "QOOCODE"
+                    "QooCode is being initialized. Please try again.",
+                    "QooCode"
                 );
             }
         }

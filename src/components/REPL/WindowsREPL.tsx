@@ -192,11 +192,11 @@ export function WindowsREPL(): React.ReactElement {
     <Box flexDirection="column">
       {/* 标题 */}
       <Box borderStyle="double" borderColor="blue" paddingX={2}>
-        <Text bold>QOOCODE v0.1.0 — AI Coding Assistant ({state.config.model})</Text>
+        <Text bold>qoocode v0.1.0 — AI Coding Assistant ({state.config.model})</Text>
       </Box>
 
       <Box padding={1}>
-        <Text>Welcome to QOOCODE! Type a message to start, or use /help for commands.</Text>
+        <Text>Welcome to qoocode! Type a message to start, or use /help for commands.</Text>
       </Box>
 
       {/* 消息区域 */}

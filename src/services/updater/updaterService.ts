@@ -221,7 +221,7 @@ export async function performUpdate(): Promise<AutoUpdaterResult> {
  */
 export function getUpdateInfo(): string {
   return `
-🔄 QOOCODE 更新信息
+🔄 qoocode 更新信息
 
 当前版本: ${CURRENT_VERSION}
 npm 包名: ${PACKAGE_NAME}

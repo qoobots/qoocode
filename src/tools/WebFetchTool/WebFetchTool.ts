@@ -23,7 +23,7 @@ async function fetchUrl(url: string): Promise<FetchResult> {
     const response = await fetch(url, {
       signal: controller.signal,
       headers: {
-        'User-Agent': 'QOOCODE/1.0',
+        'User-Agent': 'qoocode/1.0',
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       },
     })

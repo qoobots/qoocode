@@ -1,9 +1,9 @@
-﻿/**
- * QOOCODE Configuration
+/**
+ * qoocode Configuration
  * Manages plugin settings
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import com.intellij.openapi.application.*;
 import com.intellij.openapi.components.*;
@@ -15,12 +15,13 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 
 @State(
-    name = "QOOCODESettings",
+    name = "QooCodeSettings",
     storages = {
-        @Storage("QOOCODE.settings.xml")
+        @Storage("QooCode.settings.xml")
     }
 )
-public class QOOCODEConfig implements PersistentStateComponent<QOOCODEConfig.State> {
+
+public class QooCodeConfig implements PersistentStateComponent<QooCodeConfig.State> {
     private State state = new State();
     
     public static class State {

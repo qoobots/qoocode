@@ -61,7 +61,7 @@ describe('Integration Tests - Core Commands', () => {
   describe('File Operations Integration', () => {
     it('should create and read a test file', async () => {
       const testFile = path.join(tempDir, 'test.txt')
-      const content = 'Hello, QOOCODE!'
+      const content = 'Hello, qoocode!'
       
       // 写入文件
       await fs.writeFile(testFile, content, 'utf-8')

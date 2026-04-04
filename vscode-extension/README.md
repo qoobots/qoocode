@@ -1,39 +1,39 @@
-﻿# QOOCODE VS Code Extension
+# qoocode VS Code Extension
 
-VS Code extension for QOOCODE AI coding assistant.
+VS Code extension for qoocode AI coding assistant.
 
 ## Features
 
-- **Integrated AI Assistant**: Full QOOCODE CLI integration within VS Code
+- **Integrated AI Assistant**: Full qoocode CLI integration within VS Code
 - **Chat Panel**: Dedicated chat view for AI interactions
 - **Context-Aware Commands**: Right-click context menu for code actions
-- **Terminal Integration**: Built-in terminal for QOOCODE sessions
+- **Terminal Integration**: Built-in terminal for qoocode sessions
 - **Status Bar**: Real-time status and model information
-- **Keyboard Shortcuts**: Quick access to QOOCODE features
+- **Keyboard Shortcuts**: Quick access to qoocode features
 
 ## Commands
 
 | Command | Description | Shortcut |
 |---------|-------------|----------|
-| `QOOCODE.start` | Start QOOCODE session | `Ctrl+Shift+O` |
-| `QOOCODE.chat` | Open chat panel | `Ctrl+Shift+C` |
-| `QOOCODE.quickChat` | Quick chat with selection | `Ctrl+Shift+/` |
-| `QOOCODE.config` | Configure QOOCODE | - |
-| `QOOCODE.stop` | Stop session | - |
-| `QOOCODE.restart` | Restart session | - |
-| `QOOCODE.status` | Show status | - |
-| `QOOCODE.explain` | Explain code | - |
-| `QOOCODE.fix` | Fix error | - |
-| `QOOCODE.refactor` | Refactor code | - |
+| `qoocode.start` | Start qoocode session | `Ctrl+Shift+O` |
+| `qoocode.chat` | Open chat panel | `Ctrl+Shift+C` |
+| `qoocode.quickChat` | Quick chat with selection | `Ctrl+Shift+/` |
+| `qoocode.config` | Configure qoocode | - |
+| `qoocode.stop` | Stop session | - |
+| `qoocode.restart` | Restart session | - |
+| `qoocode.status` | Show status | - |
+| `qoocode.explain` | Explain code | - |
+| `qoocode.fix` | Fix error | - |
+| `qoocode.refactor` | Refactor code | - |
 
 ## Configuration
 
 ```json
 {
-  "QOOCODE.apiKey": "your-api-key",
-  "QOOCODE.model": "claude-opus-4-5",
-  "QOOCODE.autoStart": false,
-  "QOOCODE.theme": "auto"
+  "qoocode.apiKey": "your-api-key",
+  "qoocode.model": "claude-opus-4-5",
+  "qoocode.autoStart": false,
+  "qoocode.theme": "auto"
 }
 ```
 
@@ -46,4 +46,4 @@ VS Code extension for QOOCODE AI coding assistant.
 
 ## License
 
-MIT
+Apache 2.0

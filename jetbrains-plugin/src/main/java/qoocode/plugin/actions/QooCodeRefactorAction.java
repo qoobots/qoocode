@@ -1,20 +1,20 @@
-﻿/**
- * QOOCODE Refactor Action
+/**
+ * qoocode Refactor Action
  * Refactor selected code
  */
 
-package QOOCODE.plugin.actions;
+package qoocode.plugin.actions;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.project.*;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.diagnostic.*;
 import com.intellij.openapi.wm.*;
-import QOOCODE.plugin.QOOCODEChatPanel;
+import qoocode.plugin.QooCodeChatPanel;
 import org.jetbrains.annotations.*;
 
-public class QOOCODERefactorAction extends AnAction {
-    private static final Logger LOG = Logger.getLogger(QOOCODERefactorAction.class);
+public class QooCodeRefactorAction extends AnAction {
+    private static final Logger LOG = Logger.getLogger(QooCodeRefactorAction.class);
     
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
@@ -34,19 +34,19 @@ public class QOOCODERefactorAction extends AnAction {
         
         ToolWindowManager manager = ToolWindowManager.getInstance(project);
         if (manager != null) {
-            ToolWindow toolWindow = manager.getToolWindow("QOOCODE");
+            ToolWindow toolWindow = manager.getToolWindow("QooCode");
             if (toolWindow != null) {
                 toolWindow.show();
                 
-                Object userData = toolWindow.getUserData(QOOCODEChatPanel.class);
-                if (userData instanceof QOOCODEChatPanel) {
-                    QOOCODEChatPanel chatPanel = (QOOCODEChatPanel) userData;
-                    chatPanel.addMessage(new QOOCODEChatPanel.ChatMessage(
-                        QOOCODEChatPanel.MessageRole.USER,
+                Object userData = toolWindow.getUserData(QooCodeChatPanel.class);
+                if (userData instanceof QooCodeChatPanel) {
+                    QooCodeChatPanel chatPanel = (QooCodeChatPanel) userData;
+                    chatPanel.addMessage(new QooCodeChatPanel.ChatMessage(
+                        QooCodeChatPanel.MessageRole.USER,
                         "Refactor this code to improve quality:\n" + selectedText
                     ));
-                    chatPanel.addMessage(new QOOCODEChatPanel.ChatMessage(
-                        QOOCODEChatPanel.MessageRole.ASSISTANT,
+                    chatPanel.addMessage(new QooCodeChatPanel.ChatMessage(
+                        QooCodeChatPanel.MessageRole.ASSISTANT,
                         "Here are some refactoring suggestions:\n\n" +
                         "1. Extract method for repeated logic\n" +
                         "2. Use more descriptive variable names\n" +

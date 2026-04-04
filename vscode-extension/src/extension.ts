@@ -1,151 +1,151 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Main entry point
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEChatProvider } from './chat/chatProvider';
-import { QOOCODETerminalManager } from './terminal/terminalManager';
-import { QOOCODEStatusBar } from './statusbar/statusBar';
-import { QOOCODECodeLensProvider, QOOCODEHoverProvider } from './editor/codeActions';
-import { QOOCODEDiagnosticsProvider, QOOCODECodeActionProvider } from './editor/diagnostics';
-import { QOOCODEFileWatcher, QOOCODEDocumentManager } from './editor/fileWatcher';
-import { QOOCODEWorkspaceManager, QOOCODETaskProvider } from './workspace/workspaceManager';
-import { QOOCODEInlineCompletionProvider } from './ai/aiProvider';
-import { QOOCODEDebugAdapterTrackerFactory, QOOCODEDebugConfigurationProvider } from './debug/debugIntegration';
-import { QOOCODEGitIntegration } from './git/gitIntegration';
-import { QOOCODENotificationManager, QOOCODEProgressManager, QOOCODEWelcomeView } from './notifications/notifications';
-import { QOOCODERemoteConnection, QOOCODEContainerSupport } from './remote/remoteIntegration';
-import { QOOCODEFloatingPanel, QOOCODESnippetManager, QOOCODEActivityBarWidget } from './ui/advancedComponents';
+import { QoocodeChatProvider } from './chat/chatProvider';
+import { QoocodeTerminalManager } from './terminal/terminalManager';
+import { QoocodeStatusBar } from './statusbar/statusBar';
+import { QoocodeCodeLensProvider, QoocodeHoverProvider } from './editor/codeActions';
+import { QoocodeDiagnosticsProvider, QoocodeCodeActionProvider } from './editor/diagnostics';
+import { QoocodeFileWatcher, QoocodeDocumentManager } from './editor/fileWatcher';
+import { QoocodeWorkspaceManager, QoocodeTaskProvider } from './workspace/workspaceManager';
+import { QoocodeInlineCompletionProvider } from './ai/aiProvider';
+import { QoocodeDebugAdapterTrackerFactory, QoocodeDebugConfigurationProvider } from './debug/debugIntegration';
+import { QoocodeGitIntegration } from './git/gitIntegration';
+import { QoocodeNotificationManager, QoocodeProgressManager, QoocodeWelcomeView } from './notifications/notifications';
+import { QoocodeRemoteConnection, QoocodeContainerSupport } from './remote/remoteIntegration';
+import { QoocodeFloatingPanel, QoocodeSnippetManager, QoocodeActivityBarWidget } from './ui/advancedComponents';
 import { DesignSystemProvider } from './ui/designSystem';
-import { QOOCODETelemetry, QOOCODEAnalyticsDashboard } from './telemetry/telemetry';
+import { QoocodeTelemetry, QoocodeAnalyticsDashboard } from './telemetry/telemetry';
 import { registerCommands } from './commands';
-import { QOOCODEConfig } from './config/config';
-import { QOOCODEAuthProvider } from './auth/authProvider';
+import { QoocodeConfig } from './config/config';
+import { QoocodeAuthProvider } from './auth/authProvider';
 import { BidirectionalCommunication } from './communication/bidirectionalComm';
-import { QOOCODEAutoUpdater } from './updates/autoUpdater';
+import { QoocodeAutoUpdater } from './updates/autoUpdater';
 
-let chatProvider: QOOCODEChatProvider | undefined;
-let terminalManager: QOOCODETerminalManager | undefined;
-let statusBar: QOOCODEStatusBar | undefined;
-let codeLensProvider: QOOCODECodeLensProvider | undefined;
-let hoverProvider: QOOCODEHoverProvider | undefined;
-let diagnosticsProvider: QOOCODEDiagnosticsProvider | undefined;
-let codeActionProvider: QOOCODECodeActionProvider | undefined;
-let fileWatcher: QOOCODEFileWatcher | undefined;
-let documentManager: QOOCODEDocumentManager | undefined;
-let workspaceManager: QOOCODEWorkspaceManager | undefined;
-let gitIntegration: QOOCODEGitIntegration | undefined;
-let notifications: QOOCODENotificationManager | undefined;
-let progress: QOOCODEProgressManager | undefined;
-let remoteConnection: QOOCODERemoteConnection | undefined;
-let containerSupport: QOOCODEContainerSupport | undefined;
-let floatingPanel: QOOCODEFloatingPanel | undefined;
-let snippetManager: QOOCODESnippetManager | undefined;
-let activityWidget: QOOCODEActivityBarWidget | undefined;
-let telemetry: QOOCODETelemetry | undefined;
-let authProvider: QOOCODEAuthProvider | undefined;
+let chatProvider: QoocodeChatProvider | undefined;
+let terminalManager: QoocodeTerminalManager | undefined;
+let statusBar: QoocodeStatusBar | undefined;
+let codeLensProvider: QoocodeCodeLensProvider | undefined;
+let hoverProvider: QoocodeHoverProvider | undefined;
+let diagnosticsProvider: QoocodeDiagnosticsProvider | undefined;
+let codeActionProvider: QoocodeCodeActionProvider | undefined;
+let fileWatcher: QoocodeFileWatcher | undefined;
+let documentManager: QoocodeDocumentManager | undefined;
+let workspaceManager: QoocodeWorkspaceManager | undefined;
+let gitIntegration: QoocodeGitIntegration | undefined;
+let notifications: QoocodeNotificationManager | undefined;
+let progress: QoocodeProgressManager | undefined;
+let remoteConnection: QoocodeRemoteConnection | undefined;
+let containerSupport: QoocodeContainerSupport | undefined;
+let floatingPanel: QoocodeFloatingPanel | undefined;
+let snippetManager: QoocodeSnippetManager | undefined;
+let activityWidget: QoocodeActivityBarWidget | undefined;
+let telemetry: QoocodeTelemetry | undefined;
+let authProvider: QoocodeAuthProvider | undefined;
 let communication: BidirectionalCommunication | undefined;
 let designSystem: DesignSystemProvider | undefined;
-let autoUpdater: QOOCODEAutoUpdater | undefined;
+let autoUpdater: QoocodeAutoUpdater | undefined;
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
   // Initialize configuration
-  const config = new QOOCODEConfig();
+  const config = new QoocodeConfig();
 
   // Check if auto-start is enabled
   if (config.get('autoStart')) {
     const workspaceFolders = vscode.workspace.workspaceFolders;
     if (workspaceFolders && workspaceFolders.length > 0) {
-      startQOOCODE(workspaceFolders[0].uri.fsPath);
+      startqoocode(workspaceFolders[0].uri.fsPath);
     }
   }
 
   // Initialize status bar
-  statusBar = new QOOCODEStatusBar(config);
+  statusBar = new QoocodeStatusBar(config);
   statusBar.show();
 
   // Initialize terminal manager
-  terminalManager = new QOOCODETerminalManager(config);
+  terminalManager = new QoocodeTerminalManager(config);
 
   // Initialize chat provider
-  chatProvider = new QOOCODEChatProvider(context, config);
+  chatProvider = new QoocodeChatProvider(context, config);
 
   // Initialize workspace manager
-  workspaceManager = new QOOCODEWorkspaceManager(config);
+  workspaceManager = new QoocodeWorkspaceManager(config);
 
   // Initialize document manager
-  documentManager = new QOOCODEDocumentManager(config);
+  documentManager = new QoocodeDocumentManager(config);
 
   // Initialize file watcher
-  fileWatcher = new QOOCODEFileWatcher(context, config);
+  fileWatcher = new QoocodeFileWatcher(context, config);
 
   // Initialize CodeLens provider
-  codeLensProvider = new QOOCODECodeLensProvider(config);
+  codeLensProvider = new QoocodeCodeLensProvider(config);
   vscode.languages.registerCodeLensProvider(
     { scheme: 'file', languages: ['typescript', 'javascript', 'python', 'go', 'rust'] },
     codeLensProvider
   );
 
   // Initialize Hover provider
-  hoverProvider = new QOOCODEHoverProvider(config);
+  hoverProvider = new QoocodeHoverProvider(config);
   vscode.languages.registerHoverProvider(
     { scheme: 'file', languages: ['typescript', 'javascript', 'python', 'go', 'rust'] },
     hoverProvider
   );
 
   // Initialize Diagnostics provider
-  diagnosticsProvider = new QOOCODEDiagnosticsProvider(config);
+  diagnosticsProvider = new QoocodeDiagnosticsProvider(config);
   vscode.workspace.onDidSaveTextDocument((document) => {
     diagnosticsProvider?.analyzeDocument(document);
   });
 
   // Initialize Code Action provider
-  codeActionProvider = new QOOCODECodeActionProvider(config);
+  codeActionProvider = new QoocodeCodeActionProvider(config);
   vscode.languages.registerCodeActionProvider(
     { scheme: 'file' },
     codeActionProvider,
-    'QOOCODE'
+    'qoocode'
   );
 
   // Initialize Task provider
-  vscode.tasks.registerTaskProvider('QOOCODE', new QOOCODETaskProvider(config));
+  vscode.tasks.registerTaskProvider('qoocode', new QoocodeTaskProvider(config));
 
   // Initialize Inline Completion provider
-  const inlineCompletionProvider = new QOOCODEInlineCompletionProvider(config);
+  const inlineCompletionProvider = new QoocodeInlineCompletionProvider(config);
   vscode.languages.registerInlineCompletionItemProvider(
     { scheme: 'file' },
     inlineCompletionProvider
   );
 
   // Initialize Debug integration
-  const debugTrackerFactory = new QOOCODEDebugAdapterTrackerFactory(config);
+  const debugTrackerFactory = new QoocodeDebugAdapterTrackerFactory(config);
   vscode.debug.registerDebugAdapterTrackerFactory('*', debugTrackerFactory);
 
-  const debugConfigProvider = new QOOCODEDebugConfigurationProvider(config);
-  vscode.debug.registerDebugConfigurationProvider('QOOCODE', debugConfigProvider);
+  const debugConfigProvider = new QoocodeDebugConfigurationProvider(config);
+  vscode.debug.registerDebugConfigurationProvider('qoocode', debugConfigProvider);
 
   // Initialize Git integration
-  gitIntegration = new QOOCODEGitIntegration(config);
+  gitIntegration = new QoocodeGitIntegration(config);
 
   // Initialize Notifications and Progress
-  notifications = new QOOCODENotificationManager(config);
-  progress = new QOOCODEProgressManager(config);
+  notifications = new QoocodeNotificationManager(config);
+  progress = new QoocodeProgressManager(config);
 
   // Initialize Remote support
-  remoteConnection = new QOOCODERemoteConnection(config);
-  containerSupport = new QOOCODEContainerSupport(config);
+  remoteConnection = new QoocodeRemoteConnection(config);
+  containerSupport = new QoocodeContainerSupport(config);
 
   // Initialize UI components
-  floatingPanel = new QOOCODEFloatingPanel(context, config);
-  snippetManager = new QOOCODESnippetManager(config);
-  activityWidget = new QOOCODEActivityBarWidget(config);
+  floatingPanel = new QoocodeFloatingPanel(context, config);
+  snippetManager = new QoocodeSnippetManager(config);
+  activityWidget = new QoocodeActivityBarWidget(config);
 
   // Initialize Telemetry
-  telemetry = new QOOCODETelemetry(config);
+  telemetry = new QoocodeTelemetry(config);
 
   // Initialize Auth Provider
-  authProvider = new QOOCODEAuthProvider(context, config);
+  authProvider = new QoocodeAuthProvider(context, config);
   
   // Initialize Bidirectional Communication
   communication = new BidirectionalCommunication(context, config, authProvider);
@@ -153,16 +153,16 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   // Set up communication event handlers
   communication.setEventHandlers({
     onConnect: () => {
-      vscode.window.showInformationMessage('QOOCODE connected to backend');
+      vscode.window.showInformationMessage('qoocode connected to backend');
       statusBar?.setConnectionStatus(true);
     },
     onDisconnect: () => {
-      vscode.window.showWarningMessage('QOOCODE disconnected from backend');
+      vscode.window.showWarningMessage('qoocode disconnected from backend');
       statusBar?.setConnectionStatus(false);
     },
     onError: (error) => {
       console.error('Communication error:', error);
-      vscode.window.showErrorMessage(`QOOCODE communication error: ${error.message}`);
+      vscode.window.showErrorMessage(`qoocode communication error: ${error.message}`);
     },
     onSync: (data) => {
       console.log('Workspace sync received:', data);
@@ -178,7 +178,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   designSystem = new DesignSystemProvider();
 
   // Initialize Auto-Updater
-  autoUpdater = new QOOCODEAutoUpdater(context, config);
+  autoUpdater = new QoocodeAutoUpdater(context, config);
   
   // Check for updates on startup
   if (config.get('updates.autoCheck')) {
@@ -188,10 +188,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   }
 
   // Show welcome view on first activation
-  const welcomeShown = context.globalState.get<boolean>('QOOCODE.welcomeShown');
+  const welcomeShown = context.globalState.get<boolean>('qoocode.welcomeShown');
   if (!welcomeShown) {
-    context.globalState.update('QOOCODE.welcomeShown', true);
-    const welcomeView = new QOOCODEWelcomeView(context, config);
+    context.globalState.update('qoocode.welcomeShown', true);
+    const welcomeView = new QoocodeWelcomeView(context, config);
     await welcomeView.show();
   }
 
@@ -203,10 +203,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   });
 
   // Register tree data provider
-  vscode.window.registerTreeDataProvider('QOOCODE.chat', chatProvider);
+  vscode.window.registerTreeDataProvider('qoocode.chat', chatProvider);
 
   // Register tree view
-  const treeView = vscode.window.createTreeView('QOOCODE.chat', {
+  const treeView = vscode.window.createTreeView('qoocode.chat', {
     treeDataProvider: chatProvider,
     showCollapseAll: true
   });
@@ -219,12 +219,12 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   });
 
   // Show welcome message on first activation
-  const stateKey = 'QOOCODE.activated';
+  const stateKey = 'qoocode.activated';
   const isActivated = context.globalState.get<boolean>(stateKey);
   if (!isActivated) {
     context.globalState.update(stateKey, true);
     vscode.window.showInformationMessage(
-      'QOOCODE Extension Activated! Use Ctrl+Shift+O to start.'
+      'qoocode Extension Activated! Use Ctrl+Shift+O to start.'
     );
   }
 }
@@ -249,9 +249,9 @@ export function deactivate(): void {
 }
 
 /**
- * Start QOOCODE session
+ * Start qoocode session
  */
-async function startQOOCODE(workspacePath: string): Promise<void> {
+async function startqoocode(workspacePath: string): Promise<void> {
   if (terminalManager) {
     await terminalManager.createTerminal(workspacePath);
   }

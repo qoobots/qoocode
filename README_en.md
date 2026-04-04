@@ -1,4 +1,4 @@
-﻿# QOOCODE
+﻿# qoocode
 
 **Open Source AI Coding Assistant CLI**
 
@@ -6,11 +6,11 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Bun](https://img.shields.io/badge/Bun-1.3-green.svg)](https://bun.sh/)
 [![Test](https://img.shields.io/badge/Tests-113/124%20passed-brightgreen.svg)]()
-[![GitHub Stars](https://img.shields.io/github/stars/your-username/QOOCODE?style=social)]()
+[![GitHub Stars](https://img.shields.io/github/stars/qoobots/qoocode?style=social)]()
 
 🚀 An open-source AI coding assistant CLI compatible with OpenAI/DeepSeek APIs, providing intelligent code assistance right in your terminal.
 
-> QOOCODE is a fully open-source independent project, inspired by and referencing the [Claude Code source code](https://github.com/qoobots/opencode), with complete feature replication.
+> qoocode is a fully open-source independent project, inspired by and referencing the [Claude Code source code](https://github.com/qoobots/opencode), with complete feature replication.
 
 ## ✨ Features
 
@@ -35,30 +35,30 @@
 
 ### Option 1: Download Binary (Recommended)
 
-Download the executable for your platform from [Releases](https://github.com/your-username/QOOCODE/releases):
+Download the executable for your platform from [Releases](https://github.com/qoobots/qoocode/releases):
 
 | Platform | Download |
 |----------|----------|
-| Windows x64 | `QOOCODE.exe` |
-| macOS x64 | `QOOCODE-macos` |
-| macOS ARM64 | `QOOCODE-macos-arm64` |
-| Linux x64 | `QOOCODE-linux` |
+| Windows x64 | `qoocode.exe` |
+| macOS x64 | `qoocode-macos` |
+| macOS ARM64 | `qoocode-macos-arm64` |
+| Linux x64 | `qoocode-linux` |
 
 ```bash
 # Windows
-.\QOOCODE.exe
+.\qoocode.exe
 
 # macOS / Linux
-chmod +x QOOCODE
-./QOOCODE
+chmod +x qoocode
+./qoocode
 ```
 
 ### Option 2: Build from Source
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/QOOCODE.git
-cd QOOCODE
+git clone https://github.com/qoobots/qoocode.git
+cd qoocode
 
 # Install dependencies
 bun install
@@ -94,10 +94,10 @@ set OPENAI_MODEL=deepseek-chat
 ### 2. Run
 
 ```bash
-QOOCODE
+qoocode
 
 # Or use command line arguments
-QOOCODE --api-key your-api-key --base-url https://api.deepseek.com/v1 --model deepseek-chat
+qoocode --api-key your-api-key --base-url https://api.deepseek.com/v1 --model deepseek-chat
 ```
 
 ## 📖 Usage Examples
@@ -177,10 +177,10 @@ Assistant: Creating files...
 
 ```bash
 # Linux/macOS
-~/.QOOCODE/config.json
+~/.qoocode/config.json
 
 # Windows
-%USERPROFILE%\.QOOCODE\config.json
+%USERPROFILE%\.qoocode\config.json
 ```
 
 ### Config Format
@@ -214,12 +214,12 @@ Assistant: Creating files...
 | `QOOCODE_MAX_TOKENS` | Max tokens | `8192` |
 | `QOOCODE_DEBUG` | Debug mode | `false` |
 | `QOOCODE_VERBOSE` | Verbose output | `false` |
-| `QOOCODE_CONFIG` | Config file path | `~/.QOOCODE/config.json` |
+| `QOOCODE_CONFIG` | Config file path | `~/.qoocode/config.json` |
 
 ## ⌨️ CLI Options
 
 ```bash
-QOOCODE [options]
+qoocode [options]
 
 Options:
   --api-key <key>         API key
@@ -256,7 +256,7 @@ bun test src/utils.test.ts
 ## 📁 Project Structure
 
 ```
-QOOCODE/
+qoocode/
 ├── src/
 │   ├── main.tsx                 # Entry point
 │   ├── App.tsx                  # Main app component
@@ -296,8 +296,8 @@ Contributions are welcome! Please feel free to submit issues and pull requests.
 
 ```bash
 # 1. Fork and clone
-git clone https://github.com/your-username/QOOCODE.git
-cd QOOCODE
+git clone https://github.com/qoobots/qoocode.git
+cd qoocode
 
 # 2. Create feature branch
 git checkout -b feature/amazing-feature
@@ -341,10 +341,10 @@ Types:
 ## ❓ FAQ
 
 **Q: Which models are supported?**
-A: QOOCODE supports any OpenAI API-compatible model including GPT-4, Claude, DeepSeek, and local models.
+A: qoocode supports any OpenAI API-compatible model including GPT-4, Claude, DeepSeek, and local models.
 
 **Q: How does pricing work?**
-A: You only pay for the API calls to your chosen provider. QOOCODE itself is free and open source.
+A: You only pay for the API calls to your chosen provider. qoocode itself is free and open source.
 
 **Q: Can I use it offline?**
 A: Yes, if you have a local LLM server running (like Ollama) with OpenAI-compatible API.
@@ -369,7 +369,7 @@ This project is licensed under the [MIT License](./LICENSE).
 
 ## 📬 Contact
 
-- GitHub Issues: [https://github.com/your-username/QOOCODE/issues](https://github.com/your-username/QOOCODE/issues)
+- GitHub Issues: [https://github.com/qoobots/qoocode/issues](https://github.com/qoobots/qoocode/issues)
 - Email: your.email@example.com
 
 ---

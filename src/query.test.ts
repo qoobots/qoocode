@@ -1,6 +1,6 @@
 ﻿import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { query, querySimple, type QueryOptions, type QueryResult } from './query.js'
-import type { QOOCODEConfig } from './utils/config.js'
+import type { QoocodeConfig } from './utils/config.js'
 import type { Message, SessionCost } from './types/message.js'
 
 // Mock dependencies
@@ -60,7 +60,7 @@ vi.mock('./services/api/openai-client.js', () => {
 })
 
 describe('Query Module', () => {
-  const mockConfig: QOOCODEConfig = {
+  const mockConfig: QoocodeConfig = {
     apiKey: 'test-api-key',
     baseUrl: 'https://api.test.com',
     model: 'test-model',

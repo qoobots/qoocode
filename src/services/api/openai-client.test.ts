@@ -1,6 +1,6 @@
 ﻿import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { getOpenAIClient, resetClient } from './openai-client'
-import type { QOOCODEConfig } from '../../utils/config'
+import type { QoocodeConfig } from '../../utils/config'
 
 // Mock OpenAI SDK
 vi.mock('openai', () => ({
@@ -15,7 +15,7 @@ vi.mock('openai', () => ({
 }))
 
 describe('OpenAI Client', () => {
-  let mockConfig: QOOCODEConfig
+  let mockConfig: QoocodeConfig
 
   beforeEach(() => {
     vi.clearAllMocks()

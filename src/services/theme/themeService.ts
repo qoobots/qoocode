@@ -1,4 +1,4 @@
-﻿// Theme service for QOOCODE CLI
+﻿// Theme service for qoocode CLI
 
 export type ThemeName = 'light' | 'dark' | 'auto'
 
@@ -213,7 +213,7 @@ export function getThemeCSSVariables(theme: Theme): Record<string, string> {
 }
 
 // Theme configuration storage
-const THEME_CONFIG_KEY = 'QOOCODE_theme'
+const THEME_CONFIG_KEY = 'qoocode_theme'
 
 /**
  * Load saved theme from config

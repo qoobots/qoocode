@@ -104,12 +104,12 @@ class RemoteSessionService extends EventEmitter {
     const { config, id } = session
     
     // Create tmux session
-    const sessionName = config.sessionName || `QOOCODE-${id}`
-    const socketPath = `/tmp/QOOCODE-${id}.sock`
+    const sessionName = config.sessionName || `qoocode-${id}`
+    const socketPath = `/tmp/qoocode-${id}.sock`
 
     // Create new tmux session with socket
     await this.execCommand('tmux', [
-      '-L', `QOOCODE-${id}`,
+      '-L', `qoocode-${id}`,
       'new-session',
       '-d',
       '-s', sessionName,
@@ -119,7 +119,7 @@ class RemoteSessionService extends EventEmitter {
     // Set window size if specified
     if (config.size) {
       await this.execCommand('tmux', [
-        '-L', `QOOCODE-${id}`,
+        '-L', `qoocode-${id}`,
         'resize-window',
         '-t', sessionName,
         '-x', config.size.width.toString(),
@@ -139,7 +139,7 @@ class RemoteSessionService extends EventEmitter {
     // For now, we'll use a simplified approach
     const { config, id } = session
     
-    const scriptPath = `/tmp/QOOCODE-iterm-${id}.sh`
+    const scriptPath = `/tmp/qoocode-iterm-${id}.sh`
     const script = `#!/bin/bash
 osascript -e 'tell application "iTerm2"
   activate
@@ -178,7 +178,7 @@ end tell'`
 
     if (config.backend === 'tmux') {
       await this.execCommand('tmux', [
-        '-L', `QOOCODE-${sessionId}`,
+        '-L', `qoocode-${sessionId}`,
         'send-keys',
         '-t', config.sessionName,
         input,
@@ -207,7 +207,7 @@ end tell'`
 
     if (config.backend === 'tmux') {
       await this.execCommand('tmux', [
-        '-L', `QOOCODE-${sessionId}`,
+        '-L', `qoocode-${sessionId}`,
         'resize-window',
         '-t', config.sessionName,
         '-x', width.toString(),
@@ -236,7 +236,7 @@ end tell'`
 
     if (config.backend === 'tmux') {
       const output = await this.execCommand('tmux', [
-        '-L', `QOOCODE-${sessionId}`,
+        '-L', `qoocode-${sessionId}`,
         'capture-pane',
         '-t', config.sessionName,
         '-p',
@@ -261,7 +261,7 @@ end tell'`
 
     if (config.backend === 'tmux') {
       const proc = spawn('tmux', [
-        '-L', `QOOCODE-${sessionId}`,
+        '-L', `qoocode-${sessionId}`,
         'pipe-pane',
         '-t', config.sessionName,
         'cat',
@@ -335,7 +335,7 @@ end tell'`
 
     if (config.backend === 'tmux') {
       await this.execCommand('tmux', [
-        '-L', `QOOCODE-${sessionId}`,
+        '-L', `qoocode-${sessionId}`,
         'kill-session',
         '-t', config.sessionName,
       ]).catch(() => {}) // Ignore errors if session already gone

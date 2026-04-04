@@ -111,7 +111,7 @@ export const TeamCreateTool = buildTool({
       ...prev,
       teamContext: {
         teamName: finalTeamName,
-        teamFilePath: `.QOOCODE/teams/${finalTeamName}.json`,
+        teamFilePath: `.qoocode/teams/${finalTeamName}.json`,
         leadAgentId,
         teammates: {
           [leadAgentId]: {
@@ -130,7 +130,7 @@ export const TeamCreateTool = buildTool({
     return {
       data: {
         team_name: finalTeamName,
-        team_file_path: `.QOOCODE/teams/${finalTeamName}.json`,
+        team_file_path: `.qoocode/teams/${finalTeamName}.json`,
         lead_agent_id: leadAgentId,
       },
       content: `

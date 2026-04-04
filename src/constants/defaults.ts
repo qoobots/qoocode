@@ -35,6 +35,6 @@ export function getModelCost(model: string): { input: number; output: number } {
 
 export const APP_NAME = 'qoocode'
 export const APP_VERSION = '0.1.0'
-export const CONFIG_DIR_NAME = '.QOOCODE'
+export const CONFIG_DIR_NAME = '.qoocode'
 export const CONFIG_FILE_NAME = 'config.json'
 export const HISTORY_FILE_NAME = 'history.json'

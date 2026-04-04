@@ -1,10 +1,10 @@
 ﻿/**
- * QOOCODE Auto-Updater
- * Automatic update checking and installation for QOOCODE extension
+ * qoocode Auto-Updater
+ * Automatic update checking and installation for qoocode extension
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
 export interface UpdateInfo {
   version: string;
@@ -29,8 +29,8 @@ export interface UpdateSettings {
   channel: 'stable' | 'beta' | 'nightly';
 }
 
-export class QOOCODEAutoUpdater {
-  private config: QOOCODEConfig;
+export class QoocodeAutoUpdater {
+  private config: QoocodeConfig;
   private context: vscode.ExtensionContext;
   private settings: UpdateSettings;
   private status: UpdateStatus = { state: 'idle' };
@@ -39,7 +39,7 @@ export class QOOCODEAutoUpdater {
 
   public readonly onStatusChanged = this.statusChangedEmitter.event;
 
-  constructor(context: vscode.ExtensionContext, config: QOOCODEConfig) {
+  constructor(context: vscode.ExtensionContext, config: QoocodeConfig) {
     this.context = context;
     this.config = config;
     this.settings = this.loadSettings();
@@ -185,16 +185,16 @@ export class QOOCODEAutoUpdater {
     // For now, return null to indicate no update available
     try {
       const extensions = await vscode.extensions.all;
-      const QOOCODEExtension = extensions.find(ext => ext.id.includes('QOOCODE'));
+      const QoocodeExtension = extensions.find(ext => ext.id.includes('qoocode'));
       
-      if (QOOCODEExtension) {
-        const latestVersion = QOOCODEExtension.packageJSON.version;
+      if (QoocodeExtension) {
+        const latestVersion = QoocodeExtension.packageJSON.version;
         if (this.isNewerVersion(latestVersion, currentVersion)) {
           return {
             version: latestVersion,
             releaseDate: new Date().toISOString(),
             releaseNotes: 'New version available',
-            downloadUrl: QOOCODEExtension.packageJSON.downloadUrl || '',
+            downloadUrl: QoocodeExtension.packageJSON.downloadUrl || '',
             isMandatory: false
           };
         }
@@ -269,7 +269,7 @@ export class QOOCODEAutoUpdater {
       // Show confirmation dialog for mandatory updates
       if (info.isMandatory) {
         const choice = await vscode.window.showInformationMessage(
-          `QOOCODE ${info.version} is required. The extension will restart to install.`,
+          `qoocode ${info.version} is required. The extension will restart to install.`,
           'Restart Now',
           'Later'
         );
@@ -280,7 +280,7 @@ export class QOOCODEAutoUpdater {
         }
       } else {
         const choice = await vscode.window.showInformationMessage(
-          `QOOCODE ${info.version} is available. Would you like to update?`,
+          `qoocode ${info.version} is available. Would you like to update?`,
           'Update Now',
           'Later',
           'View Release Notes'
@@ -356,7 +356,7 @@ export class QOOCODEAutoUpdater {
       const info = this.status.updateInfo;
       
       const choice = await vscode.window.showInformationMessage(
-        `QOOCODE ${info.version} is available!`,
+        `qoocode ${info.version} is available!`,
         'Update Now',
         'Later',
         'View Release Notes'

@@ -1,30 +1,30 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Command registration
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
-import { QOOCODEChatProvider } from '../chat/chatProvider';
-import { QOOCODETerminalManager } from '../terminal/terminalManager';
-import { QOOCODEStatusBar } from '../statusbar/statusBar';
+import { QoocodeConfig } from '../config/config';
+import { QoocodeChatProvider } from '../chat/chatProvider';
+import { QoocodeTerminalManager } from '../terminal/terminalManager';
+import { QoocodeStatusBar } from '../statusbar/statusBar';
 
-interface QOOCODEServices {
-  chatProvider?: QOOCODEChatProvider;
-  terminalManager?: QOOCODETerminalManager;
-  statusBar?: QOOCODEStatusBar;
+interface QoocodeServices {
+  chatProvider?: QoocodeChatProvider;
+  terminalManager?: QoocodeTerminalManager;
+  statusBar?: QoocodeStatusBar;
 }
 
 export function registerCommands(
   context: vscode.ExtensionContext,
-  config: QOOCODEConfig,
-  services: QOOCODEServices
+  config: QoocodeConfig,
+  services: QoocodeServices
 ): void {
   const { chatProvider, terminalManager, statusBar } = services;
 
-  // Start QOOCODE
+  // Start qoocode
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.start', async () => {
+    vscode.commands.registerCommand('qoocode.start', async () => {
       const workspaceFolders = vscode.workspace.workspaceFolders;
       if (!workspaceFolders || workspaceFolders.length === 0) {
         vscode.window.showWarningMessage('No workspace folder open');
@@ -41,32 +41,32 @@ export function registerCommands(
 
   // Open chat panel
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.chat', async () => {
-      await vscode.commands.executeCommand('QOOCODE.chat.focus');
+    vscode.commands.registerCommand('qoocode.chat', async () => {
+      await vscode.commands.executeCommand('qoocode.chat.focus');
     })
   );
 
-  // Configure QOOCODE
+  // Configure qoocode
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.config', async () => {
+    vscode.commands.registerCommand('qoocode.config', async () => {
       await vscode.commands.executeCommand(
         'workbench.action.openSettings',
-        'QOOCODE'
+        'qoocode'
       );
     })
   );
 
-  // Stop QOOCODE
+  // Stop qoocode
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.stop', async () => {
+    vscode.commands.registerCommand('qoocode.stop', async () => {
       terminalManager?.stopCurrentSession();
       statusBar?.setStatus('stopped');
     })
   );
 
-  // Restart QOOCODE
+  // Restart qoocode
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.restart', async () => {
+    vscode.commands.registerCommand('qoocode.restart', async () => {
       terminalManager?.stopCurrentSession();
       const workspaceFolders = vscode.workspace.workspaceFolders;
       if (workspaceFolders && workspaceFolders.length > 0) {
@@ -78,11 +78,11 @@ export function registerCommands(
 
   // Show status
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.status', async () => {
+    vscode.commands.registerCommand('qoocode.status', async () => {
       const status = statusBar?.getStatus();
       const model = config.get('model');
       vscode.window.showInformationMessage(
-        `QOOCODE Status: ${status}\nModel: ${model}`,
+        `qoocode Status: ${status}\nModel: ${model}`,
         'OK'
       );
     })
@@ -90,7 +90,7 @@ export function registerCommands(
 
   // Quick chat with selection
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.quickChat', async () => {
+    vscode.commands.registerCommand('qoocode.quickChat', async () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) {
         vscode.window.showWarningMessage('No active editor');
@@ -112,14 +112,14 @@ export function registerCommands(
           content: selectedText,
           timestamp: Date.now()
         });
-        await vscode.commands.executeCommand('QOOCODE.chat.focus');
+        await vscode.commands.executeCommand('qoocode.chat.focus');
       }
     })
   );
 
   // Explain code
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.explain', async () => {
+    vscode.commands.registerCommand('qoocode.explain', async () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) return;
 
@@ -134,14 +134,14 @@ export function registerCommands(
           content: `Explain this code:\n\`\`\`\n${selectedText}\n\`\`\``,
           timestamp: Date.now()
         });
-        await vscode.commands.executeCommand('QOOCODE.chat.focus');
+        await vscode.commands.executeCommand('qoocode.chat.focus');
       }
     })
   );
 
   // Fix error
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.fix', async () => {
+    vscode.commands.registerCommand('qoocode.fix', async () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) return;
 
@@ -156,14 +156,14 @@ export function registerCommands(
           content: `Fix this error:\n\`\`\`\n${selectedText}\n\`\`\``,
           timestamp: Date.now()
         });
-        await vscode.commands.executeCommand('QOOCODE.chat.focus');
+        await vscode.commands.executeCommand('qoocode.chat.focus');
       }
     })
   );
 
   // Refactor code
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.refactor', async () => {
+    vscode.commands.registerCommand('qoocode.refactor', async () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) return;
 
@@ -178,14 +178,14 @@ export function registerCommands(
           content: `Refactor this code:\n\`\`\`\n${selectedText}\n\`\`\``,
           timestamp: Date.now()
         });
-        await vscode.commands.executeCommand('QOOCODE.chat.focus');
+        await vscode.commands.executeCommand('qoocode.chat.focus');
       }
     })
   );
 
-  // Send message to QOOCODE
+  // Send message to qoocode
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.send', async (message: string) => {
+    vscode.commands.registerCommand('qoocode.send', async (message: string) => {
       if (chatProvider) {
         chatProvider.addMessage({
           type: 'user',
@@ -198,7 +198,7 @@ export function registerCommands(
 
   // Clear chat
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.clear', async () => {
+    vscode.commands.registerCommand('qoocode.clear', async () => {
       if (chatProvider) {
         chatProvider.clearMessages();
       }
@@ -207,7 +207,7 @@ export function registerCommands(
 
   // Analyze file
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.analyze', async (uri?: vscode.Uri) => {
+    vscode.commands.registerCommand('qoocode.analyze', async (uri?: vscode.Uri) => {
       const targetUri = uri || vscode.window.activeTextEditor?.document.uri;
       if (!targetUri) {
         vscode.window.showWarningMessage('No file open');
@@ -221,14 +221,14 @@ export function registerCommands(
           content: `Analyze this file:\n\`\`\`\n${document.getText()}\n\`\`\``,
           timestamp: Date.now()
         });
-        await vscode.commands.executeCommand('QOOCODE.chat.focus');
+        await vscode.commands.executeCommand('qoocode.chat.focus');
       }
     })
   );
 
   // Review file
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.review', async (uri?: vscode.Uri, position?: vscode.Position) => {
+    vscode.commands.registerCommand('qoocode.review', async (uri?: vscode.Uri, position?: vscode.Position) => {
       const targetUri = uri || vscode.window.activeTextEditor?.document.uri;
       if (!targetUri) {
         vscode.window.showWarningMessage('No file open');
@@ -255,14 +255,14 @@ export function registerCommands(
           content: `Review this code:\n\`\`\`\n${content}\n\`\`\``,
           timestamp: Date.now()
         });
-        await vscode.commands.executeCommand('QOOCODE.chat.focus');
+        await vscode.commands.executeCommand('qoocode.chat.focus');
       }
     })
   );
 
   // Complete code
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.complete', async (uri?: vscode.Uri, position?: vscode.Position) => {
+    vscode.commands.registerCommand('qoocode.complete', async (uri?: vscode.Uri, position?: vscode.Position) => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) {
         vscode.window.showWarningMessage('No active editor');
@@ -278,24 +278,24 @@ export function registerCommands(
           content: 'Suggest a completion for the current code context.',
           timestamp: Date.now()
         });
-        await vscode.commands.executeCommand('QOOCODE.chat.focus');
+        await vscode.commands.executeCommand('qoocode.chat.focus');
       }
     })
   );
 
   // Show output
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.output', async () => {
-      const output = vscode.window.createOutputChannel('QOOCODE');
+    vscode.commands.registerCommand('qoocode.output', async () => {
+      const output = vscode.window.createOutputChannel('qoocode');
       output.show();
     })
   );
 
   // Show keyboard shortcuts
   context.subscriptions.push(
-    vscode.commands.registerCommand('QOOCODE.shortcuts', async () => {
+    vscode.commands.registerCommand('qoocode.shortcuts', async () => {
       const shortcuts: Array<{ key: string; command: string }> = [
-        { key: 'Ctrl+Shift+O', command: 'Start QOOCODE' },
+        { key: 'Ctrl+Shift+O', command: 'Start qoocode' },
         { key: 'Ctrl+Shift+C', command: 'Open Chat' },
         { key: 'Ctrl+Shift+/', command: 'Quick Chat (with selection)' }
       ];
@@ -306,7 +306,7 @@ export function registerCommands(
       }));
 
       await vscode.window.showQuickPick(items, {
-        placeHolder: 'QOOCODE Keyboard Shortcuts'
+        placeHolder: 'qoocode Keyboard Shortcuts'
       });
     })
   );

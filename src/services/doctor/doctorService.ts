@@ -1,5 +1,5 @@
 ﻿/**
- * Doctor - System diagnostic tool for QOOCODE
+ * Doctor - System diagnostic tool for qoocode
  * Checks system configuration and reports potential issues
  */
 
@@ -31,7 +31,7 @@ export interface SystemDiagnostics {
 }
 
 /**
- * Get the current QOOCODE version
+ * Get the current qoocode version
  */
 function getVersion(): string {
   try {
@@ -115,7 +115,7 @@ async function checkDependencies(): Promise<DiagnosticResult> {
     name: 'Bun Runtime',
     status: bunExists ? 'ok' : 'error',
     message: bunExists ? `Found: ${getRuntimeVersion()}` : 'Not found',
-    details: bunExists ? 'Required for running QOOCODE' : 'Install Bun from https://bun.sh',
+    details: bunExists ? 'Required for running qoocode' : 'Install Bun from https://bun.sh',
   });
   
   // Check Git
@@ -183,12 +183,12 @@ async function checkEnvironment(): Promise<DiagnosticResult> {
   
   // Config file check
   try {
-    const configPath = join(process.cwd(), 'QOOCODE.json');
+    const configPath = join(process.cwd(), 'qoocode.json');
     await readFile(configPath, 'utf-8');
     items.push({
       name: 'Config File',
       status: 'ok',
-      message: 'Found: QOOCODE.json',
+      message: 'Found: qoocode.json',
     });
   } catch {
     items.push({
@@ -248,7 +248,7 @@ async function getInstallationInfo(): Promise<DiagnosticResult> {
   
   // Version
   items.push({
-    name: 'QOOCODE Version',
+    name: 'qoocode Version',
     status: 'ok',
     message: getVersion(),
   });
@@ -311,7 +311,7 @@ export function formatDiagnostics(diagnostics: SystemDiagnostics): string {
   };
   
   lines.push('═'.repeat(50));
-  lines.push('  QOOCODE System Diagnostics');
+  lines.push('  qoocode System Diagnostics');
   lines.push('═'.repeat(50));
   
   formatResult(diagnostics.installation);

@@ -1,14 +1,14 @@
 ﻿/**
- * QOOCODE Bidirectional Communication
- * Enables two-way communication between VS Code and QOOCODE backend
+ * qoocode Bidirectional Communication
+ * Enables two-way communication between VS Code and qoocode backend
  */
 
 import * as vscode from 'vscode';
 import * as http from 'http';
 import * as https from 'https';
 import { URL } from 'url';
-import { QOOCODEAuthProvider } from '../auth/authProvider';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeAuthProvider } from '../auth/authProvider';
+import { QoocodeConfig } from '../config/config';
 
 export interface Message {
   id: string;
@@ -42,8 +42,8 @@ export interface SyncData {
 }
 
 export class BidirectionalCommunication {
-  private config: QOOCODEConfig;
-  private authProvider: QOOCODEAuthProvider;
+  private config: QoocodeConfig;
+  private authProvider: QoocodeAuthProvider;
   private context: vscode.ExtensionContext;
   private wsEndpoint: string;
   private reconnectAttempts = 0;
@@ -60,8 +60,8 @@ export class BidirectionalCommunication {
 
   constructor(
     context: vscode.ExtensionContext,
-    config: QOOCODEConfig,
-    authProvider: QOOCODEAuthProvider
+    config: QoocodeConfig,
+    authProvider: QoocodeAuthProvider
   ) {
     this.context = context;
     this.config = config;
@@ -70,7 +70,7 @@ export class BidirectionalCommunication {
   }
 
   /**
-   * Connect to the QOOCODE backend
+   * Connect to the qoocode backend
    */
   public async connect(): Promise<boolean> {
     try {
@@ -247,7 +247,7 @@ export class BidirectionalCommunication {
     const workspaceFolders = vscode.workspace.workspaceFolders;
 
     const syncData: SyncData = {
-      settings: vscode.workspace.getConfiguration('QOOCODE').get<string, Record<string, unknown>>('')
+      settings: vscode.workspace.getConfiguration('qoocode').get<string, Record<string, unknown>>('')
     };
 
     if (editor) {

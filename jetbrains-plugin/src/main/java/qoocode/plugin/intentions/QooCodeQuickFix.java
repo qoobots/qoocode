@@ -1,9 +1,9 @@
-﻿/**
- * QOOCODE Quick Fix
+/**
+ * qoocode Quick Fix
  * Quick fix intention action
  */
 
-package QOOCODE.plugin.intentions;
+package qoocode.plugin.intentions;
 
 import com.intellij.codeInspection.*;
 import com.intellij.openapi.editor.*;
@@ -14,19 +14,19 @@ import org.jetbrains.annotations.*;
 
 import javax.swing.*;
 
-public class QOOCODEQuickFix implements IntentionAction {
-    private static final Logger LOG = Logger.getInstance(QOOCODEQuickFix.class);
+public class QooCodeQuickFix implements IntentionAction {
+    private static final Logger LOG = Logger.getInstance(QooCodeQuickFix.class);
     
     @Override
     @NotNull
     public String getText() {
-        return "Fix with QOOCODE";
+        return "Fix with QooCode";
     }
     
     @Override
     @NotNull
     public String getFamilyName() {
-        return "QOOCODE";
+        return "QooCode";
     }
     
     @Override
@@ -38,7 +38,7 @@ public class QOOCODEQuickFix implements IntentionAction {
     public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws ProblemsHolder {
         if (file == null || editor == null) return;
         
-        LOG.info("QOOCODE quick fix invoked");
+        LOG.info("QooCode quick fix invoked");
         
         // Get selection
         int offset = editor.getCaretModel().getOffset();
@@ -49,7 +49,7 @@ public class QOOCODEQuickFix implements IntentionAction {
         // Show suggestion
         editor.getDocument().insertString(
             editor.getSelectionModel().getSelectionEnd(),
-            " // QOOCODE: Consider using a more efficient approach"
+            " // QooCode: Consider using a more efficient approach"
         );
     }
     

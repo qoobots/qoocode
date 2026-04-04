@@ -1,10 +1,10 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Telemetry and Analytics
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
 export interface TelemetryEvent {
   name: string;
@@ -13,14 +13,14 @@ export interface TelemetryEvent {
   timestamp: number;
 }
 
-export class QOOCODETelemetry {
-  private config: QOOCODEConfig;
+export class QoocodeTelemetry {
+  private config: QoocodeConfig;
   private events: TelemetryEvent[] = [];
   private outputChannel: vscode.OutputChannel;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.outputChannel = vscode.window.createOutputChannel('QOOCODE Telemetry');
+    this.outputChannel = vscode.window.createOutputChannel('qoocode Telemetry');
   }
 
   /**
@@ -128,10 +128,10 @@ interface AnalyticsSummary {
   recentErrors: Array<{ message: string; count: number }>;
 }
 
-export class QOOCODEAnalyticsDashboard {
-  private telemetry: QOOCODETelemetry;
+export class QoocodeAnalyticsDashboard {
+  private telemetry: QoocodeTelemetry;
 
-  constructor(telemetry: QOOCODETelemetry) {
+  constructor(telemetry: QoocodeTelemetry) {
     this.telemetry = telemetry;
   }
 
@@ -142,8 +142,8 @@ export class QOOCODEAnalyticsDashboard {
     const summary = this.telemetry.getSummary();
 
     const panel = vscode.window.createWebviewPanel(
-      'QOOCODE.analytics',
-      'QOOCODE Analytics',
+      'qoocode.analytics',
+      'qoocode Analytics',
       vscode.ViewColumn.One,
       { enableScripts: true }
     );
@@ -173,7 +173,7 @@ export class QOOCODEAnalyticsDashboard {
   </style>
 </head>
 <body>
-  <h1>📊 QOOCODE Analytics</h1>
+  <h1>📊 qoocode Analytics</h1>
   <div class="stat">
     <div class="stat-value">${summary.totalEvents}</div>
     <div class="stat-label">Total Events</div>

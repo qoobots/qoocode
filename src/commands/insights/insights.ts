@@ -4,7 +4,7 @@ import type { Command } from '../../types/message.js'
 /**
  * Insights - Provides detailed usage analysis and statistics
  * 
- * This command analyzes your QOOCODE usage patterns including:
+ * This command analyzes your qoocode usage patterns including:
  * - Tool usage statistics
  * - Language distribution
  * - Session metrics
@@ -53,7 +53,7 @@ function formatInsights(data: InsightsData): string {
   const lines: string[] = [
     '',
     '  ┌─────────────────────────────────────────────────────────┐',
-    '  │           QOOCODE Insights - Usage Analysis             │',
+    '  │           qoocode Insights - Usage Analysis             │',
     '  └─────────────────────────────────────────────────────────┘',
     '',
     `  📊 Overview`,
@@ -125,7 +125,7 @@ export const insightsCommand: Command = {
     /insights tools     Show detailed tool usage
     /insights help      Show this help
 
-  This command provides insights into your QOOCODE usage:
+  This command provides insights into your qoocode usage:
   - Session statistics
   - Tool usage patterns
   - Language distribution

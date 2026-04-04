@@ -1,18 +1,18 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Notifications and progress system
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODENotificationManager {
-  private config: QOOCODEConfig;
+export class QoocodeNotificationManager {
+  private config: QoocodeConfig;
   private outputChannel: vscode.OutputChannel;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.outputChannel = vscode.window.createOutputChannel('QOOCODE Notifications');
+    this.outputChannel = vscode.window.createOutputChannel('qoocode Notifications');
   }
 
   /**
@@ -74,11 +74,11 @@ interface NotificationOptions {
   onAction?: (action: string) => void;
 }
 
-export class QOOCODEProgressManager {
-  private config: QOOCODEConfig;
+export class QoocodeProgressManager {
+  private config: QoocodeConfig;
   private progressMap: Map<string, vscode.Progress<{ message?: string; increment?: number }>> = new Map();
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
@@ -130,11 +130,11 @@ export class QOOCODEProgressManager {
   }
 }
 
-export class QOOCODEWelcomeView {
-  private config: QOOCODEConfig;
+export class QoocodeWelcomeView {
+  private config: QoocodeConfig;
   private context: vscode.ExtensionContext;
 
-  constructor(context: vscode.ExtensionContext, config: QOOCODEConfig) {
+  constructor(context: vscode.ExtensionContext, config: QoocodeConfig) {
     this.config = config;
     this.context = context;
   }
@@ -144,8 +144,8 @@ export class QOOCODEWelcomeView {
    */
   async show(): Promise<void> {
     const panel = vscode.window.createWebviewPanel(
-      'QOOCODE.welcome',
-      'Welcome to QOOCODE',
+      'qoocode.welcome',
+      'Welcome to qoocode',
       vscode.ViewColumn.One,
       {
         enableScripts: true,
@@ -216,13 +216,13 @@ export class QOOCODEWelcomeView {
   </style>
 </head>
 <body>
-  <h1>🎉 Welcome to QOOCODE</h1>
+  <h1>🎉 Welcome to qoocode</h1>
   <p>Your AI-powered coding assistant is ready!</p>
 
   <div class="features">
     <div class="feature">
       <h3>🚀 Quick Start</h3>
-      <p>Press <kbd>Ctrl+Shift+O</kbd> to start a new QOOCODE session</p>
+      <p>Press <kbd>Ctrl+Shift+O</kbd> to start a new qoocode session</p>
     </div>
     <div class="feature">
       <h3>💬 Chat</h3>
@@ -243,7 +243,7 @@ export class QOOCODEWelcomeView {
 
   <div class="shortcuts">
     <h3>Keyboard Shortcuts</h3>
-    <div class="shortcut"><span>Start QOOCODE</span><kbd>Ctrl+Shift+O</kbd></div>
+    <div class="shortcut"><span>Start qoocode</span><kbd>Ctrl+Shift+O</kbd></div>
     <div class="shortcut"><span>Open Chat</span><kbd>Ctrl+Shift+C</kbd></div>
     <div class="shortcut"><span>Quick Chat</span><kbd>Ctrl+Shift+/</kbd></div>
   </div>
@@ -252,9 +252,9 @@ export class QOOCODEWelcomeView {
     window.addEventListener('message', (event) => {
       const { command } = event.data;
       if (command === 'start') {
-        vscode.postMessage({ command: 'execute', id: 'QOOCODE.start' });
+        vscode.postMessage({ command: 'execute', id: 'qoocode.start' });
       } else if (command === 'configure') {
-        vscode.postMessage({ command: 'execute', id: 'QOOCODE.config' });
+        vscode.postMessage({ command: 'execute', id: 'qoocode.config' });
       }
     });
   </script>

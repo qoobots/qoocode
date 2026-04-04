@@ -1,18 +1,18 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Remote Development support
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODERemoteConnection {
-  private config: QOOCODEConfig;
+export class QoocodeRemoteConnection {
+  private config: QoocodeConfig;
   private outputChannel: vscode.OutputChannel;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.outputChannel = vscode.window.createOutputChannel('QOOCODE Remote');
+    this.outputChannel = vscode.window.createOutputChannel('qoocode Remote');
   }
 
   /**
@@ -39,7 +39,7 @@ export class QOOCODERemoteConnection {
       host: env.SSH_CONNECTION || env.HOST || 'unknown',
       user: env.USER || env.USERNAME || 'unknown',
       os: await this.getRemoteOS(),
-      QOOCODEPath: await this.findQOOCODEPath()
+      QoocodePath: await this.findQoocodePath()
     };
   }
 
@@ -50,32 +50,32 @@ export class QOOCODERemoteConnection {
     return 'Linux/Unix';
   }
 
-  private async findQOOCODEPath(): Promise<string> {
-    // Common locations for QOOCODE on remote
+  private async findQoocodePath(): Promise<string> {
+    // Common locations for qoocode on remote
     const paths = [
-      '/usr/local/bin/QOOCODE',
-      '/usr/bin/QOOCODE',
-      '~/.QOOCODE/bin/QOOCODE',
-      '~/QOOCODE/bin/QOOCODE'
+      '/usr/local/bin/qoocode',
+      '/usr/bin/qoocode',
+      '~/.qoocode/bin/qoocode',
+      '~/qoocode/bin/qoocode'
     ];
 
     for (const p of paths) {
       // Would check if file exists
     }
 
-    return 'QOOCODE'; // Default to PATH
+    return 'qoocode'; // Default to PATH
   }
 
   /**
-   * Connect to remote QOOCODE session
+   * Connect to remote qoocode session
    */
   async connectRemote(connectionInfo: RemoteConnectionInfo): Promise<void> {
     this.outputChannel.appendLine(`Connecting to ${connectionInfo.user}@${connectionInfo.host}...`);
     this.outputChannel.show();
 
-    // Would establish SSH connection and start QOOCODE
+    // Would establish SSH connection and start qoocode
     vscode.window.showInformationMessage(
-      `QOOCODE: Would connect to ${connectionInfo.host}`
+      `qoocode: Would connect to ${connectionInfo.host}`
     );
   }
 
@@ -96,18 +96,18 @@ interface RemoteConnectionInfo {
   host: string;
   user: string;
   os: string;
-  QOOCODEPath: string;
+  QoocodePath: string;
 }
 
-export class QOOCODESSHtunnel {
-  private config: QOOCODEConfig;
+export class QoocodeSSHtunnel {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
   /**
-   * Create SSH tunnel for QOOCODE
+   * Create SSH tunnel for qoocode
    */
   async createTunnel(
     localPort: number,
@@ -126,10 +126,10 @@ export class QOOCODESSHtunnel {
   }
 }
 
-export class QOOCODEContainerSupport {
-  private config: QOOCODEConfig;
+export class QoocodeContainerSupport {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
@@ -156,12 +156,12 @@ export class QOOCODEContainerSupport {
   }
 
   /**
-   * Install QOOCODE in container
+   * Install qoocode in container
    */
   async installInContainer(): Promise<boolean> {
-    // Would install QOOCODE in container
+    // Would install qoocode in container
     vscode.window.showInformationMessage(
-      'QOOCODE: Installing in container...'
+      'qoocode: Installing in container...'
     );
     return true;
   }

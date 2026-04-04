@@ -1,16 +1,16 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * CodeLens and Hover provider
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODECodeLensProvider implements vscode.CodeLensProvider {
-  private config: QOOCODEConfig;
+export class QoocodeCodeLensProvider implements vscode.CodeLensProvider {
+  private config: QoocodeConfig;
   private onDidChangeCodeLenses = new vscode.EventEmitter<void>();
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
@@ -27,15 +27,15 @@ export class QOOCODECodeLensProvider implements vscode.CodeLensProvider {
       return lenses;
     }
 
-    // Add "Explain with QOOCODE" code lens
+    // Add "Explain with qoocode" code lens
     const explainRange = new vscode.Range(0, 0, 0, 0);
     lenses.push(new vscode.CodeLens(explainRange, {
-      title: '$(sparkle) Explain with QOOCODE',
-      command: 'QOOCODE.explain',
+      title: '$(sparkle) Explain with qoocode',
+      command: 'qoocode.explain',
       arguments: [document.uri]
     }));
 
-    // Add "Review with QOOCODE" code lens for functions
+    // Add "Review with qoocode" code lens for functions
     const text = document.getText();
     const functionPattern = /(?:function|const|let|var|class|def|async)\s+\w+/g;
     let match;
@@ -45,7 +45,7 @@ export class QOOCODECodeLensProvider implements vscode.CodeLensProvider {
       const range = new vscode.Range(position, position);
       lenses.push(new vscode.CodeLens(range, {
         title: '$(sparkle) Review',
-        command: 'QOOCODE.review',
+        command: 'qoocode.review',
         arguments: [document.uri, position]
       }));
     }
@@ -58,10 +58,10 @@ export class QOOCODECodeLensProvider implements vscode.CodeLensProvider {
   }
 }
 
-export class QOOCODEHoverProvider implements vscode.HoverProvider {
-  private config: QOOCODEConfig;
+export class QoocodeHoverProvider implements vscode.HoverProvider {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
@@ -85,31 +85,31 @@ export class QOOCODEHoverProvider implements vscode.HoverProvider {
     // Show hover with option to explain
     const markdown = new vscode.MarkdownString();
     markdown.appendMarkdown(`**${word}**\n\n`);
-    markdown.appendMarkdown('> $(sparkle) Ask QOOCODE to explain this function\n');
+    markdown.appendMarkdown('> $(sparkle) Ask qoocode to explain this function\n');
     markdown.appendCommandLink(
-      'Explain with QOOCODE',
-      new vscode.Command('QOOCODE.explain', 'QOOCODE.explain', [document.uri, wordRange])
+      'Explain with qoocode',
+      new vscode.Command('qoocode.explain', 'qoocode.explain', [document.uri, wordRange])
     );
 
     return new vscode.Hover(markdown, wordRange);
   }
 }
 
-export class QOOCODEDefinitionProvider implements vscode.DefinitionProvider {
+export class QoocodeDefinitionProvider implements vscode.DefinitionProvider {
   provideDefinition(
     document: vscode.TextDocument,
     position: vscode.Position
   ): vscode.Location | undefined {
-    // This would integrate with QOOCODE to find definitions
+    // This would integrate with qoocode to find definitions
     // For now, return undefined to use default behavior
     return undefined;
   }
 }
 
-export class QOOCODECompletionProvider implements vscode.CompletionItemProvider {
-  private config: QOOCODEConfig;
+export class QoocodeCompletionProvider implements vscode.CompletionItemProvider {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
@@ -117,19 +117,19 @@ export class QOOCODECompletionProvider implements vscode.CompletionItemProvider 
     document: vscode.TextDocument,
     position: vscode.Position
   ): vscode.CompletionItem[] {
-    // Provide AI-powered completions through QOOCODE
-    // This is a placeholder that would integrate with the QOOCODE service
+    // Provide AI-powered completions through qoocode
+    // This is a placeholder that would integrate with the qoocode service
     const items: vscode.CompletionItem[] = [];
 
-    // Add a "loading" completion that triggers QOOCODE
+    // Add a "loading" completion that triggers qoocode
     const triggerCompletion = new vscode.CompletionItem(
-      '$(sparkle) Ask QOOCODE...',
+      '$(sparkle) Ask qoocode...',
       vscode.CompletionItemKind.Snippet
     );
     triggerCompletion.insertText = '';
     triggerCompletion.command = {
-      title: 'QOOCODE Completion',
-      command: 'QOOCODE.complete',
+      title: 'qoocode Completion',
+      command: 'qoocode.complete',
       arguments: [document.uri, position]
     };
     items.push(triggerCompletion);

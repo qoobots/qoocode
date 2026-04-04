@@ -1,18 +1,18 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Testing integration
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODETestAdapter {
-  private config: QOOCODEConfig;
+export class QoocodeTestAdapter {
+  private config: QoocodeConfig;
   private outputChannel: vscode.OutputChannel;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.outputChannel = vscode.window.createOutputChannel('QOOCODE Tests');
+    this.outputChannel = vscode.window.createOutputChannel('qoocode Tests');
   }
 
   /**
@@ -63,14 +63,14 @@ export class QOOCODETestAdapter {
   }
 
   /**
-   * Run specific test with QOOCODE analysis
+   * Run specific test with qoocode analysis
    */
   async runTest(test: TestInfo): Promise<TestResult> {
     this.outputChannel.appendLine(`Running: ${test.label}`);
     this.outputChannel.show();
 
     // Run the test
-    const controller = new vscode.TestController('QOOCODE', 'QOOCODE Tests');
+    const controller = new vscode.TestController('qoocode', 'qoocode Tests');
     const run = controller.createRun(test.id, {
       persist: true
     });
@@ -90,13 +90,13 @@ export class QOOCODETestAdapter {
    * Generate test for function
    */
   async generateTest(functionName: string, document: vscode.TextDocument): Promise<string | undefined> {
-    // Use QOOCODE to generate test
+    // Use qoocode to generate test
     const position = document.getText().indexOf(functionName);
     if (position === -1) {
       return undefined;
     }
 
-    vscode.commands.executeCommand('QOOCODE.chat', 
+    vscode.commands.executeCommand('qoocode.chat', 
       `Generate a test for the function "${functionName}"`
     );
 
@@ -124,10 +124,10 @@ interface TestResult {
 
 type TestType = 'jest' | 'vitest' | 'pytest' | 'go' | 'rust' | 'unknown';
 
-export class QOOCODETestCoverage {
-  private config: QOOCODEConfig;
+export class QoocodeTestCoverage {
+  private config: QoocodeConfig;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 

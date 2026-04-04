@@ -1,24 +1,24 @@
 ﻿/**
- * QOOCODE VS Code Extension
- * AI provider for QOOCODE integration
+ * qoocode VS Code Extension
+ * AI provider for qoocode integration
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
-import { QOOCODETerminalManager } from '../terminal/terminalManager';
+import { QoocodeConfig } from '../config/config';
+import { QoocodeTerminalManager } from '../terminal/terminalManager';
 
-export class QOOCODEAIProvider {
-  private config: QOOCODEConfig;
-  private terminalManager: QOOCODETerminalManager | undefined;
+export class QoocodeAIProvider {
+  private config: QoocodeConfig;
+  private terminalManager: QoocodeTerminalManager | undefined;
   private contextHistory: Map<string, AIMessage[]> = new Map();
 
-  constructor(config: QOOCODEConfig, terminalManager?: QOOCODETerminalManager) {
+  constructor(config: QoocodeConfig, terminalManager?: QoocodeTerminalManager) {
     this.config = config;
     this.terminalManager = terminalManager;
   }
 
   /**
-   * Send a query to QOOCODE
+   * Send a query to qoocode
    */
   async query(prompt: string, context?: QueryContext): Promise<string> {
     const sessionId = context?.sessionId || 'default';
@@ -32,15 +32,15 @@ export class QOOCODEAIProvider {
     // Send to terminal or API
     if (this.terminalManager) {
       this.terminalManager.sendInput(fullPrompt);
-      return 'Sent to QOOCODE terminal';
+      return 'Sent to qoocode terminal';
     }
 
     // Fallback: show in output channel
-    const output = vscode.window.createOutputChannel('QOOCODE Query');
+    const output = vscode.window.createOutputChannel('qoocode Query');
     output.appendLine(`Query: ${prompt}`);
     output.show();
 
-    return 'Query sent to QOOCODE';
+    return 'Query sent to qoocode';
   }
 
   /**
@@ -112,7 +112,7 @@ export class QOOCODEAIProvider {
    * Generate code completion
    */
   async complete(prefix: string, suffix?: string): Promise<string | undefined> {
-    // This would integrate with QOOCODE's completion API
+    // This would integrate with qoocode's completion API
     // For now, return undefined to use default completions
     return undefined;
   }
@@ -131,13 +131,13 @@ interface QueryContext {
   range?: vscode.Range;
 }
 
-export class QOOCODEInlineCompletionProvider implements vscode.InlineCompletionItemProvider {
-  private config: QOOCODEConfig;
-  private aiProvider: QOOCODEAIProvider;
+export class QoocodeInlineCompletionProvider implements vscode.InlineCompletionItemProvider {
+  private config: QoocodeConfig;
+  private aiProvider: QoocodeAIProvider;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.aiProvider = new QOOCODEAIProvider(config);
+    this.aiProvider = new QoocodeAIProvider(config);
   }
 
   async provideInlineCompletionItems(
@@ -163,7 +163,7 @@ export class QOOCODEInlineCompletionProvider implements vscode.InlineCompletionI
       return undefined;
     }
 
-    // Request completion from QOOCODE
+    // Request completion from qoocode
     const completion = await this.aiProvider.complete(prefix);
 
     if (!completion) {

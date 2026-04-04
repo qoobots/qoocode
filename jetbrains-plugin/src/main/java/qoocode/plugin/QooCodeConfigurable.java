@@ -1,9 +1,9 @@
-﻿/**
- * QOOCODE Configurable
+/**
+ * qoocode Configurable
  * Application-level settings UI
  */
 
-package QOOCODE.plugin;
+package qoocode.plugin;
 
 import com.intellij.openapi.options.*;
 import com.intellij.openapi.ui.*;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class QOOCODEConfigurable implements Configurable {
+public class QooCodeConfigurable implements Configurable {
     private JPanel mainPanel;
     private JTextField apiUrlField;
     private JPasswordField apiKeyField;
@@ -24,21 +24,21 @@ public class QOOCODEConfigurable implements Configurable {
     private JSlider temperatureSlider;
     private JLabel temperatureLabel;
     
-    private final QOOCODEConfig config;
+    private final QooCodeConfig config;
     
-    public QOOCODEConfigurable() {
-        this.config = new QOOCODEConfig();
+    public QooCodeConfigurable() {
+        this.config = new QooCodeConfig();
     }
     
     @Override
     @NotNull
     public String getDisplayName() {
-        return "QOOCODE";
+        return "QooCode";
     }
     
     @Override
     public String getHelpTopic() {
-        return "settings.QOOCODE";
+        return "settings.QooCode";
     }
     
     @Override
@@ -123,7 +123,7 @@ public class QOOCODEConfigurable implements Configurable {
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.gridwidth = 2;
-        autoStartCheck = new JCheckBox("Auto-start QOOCODE on project open", config.isAutoStart());
+        autoStartCheck = new JCheckBox("Auto-start qoocode on project open", config.isAutoStart());
         mainPanel.add(autoStartCheck, gbc);
         row++;
         

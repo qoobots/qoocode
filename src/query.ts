@@ -1,4 +1,4 @@
-﻿import type { QOOCODEConfig } from './utils/config.js'
+﻿import type { QoocodeConfig } from './utils/config.js'
 import type { Message, AssistantMessage, ToolMessage, StreamEvent, SessionCost } from './types/message.js'
 import { createUserMessage, createToolMessage, messagesToOpenAIFormat } from './utils/messages.js'
 import { buildSystemPrompt } from './utils/systemPrompt.js'
@@ -21,7 +21,7 @@ export type QueryResult = {
 }
 
 export type QueryOptions = {
-  config: QOOCODEConfig
+  config: QoocodeConfig
   messages: Message[]
   cost: SessionCost
   tools?: Tools
@@ -265,7 +265,7 @@ async function processStream(
  * Send a simple non-streaming message (for commands that need quick responses)
  */
 export async function querySimple(
-  config: QOOCODEConfig,
+  config: QoocodeConfig,
   messages: Message[],
   systemPrompt?: string,
 ): Promise<{ content: string; cost: SessionCost }> {

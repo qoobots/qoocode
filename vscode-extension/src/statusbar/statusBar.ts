@@ -1,30 +1,30 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Status bar management
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export type QOOCODEStatus = 'idle' | 'running' | 'thinking' | 'stopped' | 'error';
+export type QoocodeStatus = 'idle' | 'running' | 'thinking' | 'stopped' | 'error';
 
-export class QOOCODEStatusBar {
+export class QoocodeStatusBar {
   private statusBarItem: vscode.StatusBarItem;
-  private status: QOOCODEStatus = 'idle';
-  private config: QOOCODEConfig;
+  private status: QoocodeStatus = 'idle';
+  private config: QoocodeConfig;
   private statusUpdateTimeout: NodeJS.Timeout | undefined;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
     this.statusBarItem = vscode.window.createStatusBarItem(
-      'QOOCODE.status',
+      'qoocode.status',
       vscode.StatusBarAlignment.Left,
       100
     );
 
-    this.statusBarItem.command = 'QOOCODE.chat';
-    this.statusBarItem.text = '$(robot) QOOCODE';
-    this.statusBarItem.tooltip = 'QOOCODE AI Assistant';
+    this.statusBarItem.command = 'qoocode.chat';
+    this.statusBarItem.text = '$(robot) qoocode';
+    this.statusBarItem.tooltip = 'qoocode AI Assistant';
   }
 
   show(): void {
@@ -35,7 +35,7 @@ export class QOOCODEStatusBar {
     this.statusBarItem.hide();
   }
 
-  setStatus(status: QOOCODEStatus, message?: string): void {
+  setStatus(status: QoocodeStatus, message?: string): void {
     this.status = status;
 
     // Clear any pending timeout
@@ -47,27 +47,27 @@ export class QOOCODEStatusBar {
     // Update status bar
     switch (status) {
       case 'idle':
-        this.statusBarItem.text = '$(robot) QOOCODE: Idle';
+        this.statusBarItem.text = '$(robot) qoocode: Idle';
         this.statusBarItem.color = undefined;
         break;
 
       case 'running':
-        this.statusBarItem.text = '$(loading~spin) QOOCODE: Running';
+        this.statusBarItem.text = '$(loading~spin) qoocode: Running';
         this.statusBarItem.color = '#89d185'; // Green
         break;
 
       case 'thinking':
-        this.statusBarItem.text = '$(sync~spin) QOOCODE: Thinking';
+        this.statusBarItem.text = '$(sync~spin) qoocode: Thinking';
         this.statusBarItem.color = '#dcdcaa'; // Yellow
         break;
 
       case 'stopped':
-        this.statusBarItem.text = '$(debug-stop) QOOCODE: Stopped';
+        this.statusBarItem.text = '$(debug-stop) qoocode: Stopped';
         this.statusBarItem.color = '#f14c4c'; // Red
         break;
 
       case 'error':
-        this.statusBarItem.text = '$(error) QOOCODE: Error';
+        this.statusBarItem.text = '$(error) qoocode: Error';
         this.statusBarItem.color = '#f14c4c'; // Red
         break;
     }
@@ -76,26 +76,26 @@ export class QOOCODEStatusBar {
     if (message) {
       this.statusBarItem.tooltip = message;
     } else {
-      this.statusBarItem.tooltip = `QOOCODE AI Assistant\nStatus: ${status}`;
+      this.statusBarItem.tooltip = `qoocode AI Assistant\nStatus: ${status}`;
     }
 
     // Auto-reset thinking status after timeout
     if (status === 'thinking') {
       this.statusUpdateTimeout = setTimeout(() => {
         if (this.status === 'thinking') {
-          this.statusBarItem.text = '$(robot) QOOCODE';
+          this.statusBarItem.text = '$(robot) qoocode';
           this.statusBarItem.color = undefined;
         }
       }, 5000);
     }
   }
 
-  getStatus(): QOOCODEStatus {
+  getStatus(): QoocodeStatus {
     return this.status;
   }
 
   setModel(model: string): void {
-    this.statusBarItem.tooltip = `QOOCODE (${model})`;
+    this.statusBarItem.tooltip = `qoocode (${model})`;
   }
 
   setProgress(progress: number): void {

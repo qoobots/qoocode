@@ -1,4 +1,4 @@
-﻿// Memory command - Manage QOOCODE memory files with typed taxonomy
+﻿// Memory command - Manage qoocode memory files with typed taxonomy
 import { execSync } from 'child_process'
 import { existsSync } from 'fs'
 import { join } from 'path'
@@ -9,7 +9,7 @@ import { type MemoryType, MEMORY_TYPE_DESCRIPTIONS } from '../../services/memory
 
 export const memory: Command = {
   name: 'memory',
-  description: 'Manage QOOCODE memory files with typed taxonomy',
+  description: 'Manage qoocode memory files with typed taxonomy',
   type: 'local',
   usage: 'memory [list|create|delete|show] [options]',
   async execute(args: string): Promise<LocalCommandResult> {

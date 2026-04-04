@@ -1,6 +1,6 @@
 ﻿/**
- * QOOCODE Design System
- * Unified UI components and theming for QOOCODE extension
+ * qoocode Design System
+ * Unified UI components and theming for qoocode extension
  */
 
 import * as vscode from 'vscode';
@@ -382,7 +382,7 @@ export class DesignSystemProvider {
   }
 
   /**
-   * Get base CSS styles for QOOCODE components
+   * Get base CSS styles for qoocode components
    */
   public getBaseStyles(): string {
     return `

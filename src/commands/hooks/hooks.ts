@@ -47,8 +47,8 @@ export const hooksCmd: Command = {
     /hooks add Stop "*" "echo 'Turn complete'"
   
   Hooks are stored in:
-    Project: .QOOCODE/settings.json
-    Personal: ~/.QOOCODE/settings.local.json`
+    Project: .qoocode/settings.json
+    Personal: ~/.qoocode/settings.local.json`
     }
     
     // List hooks

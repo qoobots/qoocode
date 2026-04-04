@@ -1,19 +1,19 @@
 ﻿/**
- * QOOCODE VS Code Extension
+ * qoocode VS Code Extension
  * Diagnostics and Code Actions provider
  */
 
 import * as vscode from 'vscode';
-import { QOOCODEConfig } from '../config/config';
+import { QoocodeConfig } from '../config/config';
 
-export class QOOCODEDiagnosticsProvider {
+export class QoocodeDiagnosticsProvider {
   private diagnosticCollection: vscode.DiagnosticCollection;
-  private config: QOOCODEConfig;
+  private config: QoocodeConfig;
   private debounceTimer: NodeJS.Timeout | undefined;
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
-    this.diagnosticCollection = vscode.languages.createDiagnosticCollection('QOOCODE');
+    this.diagnosticCollection = vscode.languages.createDiagnosticCollection('qoocode');
   }
 
   /**
@@ -56,7 +56,7 @@ export class QOOCODEDiagnosticsProvider {
           issue.message,
           this.mapSeverity(issue.level)
         );
-        diagnostic.source = 'QOOCODE';
+        diagnostic.source = 'qoocode';
         diagnostic.code = issue.code;
         diagnostics.push(diagnostic);
       }
@@ -77,7 +77,7 @@ export class QOOCODEDiagnosticsProvider {
         issues.push({
           start: match.index,
           end: match.index + match[0].length,
-          message: `QOOCODE: TODO/FIXME without assignee detected. Click to ask QOOCODE to help.`,
+          message: `qoocode: TODO/FIXME without assignee detected. Click to ask qoocode to help.`,
           level: 'warning',
           code: 'todo-without-assignee'
         });
@@ -95,7 +95,7 @@ export class QOOCODEDiagnosticsProvider {
         issues.push({
           start: match.index,
           end: match.index + match[0].length,
-          message: `QOOCODE: Variable '${varName}' appears unused`,
+          message: `qoocode: Variable '${varName}' appears unused`,
           level: 'hint',
           code: 'unused-variable'
         });
@@ -148,14 +148,14 @@ interface Issue {
   code: string;
 }
 
-export class QOOCODECodeActionProvider implements vscode.CodeActionProvider {
-  private config: QOOCODEConfig;
+export class QoocodeCodeActionProvider implements vscode.CodeActionProvider {
+  private config: QoocodeConfig;
   public static readonly providedCodeActionKinds = [
     vscode.CodeActionKind.Refactor,
     vscode.CodeActionKind.QuickFix
   ];
 
-  constructor(config: QOOCODEConfig) {
+  constructor(config: QoocodeConfig) {
     this.config = config;
   }
 
@@ -166,26 +166,26 @@ export class QOOCODECodeActionProvider implements vscode.CodeActionProvider {
   ): vscode.CodeAction[] {
     const actions: vscode.CodeAction[] = [];
 
-    // Add "Explain with QOOCODE" action
+    // Add "Explain with qoocode" action
     const explainAction = new vscode.CodeAction(
-      '$(sparkle) Explain with QOOCODE',
+      '$(sparkle) Explain with qoocode',
       vscode.CodeActionKind.Refactor
     );
     explainAction.command = {
-      command: 'QOOCODE.explain',
-      title: 'Explain with QOOCODE',
+      command: 'qoocode.explain',
+      title: 'Explain with qoocode',
       arguments: [document.uri, range]
     };
     actions.push(explainAction);
 
-    // Add "Refactor with QOOCODE" action
+    // Add "Refactor with qoocode" action
     const refactorAction = new vscode.CodeAction(
-      '$(sparkle) Refactor with QOOCODE',
+      '$(sparkle) Refactor with qoocode',
       vscode.CodeActionKind.Refactor
     );
     refactorAction.command = {
-      command: 'QOOCODE.refactor',
-      title: 'Refactor with QOOCODE',
+      command: 'qoocode.refactor',
+      title: 'Refactor with qoocode',
       arguments: [document.uri, range]
     };
     actions.push(refactorAction);
@@ -193,12 +193,12 @@ export class QOOCODECodeActionProvider implements vscode.CodeActionProvider {
     // If there are diagnostics, add fix actions
     if (context.diagnostics.length > 0) {
       const fixAction = new vscode.CodeAction(
-        '$(sparkle) Fix with QOOCODE',
+        '$(sparkle) Fix with qoocode',
         vscode.CodeActionKind.QuickFix
       );
       fixAction.command = {
-        command: 'QOOCODE.fix',
-        title: 'Fix with QOOCODE',
+        command: 'qoocode.fix',
+        title: 'Fix with qoocode',
         arguments: [document.uri, context.diagnostics]
       };
       actions.push(fixAction);

@@ -23,7 +23,7 @@ export type QooCodeConfig = {
 }
 
 // Type alias for backward compatibility
-export type QOOCODEConfig = QooCodeConfig
+export type QoocodeConfig = QooCodeConfig
 
 function getConfigDir(): string {
   const home = os.homedir()
