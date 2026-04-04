@@ -72,7 +72,11 @@
 
 ```bash
 # 安装
-bun install -g qoocode
+bun install -g @qoobot/qoocode
+
+# 配置 API 密钥（首次使用必需）
+export OPENAI_API_KEY="your-api-key-here"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"
 
 # 运行
 qoocode
@@ -81,7 +85,14 @@ qoocode
 ### 方式二：使用 npm
 
 ```bash
-npm install -g qoocode
+# 安装
+npm install -g @qoobot/qoocode
+
+# 配置 API 密钥（首次使用必需）
+export OPENAI_API_KEY="your-api-key-here"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"
+
+# 运行
 qoocode
 ```
 
@@ -94,6 +105,10 @@ cd qoocode
 
 # 安装依赖
 bun install
+
+# 配置 API 密钥（首次使用必需）
+export OPENAI_API_KEY="your-api-key-here"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"
 
 # 开发模式
 bun run dev

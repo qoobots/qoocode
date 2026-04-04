@@ -1,15 +1,53 @@
 {
-  "name": "qoocode",
+  "name": "@qoobot/qoocode",
   "version": "0.1.16",
   "description": "Open-source AI coding assistant CLI - compatible with OpenAI/DeepSeek APIs",
   "type": "module",
+  "main": "dist/main.js",
+  "bin": {
+    "qoocode": "dist/main.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "dev": "bun run src/main.tsx",
     "build": "bun build src/main.tsx --outdir dist --target bun",
     "build:compile": "bun build --compile src/main.tsx --outfile qoocode",
+    "prepublishOnly": "bun run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "ai",
+    "assistant",
+    "cli",
+    "coding",
+    "openai",
+    "deepseek",
+    "anthropic",
+    "llm",
+    "gpt",
+    "claude"
+  ],
+  "author": "qoobots",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qoobots/qoocode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/qoobots/qoocode/issues"
+  },
+  "homepage": "https://github.com/qoobots/qoocode#readme",
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^13.1.0",
