@@ -3,4 +3,16 @@ node_modules
 .lingma
 .workbuddy
 
+# 环境变量和配置文件
+.env
+.env.local
+.env.*.local
+.QOOCODE/
+
+# 测试相关
+heapdump-*.heapsnapshot
+uat-test.bat
+uat-test-script.sh
+
+
 
