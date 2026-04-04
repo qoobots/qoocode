@@ -8,6 +8,8 @@
 [![Test](https://img.shields.io/badge/Tests-113/124%20passed-brightgreen.svg)]()
 [![GitHub Stars](https://img.shields.io/github/stars/qoobots/qoocode?style=social)]()
 
+English | [中文](./README.md)
+
 🚀 An open-source AI coding assistant CLI compatible with OpenAI/DeepSeek APIs, providing intelligent code assistance right in your terminal.
 
 > qoocode is a fully open-source independent project, inspired by and referencing the [Claude Code source code](https://github.com/qoobots/opencode), with complete feature replication.

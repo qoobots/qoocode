@@ -10,7 +10,7 @@
 [![Test](https://img.shields.io/badge/Tests-254%20passed-brightgreen.svg)](./src)
 [![GitHub Stars](https://img.shields.io/github/stars/qoobots/qoocode?style=social)](https://github.com/qoobots/qoocode)
 
-**English** | [中文](./README.md)
+**[English](./README_en.md)** | 中文
 
 🚀 在终端中为你提供 AI 驱动的代码辅助，支持 OpenAI、DeepSeek 等所有兼容 OpenAI API 的模型。
 
