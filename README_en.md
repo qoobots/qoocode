@@ -10,6 +10,8 @@
 
 🚀 An open-source AI coding assistant CLI compatible with OpenAI/DeepSeek APIs, providing intelligent code assistance right in your terminal.
 
+> QOOCODE is a fully open-source independent project, inspired by and referencing the [Claude Code source code](https://github.com/qoobots/opencode), with complete feature replication.
+
 ## ✨ Features
 
 ### Core Capabilities
