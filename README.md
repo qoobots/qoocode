@@ -14,6 +14,8 @@
 
 🚀 在终端中为你提供 AI 驱动的代码辅助，支持 OpenAI、DeepSeek 等所有兼容 OpenAI API 的模型。
 
+> qoocode 参考 [Claude Code 源码](https://github.com/qoobots/opencode) 实现，是一个完全开源的独立项目，功能完整复刻
+
 [快速开始](#-快速开始) • [特性](#-特性) • [安装](#-安装) • [文档](#-文档) • [贡献](#-贡献)
 
 </div>
