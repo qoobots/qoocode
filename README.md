@@ -4,10 +4,10 @@
 
 **开源 AI 编程助手 - 终端中的智能代码助手**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Bun](https://img.shields.io/badge/Bun-1.3-green.svg)](https://bun.sh/)
-[![Test](https://img.shields.io/badge/Tests-124%20passed-brightgreen.svg)](./src)
+[![Test](https://img.shields.io/badge/Tests-254%20passed-brightgreen.svg)](./src)
 [![GitHub Stars](https://img.shields.io/github/stars/qoobots/qoocode?style=social)](https://github.com/qoobots/qoocode)
 
 **English** | [中文](./README.md)
@@ -100,7 +100,7 @@ bun run dev
 
 # 构建发布版本（JS bundle）
 bun run build
-./dist/qoocode
+node dist/main.js
 
 # 编译为独立的 exe 可执行文件
 bun run build:compile
@@ -343,7 +343,7 @@ A: 需要 API 密钥来调用远程模型，暂不支持本地模型。
 
 ## 📄 许可证
 
-本项目采用 [MIT 许可证](./LICENSE)。
+本项目采用 [Apache-2.0 许可证](./LICENSE)。
 
 ---
 
