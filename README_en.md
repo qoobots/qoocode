@@ -33,7 +33,35 @@
 
 ## 📦 Installation
 
-### Option 1: Download Binary (Recommended)
+### Option 1: Bun (Recommended)
+
+```bash
+# Install
+bun install -g @qoobot/qoocode
+
+# Configure API key (required on first use)
+export OPENAI_API_KEY="your-api-key-here"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"
+
+# Run
+qoocode
+```
+
+### Option 2: npm
+
+```bash
+# Install
+npm install -g @qoobot/qoocode
+
+# Configure API key (required on first use)
+export OPENAI_API_KEY="your-api-key-here"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"
+
+# Run
+qoocode
+```
+
+### Option 3: Download Binary
 
 Download the executable for your platform from [Releases](https://github.com/qoobots/qoocode/releases):
 
@@ -53,7 +81,7 @@ chmod +x qoocode
 ./qoocode
 ```
 
-### Option 2: Build from Source
+### Option 4: Build from Source
 
 ```bash
 # Clone the repository
@@ -62,6 +90,10 @@ cd qoocode
 
 # Install dependencies
 bun install
+
+# Configure API key (required on first use)
+export OPENAI_API_KEY="your-api-key-here"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"
 
 # Build executable
 bun run build:compile

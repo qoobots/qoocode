@@ -486,7 +486,7 @@ A: 需要 API 密钥来调用远程模型，暂不支持本地模型。
 
 ## 📬 联系方式
 
-- GitHub Issues: [https://github.com/qoocode-dev/qoocode/issues](https://github.com/qoocode-dev/qoocode/issues)
+- GitHub Issues: [https://github.com/qoocodes/qoocode/issues](https://github.com/qoocodes/qoocode/issues)
 
 ---
 
