@@ -113,24 +113,132 @@ bun run build:compile
 
 ### 1. 配置 API 密钥
 
+qoocode 支持多种配置方式,按优先级从高到低:
+
+#### 方式一: 环境变量 (推荐用于临时使用)
+
+**Linux/macOS (Bash/Zsh):**
 ```bash
-# Linux/macOS
-export OPENAI_API_KEY="your-api-key"
-export OPENAI_BASE_URL="https://api.deepseek.com/v1"  # 可选
+# 添加到 ~/.bashrc 或 ~/.zshrc 使其永久生效
+export OPENAI_API_KEY="your-api-key-here"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"  # DeepSeek API
+export OPENAI_MODEL="deepseek-chat"                   # 可选,默认 deepseek-chat
 
-# Windows (PowerShell)
-$env:OPENAI_API_KEY="your-api-key"
-$env:OPENAI_BASE_URL="https://api.deepseek.com/v1"
-
-# Windows (CMD)
-set OPENAI_API_KEY=your-api-key
+# 或使用 OpenAI 官方 API
+export OPENAI_API_KEY="sk-your-openai-api-key"
+# OPENAI_BASE_URL 和 OPENAI_MODEL 可省略,使用默认值
 ```
 
-### 2. 启动程序
+**Windows (PowerShell):**
+```powershell
+# 添加到 $PROFILE 使其永久生效
+$env:OPENAI_API_KEY="your-api-key-here"
+$env:OPENAI_BASE_URL="https://api.deepseek.com/v1"
+$env:OPENAI_MODEL="deepseek-chat"
+```
+
+**Windows (CMD):**
+```cmd
+set OPENAI_API_KEY=your-api-key-here
+set OPENAI_BASE_URL=https://api.deepseek.com/v1
+set OPENAI_MODEL=deepseek-chat
+```
+
+**Windows (永久设置):**
+```cmd
+setx OPENAI_API_KEY "your-api-key-here"
+setx OPENAI_BASE_URL "https://api.deepseek.com/v1"
+setx OPENAI_MODEL "deepseek-chat"
+```
+
+#### 方式二: 配置文件 (推荐用于长期使用)
+
+创建配置文件 `~/.qoocode/config.json` (Linux/macOS) 或 `%USERPROFILE%\.qoocode\config.json` (Windows):
+
+```json
+{
+  "apiKey": "your-api-key-here",
+  "baseUrl": "https://api.deepseek.com/v1",
+  "model": "deepseek-chat",
+  "maxTokens": 8192,
+  "temperature": 0.7,
+  "timeoutMs": 120000,
+  "debug": false,
+  "verbose": false
+}
+```
+
+#### 方式三: 命令行参数 (推荐用于临时覆盖)
 
 ```bash
+# 使用 DeepSeek
+qoocode --api-key your-api-key --base-url https://api.deepseek.com/v1 --model deepseek-chat
+
+# 使用 OpenAI
+qoocode --api-key sk-your-openai-api-key --model gpt-4o
+
+# 使用通义千问
+qoocode --api-key your-api-key --base-url https://dashscope.aliyuncs.com/compatible-mode/v1 --model qwen-plus
+```
+
+### 2. 获取 API 密钥
+
+qoocode 支持所有兼容 OpenAI API 的服务:
+
+| 服务商 | 获取地址 | Base URL | 推荐模型 |
+|--------|---------|----------|---------|
+| **OpenAI** | https://platform.openai.com/api-keys | (默认) | gpt-4o, gpt-3.5-turbo |
+| **DeepSeek** | https://platform.deepseek.com/api_keys | https://api.deepseek.com/v1 | deepseek-chat, deepseek-reasoner |
+| **通义千问** | https://dashscope.console.aliyun.com/apiKey | https://dashscope.aliyuncs.com/compatible-mode/v1 | qwen-plus, qwen-turbo |
+| **智谱 GLM** | https://open.bigmodel.cn/usercenter/apikeys | https://open.bigmodel.cn/api/paas/v4 | glm-4 |
+| **Moonshot (Kimi)** | https://platform.moonshot.cn/console/api-keys | https://api.moonshot.cn/v1 | moonshot-v1-8k |
+| **Anthropic Claude** | https://console.anthropic.com/settings/keys | https://api.anthropic.com | claude-3-5-sonnet |
+
+**示例配置:**
+
+```bash
+# DeepSeek (性价比高,推荐)
+export OPENAI_API_KEY="sk-deepseek-api-key"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"
+export OPENAI_MODEL="deepseek-chat"
+
+# OpenAI GPT-4o (最强模型)
+export OPENAI_API_KEY="sk-openai-api-key"
+export OPENAI_MODEL="gpt-4o"
+
+# 通义千问 (国内访问快)
+export OPENAI_API_KEY="sk-aliyun-api-key"
+export OPENAI_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
+export OPENAI_MODEL="qwen-plus"
+```
+
+### 3. 验证配置
+
+配置完成后,运行以下命令验证:
+
+```bash
+# 显示当前配置信息
+qoocode --help
+
+# 直接运行程序
 qoocode
 ```
+
+如果配置正确,你会看到欢迎界面,可以开始对话了。
+
+### 4. 常见问题
+
+**Q: 提示 "OPENAI_API_KEY is required"?**
+A: 请检查环境变量或配置文件是否正确设置,确保 API key 不为空。
+
+**Q: 如何切换不同的模型?**
+A: 有三种方式:
+- 修改环境变量 `OPENAI_MODEL`
+- 修改配置文件中的 `model` 字段
+- 使用命令行参数 `--model xxx`
+
+**Q: 可以同时配置多个服务商吗?**
+A: 可以通过命令行参数临时切换,或在配置文件中保存多份配置,使用时通过命令行参数指定。
 
 ### 3. 开始对话
 
@@ -230,12 +338,17 @@ qoocode > 查看这个函数的实现
 
 ### 环境变量
 
-| 变量 | 描述 | 默认值 |
-|------|------|--------|
-| `OPENAI_API_KEY` | API 密钥 | - |
-| `OPENAI_BASE_URL` | API 地址 | OpenAI |
-| `OPENAI_MODEL` | 模型名称 | gpt-4 |
-| `qoocode_DEBUG` | 调试模式 | false |
+| 环境变量 | 描述 | 默认值 | 示例 |
+|---------|------|--------|------|
+| `OPENAI_API_KEY` | API 密钥(必需) | - | `sk-your-api-key` |
+| `OPENAI_BASE_URL` | API 基础地址 | `https://api.openai.com/v1` | `https://api.deepseek.com/v1` |
+| `OPENAI_MODEL` | 模型名称 | `deepseek-chat` | `gpt-4o`, `deepseek-chat` |
+| `QOOCODE_MAX_TOKENS` | 最大输出 token 数 | 8192 | 4096, 16384 |
+| `QOOCODE_DEBUG` | 调试模式 | false | 1, true |
+| `QOOCODE_VERBOSE` | 详细输出模式 | false | 1, true |
+| `QOOCODE_CONFIG` | 配置文件路径 | `~/.qoocode/config.json` | `/path/to/config.json` |
+
+**配置优先级:** 命令行参数 > 环境变量 > 配置文件 > 默认值
 
 ---
 

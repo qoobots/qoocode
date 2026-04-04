@@ -1,10 +1,11 @@
 ﻿import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { Box, Text, useApp, useInput } from 'ink'
+import { Box, Text, useApp, useInput, Static } from 'ink'
 import type { Message, AssistantMessage, StreamEvent } from '../../types/message.js'
 import { useAppState } from '../../state/AppState.js'
 import { createUserMessage } from '../../utils/messages.js'
 import { query } from '../../query.js'
 import { getCommands, findCommand } from '../../commands.js'
+import { APP_VERSION } from '../../constants/defaults.js'
 
 // Windows 兼容的 REPL 组件 - 使用 ref 存储输入缓冲区
 export function WindowsREPL(): React.ReactElement {
@@ -191,12 +192,37 @@ export function WindowsREPL(): React.ReactElement {
   return (
     <Box flexDirection="column">
       {/* 标题 */}
-      <Box borderStyle="double" borderColor="blue" paddingX={2}>
-        <Text bold>qoocode v0.1.0 — AI Coding Assistant ({state.config.model})</Text>
+      <Box paddingX={1} paddingY={1}>
+        <Box flexDirection="column">
+          <Box><Text bold color="cyan">╔═════════════════════════════════════╗════════════════════════╗</Text></Box>
+          <Box><Text bold color="blue">║                                     ║  qoocode v{APP_VERSION}        ║</Text></Box>
+          <Box><Text bold color="blue">║                       .::::.        ║  AI Coding Assistant   ║</Text></Box>
+          <Box><Text bold color="blue">║                     .::::::::.      ║  开源 AI 编程助手      ║</Text></Box>
+          <Box><Text bold color="blue">║                     :::::::::::     ║  智能代码分析          ║</Text></Box>
+          <Box><Text bold color="blue">║                     ':::::::::::.   ║  自动化开发            ║</Text></Box>
+          <Box><Text bold color="blue">║                      :::::::::::'   ║  当前模型:             ║</Text></Box>
+          <Box><Text bold color="blue">║                       ':::::::.     ║  ></Text><Text bold color="green"> {state.config.model}    </Text><Text bold color="blue">║</Text></Box>
+          <Box><Text bold color="blue">║                         .::::::::'  ║  支持主流大模型:       ║</Text></Box>
+          <Box><Text bold color="blue">║                       .::::::...    ║  > OpenAI (GPT-4/3.5)  ║</Text></Box>
+          <Box><Text bold color="blue">║                      :::::::''      ║  > DeepSeek (R1/V3)    ║</Text></Box>
+          <Box><Text bold color="blue">║           .:::.      '::::::'':::   ║  > Anthropic (Claude)  ║</Text></Box>
+          <Box><Text bold color="blue">║         .::::::.     ':::'  ':::    ║  > 通义千问 (Qwen)     ║</Text></Box>
+          <Box><Text bold color="blue">║        .::::::::::   :::     ':::   ║  > 智谱 GLM            ║</Text></Box>
+          <Box><Text bold color="blue">║       .:::: ':::::::  :::     ':::  ║  > 月之暗面 (Kimi)     ║</Text></Box>
+          <Box><Text bold color="blue">║      .::::     ':::::::::::     ':. ║  > 百度文心            ║</Text></Box>
+          <Box><Text bold color="blue">║     .::::        ':::::::::::   ':. ║  > 阿里通义            ║</Text></Box>
+          <Box><Text bold color="blue">║     .::'            '::::::: :::.   ║  > 腾讯混元            ║</Text></Box>
+          <Box><Text bold color="blue">║  ..::::             :::::::::.':.   ║  > 字节豆包            ║</Text></Box>
+          <Box><Text bold color="blue">║ ....:'               ':::::::.      ║                        ║</Text></Box>
+          <Box><Text bold color="blue">╚═════════════════════════════════════╝════════════════════════╝</Text></Box>
+        </Box>
       </Box>
 
       <Box padding={1}>
-        <Text>Welcome to qoocode! Type a message to start, or use /help for commands.</Text>
+        <Text color="cyan">🚀 欢迎使用 qoocode！</Text>
+        <Text> 输入消息开始对话，或使用 </Text>
+        <Text bold color="green">/help</Text>
+        <Text> 查看所有命令。</Text>
       </Box>
 
       {/* 消息区域 */}
