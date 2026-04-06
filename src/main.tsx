@@ -46,10 +46,27 @@ const program = new Command()
 
     // Non-interactive mode
     if (opts.prompt) {
-      const { querySimple } = await import('./query.js')
+      const { query } = await import('./query.js')
       const { createUserMessage } = await import('./utils/messages.js')
-      const result = await querySimple(config, [createUserMessage(opts.prompt)])
-      console.log(result.content)
+
+      // Use query instead of querySimple to support tool calls
+      const result = await query({
+        config,
+        messages: [createUserMessage(opts.prompt)],
+        cost: { totalCostUSD: 0, totalTokens: 0, entries: [] },
+        onStreamEvent: (event) => {
+          // Output streaming events to stdout for visibility
+          if (event.type === 'text_delta' && event.text) {
+            process.stdout.write(event.text)
+          } else if (event.type === 'tool_call_start') {
+            process.stdout.write(`\n[执行工具: ${event.functionName}]\n`)
+          } else if (event.type === 'error') {
+            process.stdout.write(`\n[错误: ${event.error.message}]\n`)
+          }
+        }
+      })
+
+      // Don't output final message again since we already streamed it
       process.exit(0)
     }
 

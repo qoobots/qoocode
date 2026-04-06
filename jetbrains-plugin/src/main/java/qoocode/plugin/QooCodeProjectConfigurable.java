@@ -39,7 +39,8 @@ public class QooCodeProjectConfigurable implements Configurable {
     
     @Override
     public JComponent createComponent() {
-        mainPanel = new JPanel(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         
         enableProjectCheck = new JCheckBox("Enable qoocode for this project");
         autoAnalyzeCheck = new JCheckBox("Auto-analyze files on save");

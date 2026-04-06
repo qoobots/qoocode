@@ -1,56 +1,74 @@
 ﻿plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.15.0"
-    id("org.jetbrains.kotlin.jvm") version "1.8.20"
+    id("org.jetbrains.intellij.platform") version "2.13.1"
+    id("org.jetbrains.kotlin.jvm") version "2.0.21"
 }
 
 group = "com.qoocode"
-version = "0.1.30"
+version = providers.gradleProperty("pluginVersion").get()
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+intellijPlatform {
+    intellijIdea("2023.1.2")
+    bundledPlugin("com.intellij.java")
+    bundledPlugin("org.jetbrains.kotlin")
 }
 
-intellij {
-    pluginName.set("qoocode")
-    version.set("2023.1.2")
-    type.set("IC")
-    
-    plugins.set(listOf(
-        "com.intellij.java",
-        "com.intellij.platform.core"
-    ))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
 }
 
 tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+    withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
-    
-    patchPluginXml {
-        version.set(project.version.toString())
-        sinceBuild.set("231")
-        untilBuild.set("242")
-    }
-    
-    buildSearchableOptions {
-        enabled = false
-    }
-    
-    runIde {
-        maxHeapSize.set("2g")
-    }
-    
-    wrapper {
-        gradleVersion.set("8.4")
-    }
-}
 
-kotlin {
-    jvmToolchain(17)
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
+
+    // 复制 qoocode.exe 到插件资源目录（在构建插件之前执行）
+    register<Copy>("copyQooCodeExe") {
+        // qoocode.exe 应该在项目根目录（jetbrains-plugin的父目录）
+        val parentDir = projectDir.parentFile
+        val qoocodeExe = File(parentDir, "qoocode.exe")
+        val targetDir = File(projectDir, "src/main/resources/bin")
+
+        if (qoocodeExe.exists()) {
+            from(qoocodeExe)
+            into(targetDir)
+            doLast {
+                println("Successfully copied qoocode.exe from ${qoocodeExe.absolutePath} to ${targetDir.absolutePath}")
+            }
+        } else {
+            println("Warning: qoocode.exe not found at ${qoocodeExe.absolutePath}")
+            println("Current projectDir: ${projectDir.absolutePath}")
+            println("Expected qoocode.exe location: ${qoocodeExe.absolutePath}")
+        }
+    }
+
+    // 在构建插件之前复制 qoocode.exe
+    named<Copy>("copyQooCodeExe") {
+        // Copy task is defined above
+    }
+
+    // 设置 buildPlugin 任务依赖 copyQooCodeExe
+    named("buildPlugin") {
+        dependsOn("copyQooCodeExe")
+    }
+
+    // 也要确保 processResources 任务在复制后执行
+    named("processResources") {
+        dependsOn("copyQooCodeExe")
+    }
 }

@@ -6,12 +6,12 @@ package qoocode.plugin.actions;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.project.*;
-import com.intellij.openapi.options.*;
-import com.intellij.openapi.diagnostic.*;
+import com.intellij.openapi.options.ShowSettingsUtil;
+import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.*;
 
 public class QooCodeSettingsAction extends AnAction {
-    private static final Logger LOG = Logger.getLogger(QooCodeSettingsAction.class);
+    private static final Logger LOG = Logger.getInstance(QooCodeSettingsAction.class);
     
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {

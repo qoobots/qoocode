@@ -47,24 +47,54 @@ function loadConfigFile(): Record<string, unknown> {
   return {}
 }
 
+// 清理字符串值中的多余引号（循环清理多层引号）
+function cleanStringValue(value: unknown): string {
+  if (typeof value !== 'string') return ''
+  let cleaned = value.trim()
+  // 循环移除首尾的引号
+  while (
+    (cleaned.startsWith('"') && cleaned.endsWith('"')) ||
+    (cleaned.startsWith("'") && cleaned.endsWith("'"))
+  ) {
+    cleaned = cleaned.slice(1, -1).trim()
+  }
+  return cleaned
+}
+
+// 清理环境变量值中的引号
+function cleanEnvValue(value: string | undefined): string {
+  return cleanStringValue(value)
+}
+
 export function resolveConfig(cliOverrides?: Partial<QooCodeConfig>): QooCodeConfig {
   const fileConfig = loadConfigFile()
+  const configDir = getConfigDir()
+
+  fs.appendFileSync(
+    path.join(configDir, 'qoocode-debug.log'),
+    `[${new Date().toISOString()}] === resolveConfig ===\n` +
+    `[${new Date().toISOString()}] cliOverrides: ${JSON.stringify(cliOverrides)}\n` +
+    `[${new Date().toISOString()}] fileConfig: ${JSON.stringify(fileConfig)}\n` +
+    `[${new Date().toISOString()}] OPENAI_API_KEY env: "${process.env.OPENAI_API_KEY}"\n` +
+    `[${new Date().toISOString()}] OPENAI_BASE_URL env: "${process.env.OPENAI_BASE_URL}"\n` +
+    `[${new Date().toISOString()}] OPENAI_MODEL env: "${process.env.OPENAI_MODEL}"\n`
+  )
 
   const config: QooCodeConfig = {
     apiKey:
       (cliOverrides?.apiKey as string) ||
-      (process.env.OPENAI_API_KEY as string) ||
-      (fileConfig.apiKey as string) ||
+      cleanEnvValue(process.env.OPENAI_API_KEY) ||
+      cleanStringValue(fileConfig.apiKey) ||
       '',
     baseUrl:
       (cliOverrides?.baseUrl as string) ||
-      (process.env.OPENAI_BASE_URL as string) ||
-      (fileConfig.baseUrl as string) ||
+      cleanEnvValue(process.env.OPENAI_BASE_URL) ||
+      cleanStringValue(fileConfig.baseUrl) ||
       DEFAULT_OPENAI_BASE_URL,
     model:
       (cliOverrides?.model as string) ||
-      (process.env.OPENAI_MODEL as string) ||
-      (fileConfig.model as string) ||
+      cleanEnvValue(process.env.OPENAI_MODEL) ||
+      cleanStringValue(fileConfig.model) ||
       DEFAULT_MODEL,
     maxTokens:
       (cliOverrides?.maxTokens as number) ||
@@ -77,11 +107,10 @@ export function resolveConfig(cliOverrides?: Partial<QooCodeConfig>): QooCodeCon
     verbose: cliOverrides?.verbose ?? (process.env.QOOCODE_VERBOSE === '1'),
   }
 
-  if (!config.apiKey) {
-    console.error('Error: OPENAI_API_KEY is required. Set it via environment variable or config file.')
-    console.error(`Config file: ${getConfigFilePath()}`)
-    process.exit(1)
-  }
+  fs.appendFileSync(
+    path.join(configDir, 'qoocode-debug.log'),
+    `[${new Date().toISOString()}] final config: ${JSON.stringify(config)}\n`
+  )
 
   return config
 }

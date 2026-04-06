@@ -10,60 +10,44 @@ import com.intellij.openapi.project.*;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.diagnostic.*;
 import com.intellij.openapi.wm.*;
+import com.intellij.openapi.util.Key;
 import qoocode.plugin.QooCodeChatPanel;
 import org.jetbrains.annotations.*;
 
 public class QooCodeRefactorAction extends AnAction {
-    private static final Logger LOG = Logger.getLogger(QooCodeRefactorAction.class);
-    
+    private static final Logger LOG = Logger.getInstance(QooCodeRefactorAction.class);
+
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         Project project = e.getProject();
         if (project == null) return;
-        
+
         Editor editor = e.getData(CommonDataKeys.EDITOR);
         if (editor == null) return;
-        
+
         String selectedText = editor.getSelectionModel().getSelectedText();
         if (selectedText == null || selectedText.isEmpty()) {
             LOG.info("No text selected for refactoring");
             return;
         }
-        
+
         LOG.info("Refactoring selected code");
-        
+
         ToolWindowManager manager = ToolWindowManager.getInstance(project);
         if (manager != null) {
             ToolWindow toolWindow = manager.getToolWindow("QooCode");
             if (toolWindow != null) {
                 toolWindow.show();
-                
-                Object userData = toolWindow.getUserData(QooCodeChatPanel.class);
-                if (userData instanceof QooCodeChatPanel) {
-                    QooCodeChatPanel chatPanel = (QooCodeChatPanel) userData;
-                    chatPanel.addMessage(new QooCodeChatPanel.ChatMessage(
-                        QooCodeChatPanel.MessageRole.USER,
-                        "Refactor this code to improve quality:\n" + selectedText
-                    ));
-                    chatPanel.addMessage(new QooCodeChatPanel.ChatMessage(
-                        QooCodeChatPanel.MessageRole.ASSISTANT,
-                        "Here are some refactoring suggestions:\n\n" +
-                        "1. Extract method for repeated logic\n" +
-                        "2. Use more descriptive variable names\n" +
-                        "3. Add early returns to reduce nesting\n" +
-                        "4. Consider using a strategy pattern for flexibility\n\n" +
-                        "Would you like me to generate the refactored code?"
-                    ));
-                }
+                LOG.info("Tool window shown");
             }
         }
     }
-    
+
     @Override
     public void update(@NotNull AnActionEvent e) {
         Project project = e.getProject();
         boolean hasSelection = false;
-        
+
         if (project != null) {
             Editor editor = e.getData(CommonDataKeys.EDITOR);
             if (editor != null) {
@@ -71,7 +55,7 @@ public class QooCodeRefactorAction extends AnAction {
                 hasSelection = selected != null && !selected.isEmpty();
             }
         }
-        
+
         e.getPresentation().setEnabled(hasSelection);
     }
 }

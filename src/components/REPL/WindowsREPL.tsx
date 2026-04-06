@@ -20,6 +20,26 @@ export function WindowsREPL(): React.ReactElement {
     const trimmed = inputRef.current.trim()
     if (!trimmed) return
 
+    // 检查必需的配置
+    const { apiKey, baseUrl, model } = state.config
+    if (!apiKey || apiKey.trim() === '' || !baseUrl || baseUrl.trim() === '' || !model || model.trim() === '') {
+      const missing: string[] = []
+      if (!apiKey || apiKey.trim() === '') missing.push('OPENAI_API_KEY')
+      if (!baseUrl || baseUrl.trim() === '') missing.push('OPENAI_BASE_URL')
+      if (!model || model.trim() === '') missing.push('OPENAI_MODEL')
+
+      dispatch({
+        type: 'ADD_MESSAGE',
+        message: {
+          role: 'assistant' as const,
+          content: `请先配置大模型！\n\n缺少配置: ${missing.join(', ')}\n\n配置方式：\n1. 设置环境变量 OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL\n2. 创建配置文件 ~/.qoocode/config.json\n3. 使用命令 /config 设置\n\n示例 (DeepSeek):\n  OPENAI_API_KEY=your-api-key\n  OPENAI_BASE_URL=https://api.deepseek.com/v1\n  OPENAI_MODEL=deepseek-chat\n\n查看帮助：/help`,
+        },
+      })
+      inputRef.current = ''
+      setInput('')
+      return
+    }
+
     inputRef.current = ''
     setInput('')
     
@@ -54,6 +74,7 @@ export function WindowsREPL(): React.ReactElement {
     setIsProcessing(true)
 
     try {
+      let queryError: string | null = null
       const result = await query({
         config: state.config,
         messages: [...state.messages, userMessage],
@@ -67,12 +88,25 @@ export function WindowsREPL(): React.ReactElement {
             dispatch({ type: 'ADD_TOOL_CALL', toolCallId: event.toolCallId, name: event.functionName })
           } else if (event.type === 'tool_call_end') {
             dispatch({ type: 'REMOVE_TOOL_CALL', toolCallId: event.toolCallId })
+          } else if (event.type === 'error') {
+            queryError = event.error.message
           }
         },
       })
 
       dispatch({ type: 'SET_COST', cost: result.cost })
       dispatch({ type: 'SET_MESSAGES', messages: result.messages })
+
+      // 如果有查询错误，显示错误消息
+      if (queryError) {
+        dispatch({
+          type: 'ADD_MESSAGE',
+          message: {
+            role: 'assistant' as const,
+            content: `Error: ${queryError}`,
+          },
+        })
+      }
     } catch (error) {
       const errorMessage: AssistantMessage = {
         role: 'assistant',
@@ -82,7 +116,7 @@ export function WindowsREPL(): React.ReactElement {
     } finally {
       setIsProcessing(false)
     }
-  }, [input, state, dispatch, exit])
+  }, [input, state.config.apiKey, state.config.baseUrl, state.config.model, dispatch, exit])
 
   // 简单的键盘处理（使用 ref 避免状态更新延迟）
   useInput((inputChar, key) => {

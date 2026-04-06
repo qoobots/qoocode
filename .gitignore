@@ -15,5 +15,32 @@ uat-test.bat
 uat-test-script.sh
 dist
 
+# Gradle
+.gradle/
+.gradle/
+build/
+.kotlin/
+.intellijPlatform/
+gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat
+
+# JetBrains 插件构建产物
+jetbrains-plugin/.gradle/
+jetbrains-plugin/.kotlin/
+jetbrains-plugin/.intellijPlatform/
+jetbrains-plugin/build/
+
+# Bun 构建缓存
+*.bun-build
+
+# 临时文件
+src/utils/untitled
+src/utils/untitled\(1\)
+src/utils/untitled\(2\)
+
+# 发布目录
+release/
+
 
 

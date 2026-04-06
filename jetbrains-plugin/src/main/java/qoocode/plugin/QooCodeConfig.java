@@ -27,7 +27,7 @@ public class QooCodeConfig implements PersistentStateComponent<QooCodeConfig.Sta
     public static class State {
         public String apiUrl = "http://localhost:8080";
         public String apiKey = "";
-        public String model = "claude-3-5-sonnet";
+        public String model = "claude-3-5-sonnet-20241022";
         public boolean autoStart = false;
         public boolean telemetryEnabled = true;
         public String theme = "dark";
@@ -47,66 +47,70 @@ public class QooCodeConfig implements PersistentStateComponent<QooCodeConfig.Sta
     }
     
     // Convenience methods
+    public static QooCodeConfig getInstance() {
+        return ApplicationManager.getApplication().getService(QooCodeConfig.class);
+    }
+
     public String getApiUrl() {
         return state.apiUrl;
     }
-    
+
     public void setApiUrl(String url) {
         state.apiUrl = url;
     }
-    
+
     public String getApiKey() {
         return state.apiKey;
     }
-    
+
     public void setApiKey(String key) {
         state.apiKey = key;
     }
-    
+
     public String getModel() {
         return state.model;
     }
-    
+
     public void setModel(String model) {
         state.model = model;
     }
-    
+
     public boolean isAutoStart() {
         return state.autoStart;
     }
-    
+
     public void setAutoStart(boolean autoStart) {
         state.autoStart = autoStart;
     }
-    
+
     public boolean isTelemetryEnabled() {
         return state.telemetryEnabled;
     }
-    
+
     public void setTelemetryEnabled(boolean enabled) {
         state.telemetryEnabled = enabled;
     }
-    
+
     public String getTheme() {
         return state.theme;
     }
-    
+
     public void setTheme(String theme) {
         state.theme = theme;
     }
-    
+
     public int getMaxTokens() {
         return state.maxTokens;
     }
-    
+
     public void setMaxTokens(int maxTokens) {
         state.maxTokens = maxTokens;
     }
-    
+
     public double getTemperature() {
         return state.temperature;
     }
-    
+
     public void setTemperature(double temperature) {
         state.temperature = temperature;
     }

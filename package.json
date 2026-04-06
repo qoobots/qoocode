@@ -19,6 +19,8 @@
     "dev": "bun run src/main.tsx",
     "build": "bun build src/main.tsx --outdir dist --target bun",
     "build:compile": "bun build --compile src/main.tsx --outfile qoocode",
+    "build:plugin": "cd jetbrains-plugin && ./gradlew.bat buildPlugin",
+    "build:all": "bun run build && bun run build:compile && bun run build:plugin",
     "prepublishOnly": "bun run build",
     "test": "vitest run",
     "test:watch": "vitest",

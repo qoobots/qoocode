@@ -7,24 +7,31 @@
     
     <description>
         qoocode - AI-Powered Code Assistant for JetBrains IDEs
-        
+
         Features:
-        - AI Chat Interface
+        - Full qoocode CLI Terminal Integration (59+ tools, 63+ commands)
+        - AI Chat Interface with Streaming Response
         - Code Analysis and Refactoring
         - Git Integration
-        - Terminal Integration
         - File Operations
         - Search and Navigation
         - Test Generation
         - Documentation Generation
+        - Built-in qoocode.exe binary (no separate installation required)
+
+        Terminal Features:
+        - All 59+ qoocode tools available (File operations, Grep, Git, etc.)
+        - All 63+ slash commands (/help, /clear, /model, /plan, etc.)
+        - Real-time interaction with AI assistant
+        - ANSI color support and progress bars
+        - qoocode.exe is bundled with the plugin
     </description>
-    
+
     <category>AI Tools</category>
-    
+
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.vcs</depends>
-    <depends>com.intellij.modules.terminal</depends>
     
     <extensionPoints>
         <extensionPoint name="QooCode.tool" interface="qoocode.plugin.QooCodeTool"/>
@@ -32,26 +39,48 @@
     </extensionPoints>
     
     <extensions defaultExtensionNs="com.intellij">
+        <!-- Application configuration service -->
+        <applicationService serviceImplementation="qoocode.plugin.QooCodeConfig"/>
+
         <!-- Application configuration -->
-        <applicationConfigurable instance="qoocode.plugin.QooCodeConfigurable"/>
-        
+        <applicationConfigurable
+            id="QooCode"
+            displayName="QooCode"
+            instance="qoocode.plugin.QooCodeConfigurable"
+            groupId="tools"/>
+
         <!-- Project settings -->
-        <projectConfigurable instance="qoocode.plugin.QooCodeProjectConfigurable"/>
+        <projectConfigurable
+            id="QooCode.Project"
+            displayName="QooCode (Project)"
+            instance="qoocode.plugin.QooCodeProjectConfigurable"
+            groupId="tools"/>
         
         <!-- Tool window factory -->
-        <toolWindowFactory implementation="qoocode.plugin.QooCodeToolWindowFactory"/>
+        <toolWindow id="QooCode"
+                    factoryClass="qoocode.plugin.QooCodeToolWindowFactory"
+                    anchor="right"
+                    icon="/META-INF/pluginIcon.svg"/>
         
         <!-- Status bar widget -->
         <StatusBarWidgetFactory id="QooCode.status" implementation="qoocode.plugin.QooCodeStatusBarWidget"/>
         
         <!-- Editor actions -->
         <actionGroup id="QooCode.Actions">
-            <action id="QooCode.Chat" 
+            <action id="QooCode.Terminal"
+                    class="qoocode.plugin.actions.QooCodeTerminalAction"
+                    text="QooCode Terminal"
+                    description="Open QooCode terminal interface">
+                <add-to-group group-id="ToolsMenu" anchor="first"/>
+                <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta shift t"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift t"/>
+            </action>
+            
+            <action id="QooCode.Chat"
                     class="qoocode.plugin.actions.QooCodeChatAction"
                     text="QooCode Chat"
                     description="Open QooCode chat interface">
-                <add-to-group group-id="ToolsMenu" anchor="last"/>
-                <add-to-group group-id="MainToolbar" anchor="last"/>
+                <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="QooCode.Terminal"/>
                 <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta shift o"/>
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift o"/>
             </action>
@@ -96,10 +125,7 @@
         
         <!-- Notifications -->
         <notificationGroup id="QooCode.notifications" displayType="BALLOON"/>
-        
-        <!-- File icons -->
-        <fileIconProvider implementation="qoocode.plugin.QooCodeFileIconProvider"/>
-        
+
         <!-- Quick fixes -->
         <intentionAction>
             <category>QooCode</category>
@@ -111,28 +137,14 @@
         <!-- Main toolbar action -->
         <action id="QooCode.main.action" class="qoocode.plugin.actions.QooCodeMainAction"
                 text="QooCode" description="QooCode AI Assistant">
-            <add-to-group group-id="MainToolbar" anchor="after" relative-to-action="ToolbarMainAction"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift q"/>
+        </action>
+
+        <!-- Main menu action -->
+        <action id="QooCode.menu.action" class="qoocode.plugin.actions.QooCodeMainAction"
+                text="QooCode AI Assistant" description="Open QooCode AI Assistant">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>
-    
-    <properties>
-        <property name="QooCode.api.url" value="http://localhost:8080"/>
-        <property name="QooCode.api.key" value=""/>
-        <property name="QooCode.auto.start" value="false"/>
-        <property name="QooCode.telemetry.enabled" value="true"/>
-    </properties>
-    
-    <changeNotes>
-        <![CDATA[
-        <version 0.1.30>
-            - Initial JetBrains plugin release
-            - Chat interface
-            - Code analysis
-            - Git integration
-            - Terminal integration
-            - File operations
-            - Search and navigation
-        </version>
-        ]]>
-    </changeNotes>
 </idea-plugin>

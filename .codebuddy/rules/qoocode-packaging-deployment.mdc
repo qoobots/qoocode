@@ -1,0 +1,123 @@
+---
+description: 
+alwaysApply: true
+enabled: true
+updatedAt: 2026-04-05T00:12:55.822Z
+provider: 
+---
+
+# QooCode 打包部署规范
+
+## 概述
+QooCode 项目包含两个核心组件，现已集成打包：
+1. **qoocode.exe** - 终端 AI 编程助手（通过 Bun 构建，内嵌到插件中）
+2. **jetbrains-plugin** - JetBrains IDE 插件（通过 Gradle 构建，包含 qoocode.exe）
+
+**重要变更**：qoocode.exe 现在内嵌到插件中，用户无需单独安装！
+
+## 版本号同步
+- `package.json` 中的 `version` (当前: 0.1.16)
+- `gradle.properties` 中的 `pluginVersion` (当前: 0.1.30)
+- 两个版本号需要在发布前同步
+
+## 打包流程
+
+### 1. 构建 qoocode.exe
+
+```bash
+# 在项目根目录执行
+cd d:/05workspaces/qoocode
+
+# 构建 Windows 可执行文件
+bun run build:compile
+
+# 生成的文件: qoocode.exe (在根目录)
+```
+
+### 2. 复制 qoocode.exe 到插件资源目录
+
+```bash
+# Windows
+if not exist jetbrains-plugin\src\main\resources\bin mkdir jetbrains-plugin\src\main\resources\bin
+copy qoocode.exe jetbrains-plugin\src\main\resources\bin\
+
+# Linux/macOS
+mkdir -p jetbrains-plugin/src/main/resources/bin
+cp qoocode jetbrains-plugin/src/main/resources/bin/
+```
+
+### 3. 构建 JetBrains 插件
+
+```bash
+# 进入插件目录
+cd jetbrains-plugin
+
+# 构建插件（使用 Gradle Wrapper）
+.\gradlew.bat buildPlugin
+
+# 生成的文件: build/distributions/jetbrains-plugin-{version}.zip
+# 该 ZIP 文件已包含 qoocode.exe
+```
+
+### 4. 版本号同步检查
+
+在打包前，必须确保：
+- `package.json` 的 `version` 字段
+- `gradle.properties` 的 `pluginVersion` 字段
+- 两者保持一致
+
+### 5. 创建发布包
+
+创建发布目录结构：
+```
+release/qoocode-{version}/
+├── jetbrains-plugin-{version}.zip  # 已内嵌 qoocode.exe
+├── README.md
+└── LICENSE
+```
+
+**注意**：qoocode.exe 已内嵌到插件 ZIP 包中，无需单独分发。
+
+## 自动化构建脚本
+
+项目已提供完整的自动化脚本：
+
+### Windows: release.bat
+- 自动构建 qoocode.exe
+- 自动复制到插件资源目录
+- 自动构建插件
+- 自动创建发布包
+
+### Linux/macOS: release.sh
+- 自动构建 qoocode
+- 自动复制到插件资源目录
+- 自动构建插件
+- 自动创建发布包
+
+## 部署注意事项
+
+### qoocode.exe 部署位置
+插件会在以下位置按优先级查找 `qoocode.exe`：
+1. **插件内嵌**：`bin/qoocode.exe` （优先使用，已内嵌在插件中）
+2. 项目根目录：`/path/to/project/qoocode.exe`
+3. 父目录：`/path/to/qoocode/qoocode.exe`
+4. 用户目录：`~/.qoocode/bin/qoocode.exe`
+5. 系统 AppData：`%LOCALAPPDATA%\qoocode\bin\qoocode.exe`
+6. 系统 PATH：`qoocode.exe`
+
+**重要**：插件优先使用内嵌的 qoocode.exe，无需额外安装！
+
+### 推荐部署方案
+1. **用户安装**：只需安装插件，qoocode.exe 已内嵌
+2. **开发者安装**：将 `qoocode.exe` 复制到项目根目录（用于独立开发）
+3. **系统安装**：将 `qoocode.exe` 安装到 `%LOCALAPPDATA%\qoocode\bin\`（可选）
+
+## 质量检查
+
+在发布前执行：
+1. 版本号一致性检查
+2. qoocode.exe 功能测试（运行 `qoocode --help`）
+3. 确认 qoocode.exe 已复制到 `jetbrains-plugin/src/main/resources/bin/`
+4. 插件完整性检查（通过 `./gradlew verifyPlugin`）
+5. 检查插件 ZIP 包包含 `bin/qoocode.exe`
+6. 插件和 CLI 的兼容性测试
