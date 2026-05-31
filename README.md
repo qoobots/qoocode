@@ -1,345 +1,223 @@
-﻿<div align="center">
+﻿# qoocode
 
-# qoocode
+**Open Source AI Coding Assistant CLI**
 
-**开源 AI 编程助手 - 终端中的智能代码助手**
-
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Bun](https://img.shields.io/badge/Bun-1.3-green.svg)](https://bun.sh/)
-[![Test](https://img.shields.io/badge/Tests-254%20passed-brightgreen.svg)](./src)
-[![GitHub Stars](https://img.shields.io/github/stars/qoobots/qoocode?style=social)](https://github.com/qoobots/qoocode)
+[![Test](https://img.shields.io/badge/Tests-113/124%20passed-brightgreen.svg)]()
+[![GitHub Stars](https://img.shields.io/github/stars/qoobots/qoocode?style=social)]()
 
-**[English](./README_en.md)** | 中文
+English | [中文](README_CN.md)
 
-🚀 在终端中为你提供 AI 驱动的代码辅助，支持 OpenAI、DeepSeek 等所有兼容 OpenAI API 的模型。
+🚀 An open-source AI coding assistant CLI compatible with OpenAI/DeepSeek APIs, providing intelligent code assistance right in your terminal.
 
-> qoocode 参考 [Claude Code 源码](https://github.com/qoobots/opencode) 实现，是一个完全开源的独立项目，功能完整复刻
+> qoocode is a fully open-source independent project, inspired by and referencing the [Claude Code source code](https://github.com/qoobots/opencode), with complete feature replication.
 
-[快速开始](#-快速开始) • [特性](#-特性) • [安装](#-安装) • [文档](#-文档) • [贡献](#-贡献)
+## ✨ Features
 
-</div>
+### Core Capabilities
+| Category | Tools | Description |
+|----------|-------|-------------|
+| **File Operations** | 8 | Read, write, edit, copy, move, delete files and directories |
+| **Git Operations** | 7 | Commit, diff, log, branch, status, tag, stash management |
+| **Code Search** | 5 | Grep, glob, LSP, symbol search, references |
+| **Web Capabilities** | 4 | Fetch, search, API calls, curl support |
+| **Testing** | 4 | Run tests, coverage, watch mode, test generation |
+| **Advanced** | 6 | Cache, hooks, auth, telemetry, update, MCP |
 
----
+### Multi-Platform IDE Integration
+- **VS Code Extension** - Full IDE integration for VS Code
+- **JetBrains Plugin** - Native plugin for IntelliJ, PyCharm, WebStorm, and more
 
-## ✨ 特性
+### 63 Slash Commands
+`/help`, `/add`, `/test`, `/search`, `/git`, `/web`, `/edit`, `/delete`, `/explain`, `/refactor`, `/lint`, `/benchmark`, `/doc`, `/debug`, `/security`, `/mcp`, and more...
 
-### 🤖 智能AI交互
-- 支持 OpenAI、DeepSeek、Anthropic 等所有兼容 OpenAI API 的模型
-- 智能代码分析和解释
-- 自动代码重构建议
+## 📦 Installation
 
-### 📁 完整文件操作
-- 读取、创建、编辑、删除文件
-- 目录结构分析和管理
-- 批量文件操作
-
-### 🔍 强大的搜索能力
-- Grep 全文搜索
-- Glob 文件模式匹配
-- 符号搜索和代码导航
-
-### 💻 Git 集成
-- 提交、分支、差异管理
-- 提交历史查看
-- Worktree 支持
-
-### 🌐 网络功能
-- 网页内容抓取
-- API 调用
-- 网络搜索
-
-### 🛡️ 安全特性
-- 23 种 Bash 安全检查
-- 命令替换检测
-- 危险命令阻止
-
-### 🎨 现代化界面
-- 基于 Ink/React 的终端 UI
-- 流式响应输出
-- 主题切换支持
-
----
-
-## 📦 安装
-
-### 前置要求
-
-- [Bun](https://bun.sh/) 1.3+ 或 Node.js 18+
-- OpenAI 兼容的 API 密钥
-
-### 方式一：使用 Bun（推荐）
+### Option 1: Bun (Recommended)
 
 ```bash
-# 安装
+# Install
 bun install -g @qoobot/qoocode
 
-# 配置 API 密钥（首次使用必需）
+# Configure API key (required on first use)
 export OPENAI_API_KEY="your-api-key-here"
 export OPENAI_BASE_URL="https://api.deepseek.com/v1"
 
-# 运行
+# Run
 qoocode
 ```
 
-### 方式二：使用 npm
+### Option 2: npm
 
 ```bash
-# 安装
+# Install
 npm install -g @qoobot/qoocode
 
-# 配置 API 密钥（首次使用必需）
+# Configure API key (required on first use)
 export OPENAI_API_KEY="your-api-key-here"
 export OPENAI_BASE_URL="https://api.deepseek.com/v1"
 
-# 运行
+# Run
 qoocode
 ```
 
-### 方式三：从源码构建
+### Option 3: Download Binary
+
+Download the executable for your platform from [Releases](https://github.com/qoobots/qoocode/releases):
+
+| Platform | Download |
+|----------|----------|
+| Windows x64 | `qoocode.exe` |
+| macOS x64 | `qoocode-macos` |
+| macOS ARM64 | `qoocode-macos-arm64` |
+| Linux x64 | `qoocode-linux` |
 
 ```bash
-# 克隆仓库
+# Windows
+.\qoocode.exe
+
+# macOS / Linux
+chmod +x qoocode
+./qoocode
+```
+
+### Option 4: Build from Source
+
+```bash
+# Clone the repository
 git clone https://github.com/qoobots/qoocode.git
 cd qoocode
 
-# 安装依赖
+# Install dependencies
 bun install
 
-# 配置 API 密钥（首次使用必需）
+# Configure API key (required on first use)
 export OPENAI_API_KEY="your-api-key-here"
 export OPENAI_BASE_URL="https://api.deepseek.com/v1"
 
-# 开发模式
-bun run dev
-
-# 构建发布版本（JS bundle）
-bun run build
-node dist/main.js
-
-# 编译为独立的 exe 可执行文件
+# Build executable
 bun run build:compile
-./qoocode.exe
+
+# Run directly
+bun run dev
 ```
 
----
+## 🚀 Quick Start
 
-## 🚀 快速开始
+### 1. Configure API Key
 
-### 1. 配置 API 密钥
-
-qoocode 支持多种配置方式,按优先级从高到低:
-
-#### 方式一: 环境变量 (推荐用于临时使用)
-
-**Linux/macOS (Bash/Zsh):**
 ```bash
-# 添加到 ~/.bashrc 或 ~/.zshrc 使其永久生效
-export OPENAI_API_KEY="your-api-key-here"
-export OPENAI_BASE_URL="https://api.deepseek.com/v1"  # DeepSeek API
-export OPENAI_MODEL="deepseek-chat"                   # 可选,默认 deepseek-chat
+# Linux/macOS
+export OPENAI_API_KEY="your-api-key"
+export OPENAI_BASE_URL="https://api.deepseek.com/v1"
+export OPENAI_MODEL="deepseek-chat"
 
-# 或使用 OpenAI 官方 API
-export OPENAI_API_KEY="sk-your-openai-api-key"
-# OPENAI_BASE_URL 和 OPENAI_MODEL 可省略,使用默认值
-```
-
-**Windows (PowerShell):**
-```powershell
-# 添加到 $PROFILE 使其永久生效
-$env:OPENAI_API_KEY="your-api-key-here"
+# Windows (PowerShell)
+$env:OPENAI_API_KEY="your-api-key"
 $env:OPENAI_BASE_URL="https://api.deepseek.com/v1"
 $env:OPENAI_MODEL="deepseek-chat"
-```
 
-**Windows (CMD):**
-```cmd
-set OPENAI_API_KEY=your-api-key-here
+# Windows (CMD)
+set OPENAI_API_KEY=your-api-key
 set OPENAI_BASE_URL=https://api.deepseek.com/v1
 set OPENAI_MODEL=deepseek-chat
 ```
 
-**Windows (永久设置):**
-```cmd
-setx OPENAI_API_KEY "your-api-key-here"
-setx OPENAI_BASE_URL "https://api.deepseek.com/v1"
-setx OPENAI_MODEL "deepseek-chat"
-```
-
-#### 方式二: 配置文件 (推荐用于长期使用)
-
-创建配置文件 `~/.qoocode/config.json` (Linux/macOS) 或 `%USERPROFILE%\.qoocode\config.json` (Windows):
-
-```json
-{
-  "apiKey": "your-api-key-here",
-  "baseUrl": "https://api.deepseek.com/v1",
-  "model": "deepseek-chat",
-  "maxTokens": 8192,
-  "temperature": 0.7,
-  "timeoutMs": 120000,
-  "debug": false,
-  "verbose": false
-}
-```
-
-#### 方式三: 命令行参数 (推荐用于临时覆盖)
+### 2. Run
 
 ```bash
-# 使用 DeepSeek
-qoocode --api-key your-api-key --base-url https://api.deepseek.com/v1 --model deepseek-chat
-
-# 使用 OpenAI
-qoocode --api-key sk-your-openai-api-key --model gpt-4o
-
-# 使用通义千问
-qoocode --api-key your-api-key --base-url https://dashscope.aliyuncs.com/compatible-mode/v1 --model qwen-plus
-```
-
-### 2. 获取 API 密钥
-
-qoocode 支持所有兼容 OpenAI API 的服务:
-
-| 服务商 | 获取地址 | Base URL | 推荐模型 |
-|--------|---------|----------|---------|
-| **OpenAI** | https://platform.openai.com/api-keys | (默认) | gpt-4o, gpt-3.5-turbo |
-| **DeepSeek** | https://platform.deepseek.com/api_keys | https://api.deepseek.com/v1 | deepseek-chat, deepseek-reasoner |
-| **通义千问** | https://dashscope.console.aliyun.com/apiKey | https://dashscope.aliyuncs.com/compatible-mode/v1 | qwen-plus, qwen-turbo |
-| **智谱 GLM** | https://open.bigmodel.cn/usercenter/apikeys | https://open.bigmodel.cn/api/paas/v4 | glm-4 |
-| **Moonshot (Kimi)** | https://platform.moonshot.cn/console/api-keys | https://api.moonshot.cn/v1 | moonshot-v1-8k |
-| **Anthropic Claude** | https://console.anthropic.com/settings/keys | https://api.anthropic.com | claude-3-5-sonnet |
-
-**示例配置:**
-
-```bash
-# DeepSeek (性价比高,推荐)
-export OPENAI_API_KEY="sk-deepseek-api-key"
-export OPENAI_BASE_URL="https://api.deepseek.com/v1"
-export OPENAI_MODEL="deepseek-chat"
-
-# OpenAI GPT-4o (最强模型)
-export OPENAI_API_KEY="sk-openai-api-key"
-export OPENAI_MODEL="gpt-4o"
-
-# 通义千问 (国内访问快)
-export OPENAI_API_KEY="sk-aliyun-api-key"
-export OPENAI_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
-export OPENAI_MODEL="qwen-plus"
-```
-
-### 3. 验证配置
-
-配置完成后,运行以下命令验证:
-
-```bash
-# 显示当前配置信息
-qoocode --help
-
-# 直接运行程序
 qoocode
+
+# Or use command line arguments
+qoocode --api-key your-api-key --base-url https://api.deepseek.com/v1 --model deepseek-chat
 ```
 
-如果配置正确,你会看到欢迎界面,可以开始对话了。
+## 📖 Usage Examples
 
-### 4. 常见问题
-
-**Q: 提示 "OPENAI_API_KEY is required"?**
-A: 请检查环境变量或配置文件是否正确设置,确保 API key 不为空。
-
-**Q: 如何切换不同的模型?**
-A: 有三种方式:
-- 修改环境变量 `OPENAI_MODEL`
-- 修改配置文件中的 `model` 字段
-- 使用命令行参数 `--model xxx`
-
-**Q: 可以同时配置多个服务商吗?**
-A: 可以通过命令行参数临时切换,或在配置文件中保存多份配置,使用时通过命令行参数指定。
-
-### 3. 开始对话
+### Interactive Conversation
 
 ```
-qoocode > 分析当前项目结构
-qoocode > 帮我创建一个新组件
-qoocode > 查看这个函数的实现
+You: Analyze the current project structure
+
+Assistant: Analyzing...
+  ✓ Found src/ directory with TypeScript source
+  ✓ Config files: package.json, tsconfig.json
+  ✓ Test files: vitest.config.ts
+  ✓ 124 test cases passing
 ```
 
----
+### Slash Commands
 
-## 📖 使用示例
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/test` | Run tests | `/test src/utils` |
+| `/search` | Search code | `/search "async function"` |
+| `/git` | Git operations | `/git "commit -m 'fix'"` |
+| `/web` | Web search | `/web "TypeScript best practices"` |
+| `/edit` | Edit file | `/edit src/app.ts:42` |
+| `/explain` | Explain code | `/explain src/utils.ts` |
+| `/refactor` | Refactor code | `/refactor "improve performance"` |
+| `/doc` | Generate docs | `/doc src/api/` |
+| `/mcp` | MCP tools | `/mcp "list servers"` |
 
-### 代码分析和解释
-
-```
-> 解释这个函数的作用
-```
-
-### 文件操作
-
-```
-> 创建一个 React 组件，放在 src/components/UserProfile.tsx
-```
-
-### Git 操作
+### Direct Tool Usage
 
 ```
-> 查看最近的提交
-> 帮我创建一个新分支
-> 比较 main 和 develop 的差异
+You: Create a REST API endpoint for user authentication
+
+Assistant: Creating files...
+  [FileWrite] src/api/auth/login.ts
+  [FileWrite] src/api/auth/register.ts
+  [FileWrite] src/middleware/auth.ts
+  [FileEdit] src/routes.ts - Added auth routes
+  [Bash] Running tests...
+  ✓ All tests passed
 ```
 
-### 代码搜索
+## 🛠️ Tool Reference
 
+### File Operations
+| Tool | Description |
+|------|-------------|
+| **FileRead** | Read file with encoding support |
+| **FileWrite** | Create/overwrite files |
+| **FileEdit** | Precise string replacement |
+| **CopyFile** | Copy with backup |
+| **MoveFile** | Move with backup |
+| **DeleteFile** | Safe delete with backup |
+
+### Git Operations
+| Tool | Description |
+|------|-------------|
+| **GitCommit** | Commit with auto-staging |
+| **GitDiff** | View diff with syntax highlighting |
+| **GitLog** | View commit history |
+| **GitBranch** | Branch management |
+
+### Code Intelligence
+| Tool | Description |
+|------|-------------|
+| **Grep** | Full-text search with regex |
+| **Glob** | Pattern-based file search |
+| **LSP** | Language Server Protocol |
+| **GotoDefinition** | Jump to definition |
+| **FindReferences** | Find all references |
+
+## 🔧 Configuration
+
+### Config File Location
+
+```bash
+# Linux/macOS
+~/.qoocode/config.json
+
+# Windows
+%USERPROFILE%\.qoocode\config.json
 ```
-> 在 src 目录下搜索 "useState"
-> 找出所有未使用的导入
-```
 
-### 运行测试
-
-```
-> 运行所有测试
-> 查看测试覆盖率
-```
-
----
-
-## 🛠️ 核心工具
-
-| 类别 | 工具 | 描述 |
-|------|------|------|
-| **文件** | FileRead, FileWrite, FileEdit, Copy, Move, Delete | 文件操作 |
-| **目录** | DirectoryRead, DirectoryWrite, DirectoryEdit | 目录管理 |
-| **搜索** | Grep, Glob, SymbolSearch | 代码搜索 |
-| **Git** | GitCommit, GitDiff, GitLog, GitBranch, Worktree | Git操作 |
-| **网络** | WebFetch, WebSearch, APICall | 网络功能 |
-| **测试** | RunTests, TestCoverage | 测试支持 |
-| **导航** | LSP, GotoDefinition, FindReferences | 代码导航 |
-| **高级** | Agent, Brief, AskUser, Skill, Speech | 智能工具 |
-
----
-
-## 📚 文档
-
-### 斜杠命令
-
-| 命令 | 功能 |
-|------|------|
-| `/help` | 显示帮助 |
-| `/clear` | 清空对话 |
-| `/model` | 切换模型 |
-| `/plan` | 进入计划模式 |
-| `/session` | 会话管理 |
-| `/commit` | Git 提交 |
-| `/test` | 运行测试 |
-| `/config` | 配置管理 |
-
-完整命令列表请查看[命令文档](./src/commands.ts)。
-
-### 配置
-
-配置文件位置：
-- Linux/macOS: `~/.qoocode/config.json`
-- Windows: `%USERPROFILE%\.qoocode\config.json`
+### Config Format
 
 ```json
 {
@@ -347,151 +225,191 @@ qoocode > 查看这个函数的实现
   "baseUrl": "https://api.deepseek.com/v1",
   "model": "deepseek-chat",
   "temperature": 0.7,
-  "maxTokens": 8192
+  "maxTokens": 8192,
+  "timeoutMs": 60000,
+  "cache": {
+    "enabled": true,
+    "ttlSeconds": 3600
+  },
+  "hooks": {
+    "preCommand": [],
+    "postCommand": []
+  }
 }
 ```
 
-### 环境变量
+### Environment Variables
 
-| 环境变量 | 描述 | 默认值 | 示例 |
-|---------|------|--------|------|
-| `OPENAI_API_KEY` | API 密钥(必需) | - | `sk-your-api-key` |
-| `OPENAI_BASE_URL` | API 基础地址 | `https://api.openai.com/v1` | `https://api.deepseek.com/v1` |
-| `OPENAI_MODEL` | 模型名称 | `deepseek-chat` | `gpt-4o`, `deepseek-chat` |
-| `QOOCODE_MAX_TOKENS` | 最大输出 token 数 | 8192 | 4096, 16384 |
-| `QOOCODE_DEBUG` | 调试模式 | false | 1, true |
-| `QOOCODE_VERBOSE` | 详细输出模式 | false | 1, true |
-| `QOOCODE_CONFIG` | 配置文件路径 | `~/.qoocode/config.json` | `/path/to/config.json` |
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OPENAI_API_KEY` | API key | - |
+| `OPENAI_BASE_URL` | API base URL | `https://api.deepseek.com/v1` |
+| `OPENAI_MODEL` | Model name | `deepseek-chat` |
+| `QOOCODE_MAX_TOKENS` | Max tokens | `8192` |
+| `QOOCODE_DEBUG` | Debug mode | `false` |
+| `QOOCODE_VERBOSE` | Verbose output | `false` |
+| `QOOCODE_CONFIG` | Config file path | `~/.qoocode/config.json` |
 
-**配置优先级:** 命令行参数 > 环境变量 > 配置文件 > 默认值
-
----
-
-## 🧪 测试
+## ⌨️ CLI Options
 
 ```bash
-# 运行所有测试
-bun test
+qoocode [options]
 
-# 监听模式
-bun run test:watch
-
-# 生成覆盖率报告
-bun run test:coverage
+Options:
+  --api-key <key>         API key
+  --base-url <url>        API base URL
+  --model <name>          Model name (default: deepseek-chat)
+  --temperature <value>   Temperature (default: 0.7)
+  --max-tokens <count>    Max tokens (default: 8192)
+  --timeout <ms>          Timeout (default: 60000ms)
+  --config <path>         Config file path
+  --debug                 Enable debug mode
+  --verbose               Verbose output
+  --no-cache              Disable cache
+  --no-telemetry          Disable telemetry
+  --help                  Show help
+  --version               Show version
 ```
 
----
+## 🧪 Testing
 
-## 📂 项目结构
+```bash
+# Run all tests
+bun test
+
+# Watch mode
+bun run test:watch
+
+# Coverage report
+bun run test:coverage
+
+# Specific test file
+bun test src/utils.test.ts
+```
+
+## 📁 Project Structure
 
 ```
 qoocode/
 ├── src/
-│   ├── main.tsx              # 入口文件
-│   ├── query.ts              # 对话循环
-│   ├── commands.ts            # 63个斜杠命令
-│   ├── tools/                # 59个核心工具
+│   ├── main.tsx                 # Entry point
+│   ├── App.tsx                  # Main app component
+│   ├── query.ts                 # Query logic
+│   ├── tools/                   # Tool implementations
 │   │   ├── BashTool/
 │   │   ├── FileReadTool/
+│   │   ├── FileWriteTool/
+│   │   ├── FileEditTool/
+│   │   ├── GrepTool/
+│   │   ├── GlobTool/
 │   │   ├── GitCommitTool/
+│   │   ├── GitDiffTool/
+│   │   ├── GitLogTool/
+│   │   ├── WebFetchTool/
 │   │   └── ...
-│   ├── services/             # 服务层
-│   │   ├── api/             # API适配
-│   │   ├── session/         # 会话管理
-│   │   ├── compact/         # 上下文压缩
-│   │   └── memory/          # Memory系统
-│   └── components/          # UI组件
-├── vscode-extension/        # VS Code扩展
-├── jetbrains-plugin/        # JetBrains插件
-├── tests/                   # 测试文件
-└── package.json
+│   ├── services/                # Service layer
+│   │   ├── api/                 # API clients
+│   │   ├── cache/               # Cache service
+│   │   └── hook/                # Hook service
+│   ├── state/                   # State management
+│   ├── types/                   # Type definitions
+│   └── utils/                   # Utilities
+├── vscode-extension/            # VS Code extension
+├── jetbrains-plugin/            # JetBrains plugin
+├── tests/                       # Test files
+├── package.json
+├── tsconfig.json
+└── vitest.config.ts
 ```
 
----
+## 🤝 Contributing
 
-## 🤝 贡献
+Contributions are welcome! Please feel free to submit issues and pull requests.
 
-欢迎贡献代码！请阅读以下指南：
+### Development Workflow
 
-### 开发流程
+```bash
+# 1. Fork and clone
+git clone https://github.com/qoobots/qoocode.git
+cd qoocode
 
-1. **Fork** 本仓库
-2. **克隆** 你的 Fork
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/qoocode.git
-   cd qoocode
-   ```
-3. **创建** 功能分支
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-4. **开发** 你的功能
-5. **测试** 确保通过
-   ```bash
-   bun test
-   ```
-6. **提交** 你的更改
-   ```bash
-   git commit -m 'feat: add amazing feature'
-   ```
-7. **推送** 到你的 Fork
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-8. 创建 **Pull Request**
+# 2. Create feature branch
+git checkout -b feature/amazing-feature
 
-### 代码规范
+# 3. Install dependencies
+bun install
 
-- 使用 TypeScript
-- 遵循 ESLint 规则
-- 添加测试用例
-- 更新相关文档
+# 4. Make changes and test
+bun test
+bun run dev
 
-### 报告问题
+# 5. Commit (follow conventional commits)
+git commit -m 'feat: add amazing feature'
 
-请使用 [GitHub Issues](https://github.com/qoobots/qoocode/issues) 报告 Bug 或请求功能。
+# 6. Push and create PR
+git push origin feature/amazing-feature
+```
 
----
+### Commit Message Format
+
+```
+<type>(<scope>): <subject>
+
+Types:
+  feat:     New feature
+  fix:      Bug fix
+  docs:     Documentation
+  style:    Formatting
+  refactor: Code refactoring
+  test:     Adding tests
+  chore:    Maintenance
+```
+
+### Code Standards
+
+- TypeScript strict mode enabled
+- Run `bun test` before submitting PR
+- Follow existing code style
+- Add tests for new features
 
 ## ❓ FAQ
 
-**Q: 支持哪些模型？**
-A: 支持所有兼容 OpenAI API 的模型，包括 GPT-4、Claude、DeepSeek 等。
+**Q: Which models are supported?**
+A: qoocode supports any OpenAI API-compatible model including GPT-4, Claude, DeepSeek, and local models.
 
-**Q: 如何获取 API 密钥？**
-A: 从 OpenAI、DeepSeek 或其他支持 OpenAI 兼容 API 的服务商获取。
+**Q: How does pricing work?**
+A: You only pay for the API calls to your chosen provider. qoocode itself is free and open source.
 
-**Q: 支持 Windows 吗？**
-A: 支持！支持 Windows、macOS 和 Linux。
+**Q: Can I use it offline?**
+A: Yes, if you have a local LLM server running (like Ollama) with OpenAI-compatible API.
 
-**Q: 可以离线使用吗？**
-A: 需要 API 密钥来调用远程模型，暂不支持本地模型。
+**Q: Is my code sent to external servers?**
+A: Only prompts and code snippets you explicitly request are sent to the API. No telemetry without consent.
 
----
+**Q: How do I report bugs?**
+A: Please open an issue on GitHub with detailed reproduction steps.
 
-## 📄 许可证
+## 📄 License
 
-本项目采用 [Apache-2.0 许可证](./LICENSE)。
+This project is licensed under the [MIT License](./LICENSE).
 
----
-
-## 🙏 致谢
+## 🙏 Acknowledgments
 
 - [Ink](https://github.com/vadimdemedes/ink) - React for CLI
-- [Bun](https://bun.sh/) - JavaScript 运行时
-- [Zod](https://zod.dev/) - TypeScript 模式验证
-- [Vitest](https://vitest.dev/) - 测试框架
+- [OpenAI](https://openai.com/) - GPT models
+- [DeepSeek](https://deepseek.com/) - DeepSeek models
+- [Bun](https://bun.sh/) - JavaScript runtime
+- [Zod](https://zod.dev/) - TypeScript schema validation
 
----
+## 📬 Contact
 
-## 📬 联系方式
-
-- GitHub Issues: [https://github.com/qoocodes/qoocode/issues](https://github.com/qoocodes/qoocode/issues)
+- GitHub Issues: [https://github.com/qoobots/qoocode/issues](https://github.com/qoobots/qoocode/issues)
+- Email: your.email@example.com
 
 ---
 
 <div align="center">
 
-**如果这个项目对你有帮助，请给它一个 ⭐！**
+**If you find this project helpful, please give it a ⭐!**
 
 </div>

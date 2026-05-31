@@ -244,7 +244,7 @@ cd jetbrains-plugin
 
 ## 相关文档
 
-- [qoocode CLI 文档](README.md)
+- [qoocode CLI 文档](README_CN.md)
 - [JetBrains Plugin 文档](jetbrains-plugin/README.md)
 - [Terminal 集成说明](jetbrains-plugin/TERMINAL_README.md)
 
