@@ -391,7 +391,7 @@ A: Please open an issue on GitHub with detailed reproduction steps.
 
 ## 📄 License
 
-This project is licensed under the [MIT License](./LICENSE).
+This project is licensed under the [Apache-2.0](./LICENSE).
 
 ## 🙏 Acknowledgments
 
