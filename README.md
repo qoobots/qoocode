@@ -404,7 +404,7 @@ This project is licensed under the [Apache-2.0](./LICENSE).
 ## 📬 Contact
 
 - GitHub Issues: [https://github.com/qoobots/qoocode/issues](https://github.com/qoobots/qoocode/issues)
-- Email: your.email@example.com
+- Email: hello@qoobot.com
 
 ---
 
