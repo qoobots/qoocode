@@ -1,190 +1,82 @@
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
+﻿                                 QooBot 专有软件许可协议
+                         QooCode AI 智能编码开发工具（闭源商业版）
+                         Copyright © 2026 QooBot. 保留所有权利。
 
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+                           PROPRIETARY SOFTWARE LICENSE AGREEMENT
 
-   1. Definitions.
+===============================================================================
+一、声明与授权范围（NOTICE AND GRANT OF RIGHTS）
+===============================================================================
 
-      "License" shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
+本软件（"软件"）指 QooCode AI 智能编码开发工具 及其全部源代码、目标代码、
+文档、设计、数据与附属材料，由 QooBot（"许可方"）享有全部著作权及其他
+知识产权。本软件**并非开源软件，亦不受任何开源许可证（包括但不限于
+Apache License 2.0、GPL、MIT 等）约束**。
 
-      "Licensor" shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
+在您（"被许可方"）支付相应许可费用并签署书面许可协议之前，本软件**仅供
+评估目的使用**，许可方仅授予您一项有限的、非独占的、不可转让的、可撤销的
+使用权，用于内部评估与测试，**不得用于任何生产环境或商业用途**。
 
-      "Legal Entity" shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      "control" means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
+===============================================================================
+二、禁止行为（RESTRICTIONS）
+===============================================================================
 
-      "You" (or "Your") shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
+未经许可方事先书面同意，被许可方**不得**：
 
-      "Source" form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
+  1. 以任何形式复制、分发、传播、出租、出借、转许可、再许可或出售本软件；
+  2. 对本软件进行反向工程、反编译、反汇编，或试图提取其源代码（适用法律
+     明确允许的情形除外）；
+  3. 移除或篡改本软件中的任何著作权、商标、专利或其他权利声明；
+  4. 将本软件用于构建与许可方构成竞争关系的产品或服务；
+  5. 将本软件托管为面向第三方的服务（SaaS / 多租户云服务等），除非已获得
+     相应的商业授权；
+  6. 修改、改编、翻译本软件，或基于本软件创作衍生作品。
 
-      "Object" form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
+===============================================================================
+三、商业授权（COMMERCIAL LICENSING）
+===============================================================================
 
-      "Work" shall mean the work of authorship, whether in Source or
-      Object form, made available under the License, as indicated by a
-      copyright notice that is included in or attached to the work
-      (an example is provided in the Appendix below).
+生产环境使用、redistribution、私有化部署、SaaS 运营、源代码授权及定制开发，
+均需与许可方签署独立的《商业许可协议》并支付对应费用。商业合作请联系：
+     hello@qoobot.com
 
-      "Derivative Works" shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and Derivative Works thereof.
+===============================================================================
+四、商标与品牌（TRADEMARKS）
+===============================================================================
 
-      "Contribution" shall mean any work of authorship, including
-      the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is intentionally
-      submitted to Licensor for inclusion in the Work by the copyright owner
-      or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, "submitted"
-      means any form of electronic, verbal, or written communication sent
-      to the Licensor or its representatives, including but not limited to
-      communication on electronic mailing lists, source code control systems,
-      and issue tracking systems that are managed by, or on behalf of, the
-      Licensor for the purpose of discussing and improving the Work, but
-      excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
+"QooBot"、"qoocode" 及相关标识为许可方的注册商标或品牌。未经书面许可，
+任何人不得使用上述标识用于任何商业或宣传目的。
 
-      "Contributor" shall mean Licensor and any individual or Legal Entity
-      on behalf of whom a Contribution has been received by Licensor and
-      subsequently incorporated within the Work.
+===============================================================================
+五、免责声明（DISCLAIMER OF WARRANTY）
+===============================================================================
 
-   2. Grant of Copyright License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      copyright license to reproduce, prepare Derivative Works of,
-      publicly display, publicly perform, sublicense, and distribute the
-      Work and such Derivative Works in Source or Object form.
+本软件按"现状"（AS IS）提供，不提供任何明示或默示的担保，包括但不限于对
+适销性、特定用途适用性及不侵权的担保。评估版软件可能不稳定，使用风险由
+被许可方自行承担。
 
-   3. Grant of Patent License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      (except as stated in this section) patent license to make, have made,
-      use, offer to sell, sell, import, and otherwise transfer the Work,
-      where such license applies only to those patent claims licensable
-      by such Contributor that are necessarily infringed by their
-      Contribution(s) alone or by combination of their Contribution(s)
-      with the Work to which such Contribution(s) was submitted. If You
-      institute patent litigation against any entity (including a
-      cross-claim or counterclaim in a lawsuit) alleging that the Work
-      or a Contribution incorporated within the Work constitutes direct
-      or contributory patent infringement, then any patent licenses
-      granted to You under this License for that Work shall terminate
-      as of the date such litigation is filed.
+===============================================================================
+六、责任限制（LIMITATION OF LIABILITY）
+===============================================================================
 
-   4. Redistribution. You may reproduce and distribute copies of the
-      Work or Derivative Works thereof in any medium, with or without
-      modifications, and in Source or Object form, provided that You
-      meet the following conditions:
+在任何情况下，许可方均不对因使用或无法使用本软件而产生的任何直接、间接、
+特殊、偶然或后果性损害承担责任，即使许可方已被告知该等损害的可能性。
 
-      (a) You must give any other recipients of the Work or
-          Derivative Works a copy of this License; and
+===============================================================================
+七、终止（TERMINATION）
+===============================================================================
 
-      (b) You must cause any modified files to carry prominent notices
-          stating that You changed the files; and
+若被许可方违反本协议任何条款，本协议及所授予权利将自动终止。终止后，
+被许可方必须立即销毁本软件的全部副本。
 
-      (c) You must retain, in the Source form of any Derivative Works
-          that You distribute, all copyright, patent, trademark, and
-          attribution notices from the Source form of the Work,
-          excluding those notices that do not pertain to any part of
-          the Derivative Works; and
+===============================================================================
+八、适用法律（GOVERNING LAW）
+===============================================================================
 
-      (d) If the Work includes a "NOTICE" text file as part of its
-          distribution, then any Derivative Works that You distribute must
-          include a readable copy of the attribution notices contained
-          within such NOTICE file, excluding those notices that do not
-          pertain to any part of the Derivative Works, in at least one
-          of the following places: within a NOTICE text file distributed
-          as part of the Derivative Works; within the Source form or
-          documentation, if provided along with the Derivative Works; or,
-          within a display generated by the Derivative Works, if and
-          wherever such third-party notices normally appear. The contents
-          of the NOTICE file are for informational purposes only and
-          do not modify the License. You may add Your own attribution
-          notices within Derivative Works that You distribute, alongside
-          or as an addendum to the NOTICE text from the Work, provided
-          that such additional attribution notices cannot be construed
-          as modifying the License.
+本协议受中华人民共和国法律管辖，并依其解释。因本协议产生的争议，提交许可方
+所在地有管辖权的人民法院诉讼解决。
 
-      You may add Your own copyright statement to Your modifications and
-      may provide additional or different license terms and conditions
-      for use, reproduction, or distribution of Your modifications, or
-      for any such Derivative Works as a whole, provided Your use,
-      reproduction, and distribution of the Work otherwise complies with
-      the conditions stated in this License.
-
-   5. Submission of Contributions. Unless You explicitly state otherwise,
-      any Contribution intentionally submitted for inclusion in the Work
-      by You to the Licensor shall be under the terms and conditions of
-      this License, without any additional terms or conditions.
-      Notwithstanding the above, nothing herein shall supersede or modify
-      the terms of any separate license agreement you may have executed
-      with Licensor regarding such Contributions.
-
-   6. Trademarks. This License does not grant permission to use the trade
-      names, trademarks, service marks, or product names of the Licensor,
-      except as required for reasonable and customary use in describing the
-      origin of the Work and reproducing the content of the NOTICE file.
-
-   7. Disclaimer of Warranty. Unless required by applicable law or
-      agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-      implied, including, without limitation, any warranties or conditions
-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-      PARTICULAR PURPOSE. You are solely responsible for determining the
-      appropriateness of using or redistributing the Work and assume any
-      risks associated with Your exercise of permissions under this License.
-
-   8. Limitation of Liability. In no event and under no legal theory,
-      whether in tort (including negligence), contract, or otherwise,
-      unless required by applicable law (such as deliberate and grossly
-      negligent acts) or agreed to in writing, shall any Contributor be
-      liable to You for damages, including any direct, indirect, special,
-      incidental, or consequential damages of any character arising as a
-      result of this License or out of the use or inability to use the
-      Work (including but not limited to damages for loss of goodwill,
-      work stoppage, computer failure or malfunction, or any and all
-      other commercial damages or losses), even if such Contributor
-      has been advised of the possibility of such damages.
-
-   9. Accepting Warranty or Additional Liability. While redistributing
-      the Work or Derivative Works thereof, You may choose to offer,
-      and charge a fee for, acceptance of support, warranty, indemnity,
-      or other liability obligations and/or rights consistent with this
-      License. However, in accepting such obligations, You may act only
-      on Your own behalf and on Your sole responsibility, not on behalf
-      of any other Contributor, and only if You agree to indemnify,
-      defend, and hold each Contributor harmless for any liability
-      incurred by, or claims asserted against, such Contributor by reason
-      of your accepting any such warranty or additional liability.
-
-   END OF TERMS AND CONDITIONS
-
-   Copyright 2025 OpenCode Contributors
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+===============================================================================
+                         保留所有权利 / ALL RIGHTS RESERVED
+                         Copyright © 2026 QooBot. All rights reserved.
+===============================================================================
