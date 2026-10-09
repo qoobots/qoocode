@@ -42,7 +42,10 @@ export function classifyOpenAIError(error: unknown): APIError {
     if (error.message.includes('401') || error.message.includes('authentication')) {
       return {
         type: 'authentication_error',
-        message: 'Invalid API key. Please check your OPENAI_API_KEY.',
+        message:
+          'Invalid API key. Check: (1) apiKey in ~/.qoocode/config.json; ' +
+          '(2) the OPENAI_API_KEY env var, which overrides the config file; ' +
+          '(3) run with -d to log which source is actually in effect.',
         originalError: error,
       }
     }

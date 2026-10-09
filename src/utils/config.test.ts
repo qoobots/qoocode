@@ -19,6 +19,9 @@ describe('Config Management', () => {
     process.env.OPENAI_API_KEY = 'test-api-key'
     process.env.OPENAI_BASE_URL = 'https://api.test.com'
     process.env.OPENAI_MODEL = 'test-model'
+    // 将配置读写重定向到临时目录，避免测试污染用户真实的 ~/.qoocode/config.json
+    await fs.mkdir(testConfigDir, { recursive: true })
+    process.env.QOOCODE_CONFIG = path.join(testConfigDir, 'config.json')
   })
 
   afterEach(async () => {
@@ -28,7 +31,8 @@ describe('Config Management', () => {
     } catch {
       // Ignore cleanup errors
     }
-  })
+    delete process.env.QOOCODE_CONFIG
+    })
 
   afterAll(() => {
     mockExit?.mockRestore()
@@ -65,7 +69,7 @@ describe('Config Management', () => {
       delete process.env.OPENAI_API_KEY
       
       // Temporarily remove apiKey from config file
-      const configPath = path.join(os.homedir(), '.qoocode', 'config.json')
+      const configPath = process.env.QOOCODE_CONFIG as string
       let originalConfig: string | null = null
       try {
         originalConfig = await fs.readFile(configPath, 'utf-8')
@@ -177,7 +181,7 @@ describe('Config Management', () => {
     it('should require valid API key', async () => {
       process.env.OPENAI_API_KEY = ''
       // Also clear apiKey from config file
-      const configPath = path.join(os.homedir(), '.qoocode', 'config.json')
+      const configPath = process.env.QOOCODE_CONFIG as string
       let originalConfig: string | null = null
       try {
         originalConfig = await fs.readFile(configPath, 'utf-8')

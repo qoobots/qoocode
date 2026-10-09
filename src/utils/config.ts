@@ -26,11 +26,15 @@ export type QooCodeConfig = {
 export type QoocodeConfig = QooCodeConfig
 
 function getConfigDir(): string {
-  const home = os.homedir()
-  return path.join(home, CONFIG_DIR_NAME)
+  // 支持通过 QOOCODE_CONFIG 覆盖配置位置（测试隔离 / 多配置切换）
+  const override = process.env.QOOCODE_CONFIG
+  if (override) return path.dirname(override)
+  return path.join(os.homedir(), CONFIG_DIR_NAME)
 }
 
 function getConfigFilePath(): string {
+  const override = process.env.QOOCODE_CONFIG
+  if (override) return override
   return path.join(getConfigDir(), CONFIG_FILE_NAME)
 }
 
@@ -66,19 +70,56 @@ function cleanEnvValue(value: string | undefined): string {
   return cleanStringValue(value)
 }
 
+// 仅在 debug 开启时记录日志，避免无条件同步写文件及敏感信息落盘
+function isDebugEnabled(cliOverrides?: Partial<QooCodeConfig>): boolean {
+  return cliOverrides?.debug === true || process.env.QOOCODE_DEBUG === '1'
+}
+
+// 单元测试不应污染真实日志
+function isTestEnv(): boolean {
+  return process.env.VITEST === 'true' || process.env.NODE_ENV === 'test'
+}
+
+// 脱敏：仅保留前缀与后 4 位，避免 API Key 明文落入日志
+function maskSecret(value: unknown): string {
+  if (typeof value !== 'string' || value.length === 0) return ''
+  if (value.length <= 8) return '***'
+  return `${value.slice(0, 3)}***${value.slice(-4)}`
+}
+
+const SENSITIVE_KEYS = ['apikey', 'api_key', 'key', 'token', 'secret', 'password']
+
+function redactSecrets(obj: unknown): unknown {
+  if (!obj || typeof obj !== 'object') return obj
+  const clone: Record<string, unknown> = { ...(obj as Record<string, unknown>) }
+  for (const k of Object.keys(clone)) {
+    if (SENSITIVE_KEYS.includes(k.toLowerCase()) && typeof clone[k] === 'string') {
+      clone[k] = maskSecret(clone[k])
+    }
+  }
+  return clone
+}
+
+function fmtEnv(value: string | undefined, sensitive = false): string {
+  return value === undefined ? 'undefined' : `"${sensitive ? maskSecret(value) : value}"`
+}
+
 export function resolveConfig(cliOverrides?: Partial<QooCodeConfig>): QooCodeConfig {
   const fileConfig = loadConfigFile()
   const configDir = getConfigDir()
+  const shouldLog = isDebugEnabled(cliOverrides) && !isTestEnv()
 
-  fs.appendFileSync(
-    path.join(configDir, 'qoocode-debug.log'),
-    `[${new Date().toISOString()}] === resolveConfig ===\n` +
-    `[${new Date().toISOString()}] cliOverrides: ${JSON.stringify(cliOverrides)}\n` +
-    `[${new Date().toISOString()}] fileConfig: ${JSON.stringify(fileConfig)}\n` +
-    `[${new Date().toISOString()}] OPENAI_API_KEY env: "${process.env.OPENAI_API_KEY}"\n` +
-    `[${new Date().toISOString()}] OPENAI_BASE_URL env: "${process.env.OPENAI_BASE_URL}"\n` +
-    `[${new Date().toISOString()}] OPENAI_MODEL env: "${process.env.OPENAI_MODEL}"\n`
-  )
+  if (shouldLog) {
+    fs.appendFileSync(
+      path.join(configDir, 'qoocode-debug.log'),
+      `[${new Date().toISOString()}] === resolveConfig ===\n` +
+      `[${new Date().toISOString()}] cliOverrides: ${JSON.stringify(redactSecrets(cliOverrides))}\n` +
+      `[${new Date().toISOString()}] fileConfig: ${JSON.stringify(redactSecrets(fileConfig))}\n` +
+      `[${new Date().toISOString()}] OPENAI_API_KEY env: ${fmtEnv(process.env.OPENAI_API_KEY, true)}\n` +
+      `[${new Date().toISOString()}] OPENAI_BASE_URL env: ${fmtEnv(process.env.OPENAI_BASE_URL)}\n` +
+      `[${new Date().toISOString()}] OPENAI_MODEL env: ${fmtEnv(process.env.OPENAI_MODEL)}\n`
+    )
+  }
 
   const config: QooCodeConfig = {
     apiKey:
@@ -107,10 +148,24 @@ export function resolveConfig(cliOverrides?: Partial<QooCodeConfig>): QooCodeCon
     verbose: cliOverrides?.verbose ?? (process.env.QOOCODE_VERBOSE === '1'),
   }
 
-  fs.appendFileSync(
-    path.join(configDir, 'qoocode-debug.log'),
-    `[${new Date().toISOString()}] final config: ${JSON.stringify(config)}\n`
-  )
+  if (shouldLog) {
+    fs.appendFileSync(
+      path.join(configDir, 'qoocode-debug.log'),
+      `[${new Date().toISOString()}] final config: ${JSON.stringify(redactSecrets(config))}\n`
+    )
+  }
+
+  if (!config.apiKey) {
+    console.error(
+      'Error: OPENAI_API_KEY is required.\n' +
+      'Set it in one of these ways:\n' +
+      '  (1) ~/.qoocode/config.json  ->  { "apiKey": "sk-..." }\n' +
+      '  (2) environment variable: OPENAI_API_KEY\n' +
+      '  (3) command line: --api-key <key>\n' +
+      'Run with --help for more information.'
+    )
+    process.exit(1)
+  }
 
   return config
 }
