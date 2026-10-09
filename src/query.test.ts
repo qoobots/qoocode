@@ -41,6 +41,10 @@ vi.mock('./services/api/streamHandler.js', () => {
   }
 })
 
+vi.mock('./services/hooks/hooksService.js', () => ({
+  getHooksManager: vi.fn(),
+}))
+
 vi.mock('./services/api/openai-client.js', () => {
   // Use a factory function to create new mock objects each time
   const createMockClient = () => ({
@@ -271,6 +275,169 @@ describe('Query Module', () => {
 
       expect(result.content).toBe('Response without usage')
       expect(result.cost.totalTokens).toBe(0)
+    })
+
+    describe('tool execution loop (hooks & parallel)', () => {
+      it('executes read-only tools and fires Pre/Post/Stop hooks', async () => {
+        const readTool = {
+          name: 'Read',
+          description: 'read a file',
+          call: vi.fn(async () => ({ content: 'file contents' })),
+          checkPermissions: vi.fn(async () => ({ behavior: 'allow' })),
+          isReadOnly: vi.fn(() => true),
+        } as any
+        const grepTool = {
+          name: 'Grep',
+          description: 'grep',
+          call: vi.fn(async () => ({ content: 'matches' })),
+          checkPermissions: vi.fn(async () => ({ behavior: 'allow' })),
+          isReadOnly: vi.fn(() => true),
+        } as any
+
+        const { getTools } = await import('./tools.js')
+        const { createStreamChatCompletion } = await import('./services/api/openai-client.js')
+        const { streamToEvents } = await import('./services/api/streamHandler.js')
+        const { getHooksManager: ghm } = await import('./services/hooks/hooksService.js')
+        const manager = { executeHooksForEvent: vi.fn().mockResolvedValue([]) }
+        ghm.mockReturnValue(manager)
+
+        getTools.mockReturnValue([readTool, grepTool] as any)
+        createStreamChatCompletion.mockResolvedValue((async function* () {})() as any)
+
+        let gen = 0
+        streamToEvents.mockImplementation(async function* () {
+          gen++
+          if (gen === 1) {
+            yield { type: 'tool_call_start', toolCallId: 'call_a', functionName: 'Read', index: 0 }
+            yield { type: 'tool_call_delta', toolCallId: 'call_a', argumentsDelta: '{"path":"x"}', index: 0 }
+            yield { type: 'tool_call_start', toolCallId: 'call_b', functionName: 'Grep', index: 1 }
+            yield { type: 'tool_call_delta', toolCallId: 'call_b', argumentsDelta: '{"pattern":"y"}', index: 1 }
+            yield { type: 'message_end', finishReason: 'stop', usage: { promptTokens: 10, completionTokens: 5, totalTokens: 15 } }
+          } else {
+            yield { type: 'text_delta', text: 'done' }
+            yield { type: 'message_end', finishReason: 'stop' }
+          }
+        })
+
+        const result = await query({ config: mockConfig, messages: mockMessages, cost: mockCost })
+
+        expect(readTool.call).toHaveBeenCalledTimes(1)
+        expect(grepTool.call).toHaveBeenCalledTimes(1)
+        expect(readTool.isReadOnly).toHaveBeenCalled()
+
+        expect(manager.executeHooksForEvent).toHaveBeenCalledWith('PreToolUse', 'Read', expect.any(Object))
+        expect(manager.executeHooksForEvent).toHaveBeenCalledWith('PostToolUse', 'Grep', expect.any(Object))
+        expect(manager.executeHooksForEvent).toHaveBeenCalledWith('Stop')
+
+        expect(result.messages.filter((m) => m.role === 'tool').length).toBe(2)
+      })
+
+      it('blocks a tool call when a PreToolUse hook fails', async () => {
+        const bannedTool = {
+          name: 'Bash',
+          description: 'run command',
+          call: vi.fn(async () => ({ content: 'ran' })),
+          checkPermissions: vi.fn(async () => ({ behavior: 'allow' })),
+          isReadOnly: vi.fn(() => false),
+        } as any
+
+        const { getTools } = await import('./tools.js')
+        const { createStreamChatCompletion } = await import('./services/api/openai-client.js')
+        const { streamToEvents } = await import('./services/api/streamHandler.js')
+        const { getHooksManager: ghm } = await import('./services/hooks/hooksService.js')
+        const manager = { executeHooksForEvent: vi.fn().mockResolvedValue([]) }
+        ghm.mockReturnValue(manager)
+
+        getTools.mockReturnValue([bannedTool] as any)
+        createStreamChatCompletion.mockResolvedValue((async function* () {})() as any)
+        manager.executeHooksForEvent.mockImplementation(async (event: string) => {
+          if (event === 'PreToolUse') {
+            return [{ hook: { id: 'blocker' }, result: { success: false, error: 'denied by policy' } }]
+          }
+          return []
+        })
+
+        let gen = 0
+        streamToEvents.mockImplementation(async function* () {
+          gen++
+          if (gen === 1) {
+            yield { type: 'tool_call_start', toolCallId: 'call_c', functionName: 'Bash', index: 0 }
+            yield { type: 'tool_call_delta', toolCallId: 'call_c', argumentsDelta: '{"command":"rm -rf /"}', index: 0 }
+            yield { type: 'message_end', finishReason: 'stop', usage: { promptTokens: 10, completionTokens: 5, totalTokens: 15 } }
+          } else {
+            yield { type: 'text_delta', text: 'done' }
+            yield { type: 'message_end', finishReason: 'stop' }
+          }
+        })
+
+        const result = await query({ config: mockConfig, messages: mockMessages, cost: mockCost })
+
+        // Bash must NOT have executed because the PreToolUse hook blocked it
+        expect(bannedTool.call).not.toHaveBeenCalled()
+        expect(
+          result.messages.some((m) => m.role === 'tool' && m.content.includes('Blocked by PreToolUse')),
+        ).toBe(true)
+
+        manager.executeHooksForEvent.mockResolvedValue([])
+      })
+    })
+
+    describe('plan mode (read-only constraint)', () => {
+      it('blocks non-read-only tools and allows read-only tools in plan mode', async () => {
+        const readTool = {
+          name: 'Read',
+          description: 'read',
+          call: vi.fn(async () => ({ content: 'file' })),
+          checkPermissions: vi.fn(async () => ({ behavior: 'allow' })),
+          isReadOnly: vi.fn(() => true),
+        } as any
+        const bashTool = {
+          name: 'Bash',
+          description: 'run',
+          call: vi.fn(async () => ({ content: 'ran' })),
+          checkPermissions: vi.fn(async () => ({ behavior: 'allow' })),
+          isReadOnly: vi.fn(() => false),
+        } as any
+
+        const { getTools } = await import('./tools.js')
+        const { createStreamChatCompletion } = await import('./services/api/openai-client.js')
+        const { streamToEvents } = await import('./services/api/streamHandler.js')
+        const { getHooksManager } = await import('./services/hooks/hooksService.js')
+        const manager = { executeHooksForEvent: vi.fn().mockResolvedValue([]) }
+        getHooksManager.mockReturnValue(manager)
+
+        getTools.mockReturnValue([readTool, bashTool] as any)
+        createStreamChatCompletion.mockResolvedValue((async function* () {})() as any)
+        manager.executeHooksForEvent.mockResolvedValue([])
+
+        let gen = 0
+        streamToEvents.mockImplementation(async function* () {
+          gen++
+          if (gen === 1) {
+            yield { type: 'tool_call_start', toolCallId: 'c1', functionName: 'Bash', index: 0 }
+            yield { type: 'tool_call_delta', toolCallId: 'c1', argumentsDelta: '{"command":"rm -rf /"}', index: 0 }
+            yield { type: 'message_end', finishReason: 'stop', usage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 } }
+          } else if (gen === 2) {
+            yield { type: 'tool_call_start', toolCallId: 'c2', functionName: 'Read', index: 0 }
+            yield { type: 'tool_call_delta', toolCallId: 'c2', argumentsDelta: '{"path":"x"}', index: 0 }
+            yield { type: 'message_end', finishReason: 'stop', usage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 } }
+          } else {
+            yield { type: 'text_delta', text: 'done' }
+            yield { type: 'message_end', finishReason: 'stop' }
+          }
+        })
+
+        const result = await query({ config: mockConfig, messages: mockMessages, cost: mockCost, planMode: true })
+
+        expect(bashTool.call).not.toHaveBeenCalled()
+        expect(readTool.call).toHaveBeenCalledTimes(1)
+        const blocked = result.messages.find(
+          (m) => m.role === 'tool' && typeof m.content === 'string' && m.content.includes('Plan mode is read-only'),
+        )
+        expect(blocked).toBeTruthy()
+
+        manager.executeHooksForEvent.mockResolvedValue([])
+      })
     })
   })
 })

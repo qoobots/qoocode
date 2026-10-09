@@ -3,6 +3,7 @@ import { Box, Text, useApp, useInput, Static } from 'ink'
 import type { Message, AssistantMessage, StreamEvent } from '../../types/message.js'
 import { useAppState } from '../../state/AppState.js'
 import { createUserMessage } from '../../utils/messages.js'
+import { CollapsibleText } from '../CollapsibleText.js'
 import { query } from '../../query.js'
 import { getCommands, findCommand } from '../../commands.js'
 import { APP_VERSION } from '../../constants/defaults.js'
@@ -18,6 +19,67 @@ export function WindowsREPL(): React.ReactElement {
   // 处理输入
   const handleSubmit = useCallback(async () => {
     const trimmed = inputRef.current.trim()
+
+    // 统一的 query 执行（支持 planMode 约束），含流式输出处理
+    const runQuery = async (inputText: string, planMode: boolean) => {
+      const userMessage = createUserMessage(inputText)
+      dispatch({ type: 'ADD_MESSAGE', message: userMessage })
+      setIsProcessing(true)
+      try {
+        let queryError: string | null = null
+        const result = await query({
+          config: state.config,
+          messages: [...state.messages, userMessage],
+          cost: state.cost,
+          onStreamEvent: (event: StreamEvent) => {
+            if (event.type === 'text_delta') {
+              dispatch({ type: 'APPEND_STREAMING_TEXT', text: event.text })
+            } else if (event.type === 'message_end') {
+              dispatch({ type: 'CLEAR_STREAMING_TEXT' })
+            } else if (event.type === 'tool_call_start') {
+              dispatch({ type: 'ADD_TOOL_CALL', toolCallId: event.toolCallId, name: event.functionName })
+            } else if (event.type === 'tool_call_end') {
+              dispatch({ type: 'REMOVE_TOOL_CALL', toolCallId: event.toolCallId })
+            } else if (event.type === 'error') {
+              queryError = event.error.message
+            }
+          },
+          planMode,
+        })
+        dispatch({ type: 'SET_COST', cost: result.cost })
+        dispatch({ type: 'SET_MESSAGES', messages: result.messages })
+        if (queryError) {
+          dispatch({ type: 'ADD_MESSAGE', message: { role: 'assistant' as const, content: `Error: ${queryError}` } })
+        }
+      } catch (error) {
+        const errorMessage: AssistantMessage = {
+          role: 'assistant',
+          content: `Error: ${error instanceof Error ? error.message : String(error)}`,
+        }
+        dispatch({ type: 'ADD_MESSAGE', message: errorMessage })
+      } finally {
+        setIsProcessing(false)
+      }
+    }
+
+    // Plan mode 审批分支：空输入 = 批准并实施；/plan = 退出；其他非空 = 修订计划
+    if (state.planMode) {
+      inputRef.current = ''
+      setInput('')
+      if (!trimmed) {
+        dispatch({ type: 'SET_PLAN_MODE', planMode: false })
+        await runQuery('Plan approved. Please begin implementing the plan now.', false)
+        return
+      }
+      if (trimmed.startsWith('/plan')) {
+        dispatch({ type: 'SET_PLAN_MODE', planMode: false })
+        dispatch({ type: 'ADD_MESSAGE', message: { role: 'assistant' as const, content: 'Exited plan mode.' } })
+        return
+      }
+      await runQuery(trimmed, true)
+      return
+    }
+
     if (!trimmed) return
 
     // 检查必需的配置
@@ -57,6 +119,21 @@ export function WindowsREPL(): React.ReactElement {
           exit()
           return
         }
+        if (typeof result === 'string' && result.startsWith('__ENTER_PLAN_MODE__:')) {
+          const taskDesc = result.slice('__ENTER_PLAN_MODE__:'.length)
+          if (taskDesc.trim() === '') {
+            if (state.planMode) {
+              dispatch({ type: 'SET_PLAN_MODE', planMode: false })
+              dispatch({ type: 'ADD_MESSAGE', message: { role: 'assistant' as const, content: 'Exited plan mode.' } })
+            } else {
+              dispatch({ type: 'ADD_MESSAGE', message: { role: 'assistant' as const, content: 'Usage: /plan <task-description>\n\nPlan mode helps break down complex tasks. Describe the task, then review and approve the plan (press Enter) before any changes are made.\n\nExample: /plan Create a user authentication system' } })
+            }
+          } else {
+            dispatch({ type: 'SET_PLAN_MODE', planMode: true })
+            await runQuery(taskDesc, true)
+          }
+          return
+        }
         // 对于其他返回值，如果是字符串则显示
         if (typeof result === 'string' && result !== '__CLEAR_MESSAGES__') {
           dispatch({
@@ -68,55 +145,9 @@ export function WindowsREPL(): React.ReactElement {
       }
     }
 
-    // 用户消息
-    const userMessage = createUserMessage(trimmed)
-    dispatch({ type: 'ADD_MESSAGE', message: userMessage })
-    setIsProcessing(true)
-
-    try {
-      let queryError: string | null = null
-      const result = await query({
-        config: state.config,
-        messages: [...state.messages, userMessage],
-        cost: state.cost,
-        onStreamEvent: (event: StreamEvent) => {
-          if (event.type === 'text_delta') {
-            dispatch({ type: 'APPEND_STREAMING_TEXT', text: event.text })
-          } else if (event.type === 'message_end') {
-            dispatch({ type: 'CLEAR_STREAMING_TEXT' })
-          } else if (event.type === 'tool_call_start') {
-            dispatch({ type: 'ADD_TOOL_CALL', toolCallId: event.toolCallId, name: event.functionName })
-          } else if (event.type === 'tool_call_end') {
-            dispatch({ type: 'REMOVE_TOOL_CALL', toolCallId: event.toolCallId })
-          } else if (event.type === 'error') {
-            queryError = event.error.message
-          }
-        },
-      })
-
-      dispatch({ type: 'SET_COST', cost: result.cost })
-      dispatch({ type: 'SET_MESSAGES', messages: result.messages })
-
-      // 如果有查询错误，显示错误消息
-      if (queryError) {
-        dispatch({
-          type: 'ADD_MESSAGE',
-          message: {
-            role: 'assistant' as const,
-            content: `Error: ${queryError}`,
-          },
-        })
-      }
-    } catch (error) {
-      const errorMessage: AssistantMessage = {
-        role: 'assistant',
-        content: `Error: ${error instanceof Error ? error.message : String(error)}`,
-      }
-      dispatch({ type: 'ADD_MESSAGE', message: errorMessage })
-    } finally {
-      setIsProcessing(false)
-    }
-  }, [input, state.config.apiKey, state.config.baseUrl, state.config.model, dispatch, exit])
+    // 普通消息（planMode = false）
+    await runQuery(trimmed, false)
+  }, [input, state.config.apiKey, state.config.baseUrl, state.config.model, state.planMode, dispatch, exit])
 
   // 简单的键盘处理（使用 ref 避免状态更新延迟）
   useInput((inputChar, key) => {
@@ -185,21 +216,24 @@ export function WindowsREPL(): React.ReactElement {
         )
       } else if (msg.role === 'assistant') {
         const content = typeof msg.content === 'string' ? msg.content : msg.content.filter(p => p.type === 'text').map(p => p.text).join('')
-        // 如果是最后一条消息且正在流式输出，追加 streamingText
+        // 如果是最后一条消息且正在流式输出，追加 streamingText（限制长度避免卡顿）
+        const streamingSuffix = state.streamingText && state.streamingText.length > 2000
+          ? '...' + state.streamingText.slice(-1997)
+          : state.streamingText
         const displayContent = (index === messages.length - 1 && state.streamingText)
-          ? content + state.streamingText
+          ? content + streamingSuffix
           : content
         return (
           <Box key={index} flexDirection="column" marginBottom={1}>
             <Text bold color="green">Assistant:</Text>
-            <Text>{displayContent}</Text>
+            <CollapsibleText text={displayContent} maxLines={30} />
           </Box>
         )
       } else if (msg.role === 'tool') {
         return (
           <Box key={index} flexDirection="column" marginBottom={1}>
             <Text bold color="yellow">Tool:</Text>
-            <Text>{msg.content}</Text>
+            <CollapsibleText text={msg.content} maxLines={20} />
           </Box>
         )
       }
@@ -228,35 +262,10 @@ export function WindowsREPL(): React.ReactElement {
       {/* 标题 */}
       <Box paddingX={1} paddingY={1}>
         <Box flexDirection="column">
-          <Box><Text bold color="cyan">╔═════════════════════════════════════╗════════════════════════╗</Text></Box>
-          <Box><Text bold color="blue">║                                     ║  qoocode v{APP_VERSION}        ║</Text></Box>
-          <Box><Text bold color="blue">║                       .::::.        ║  AI Coding Assistant   ║</Text></Box>
-          <Box><Text bold color="blue">║                     .::::::::.      ║  开源 AI 编程助手      ║</Text></Box>
-          <Box><Text bold color="blue">║                     :::::::::::     ║  智能代码分析          ║</Text></Box>
-          <Box><Text bold color="blue">║                     ':::::::::::.   ║  自动化开发            ║</Text></Box>
-          <Box><Text bold color="blue">║                      :::::::::::'   ║  当前模型:             ║</Text></Box>
-          <Box><Text bold color="blue">║                       ':::::::.     ║  ></Text><Text bold color="green"> {state.config.model}    </Text><Text bold color="blue">║</Text></Box>
-          <Box><Text bold color="blue">║                         .::::::::'  ║  支持主流大模型:       ║</Text></Box>
-          <Box><Text bold color="blue">║                       .::::::...    ║  > OpenAI (GPT-4/3.5)  ║</Text></Box>
-          <Box><Text bold color="blue">║                      :::::::''      ║  > DeepSeek (R1/V3)    ║</Text></Box>
-          <Box><Text bold color="blue">║           .:::.      '::::::'':::   ║  > Anthropic (Claude)  ║</Text></Box>
-          <Box><Text bold color="blue">║         .::::::.     ':::'  ':::    ║  > 通义千问 (Qwen)     ║</Text></Box>
-          <Box><Text bold color="blue">║        .::::::::::   :::     ':::   ║  > 智谱 GLM            ║</Text></Box>
-          <Box><Text bold color="blue">║       .:::: ':::::::  :::     ':::  ║  > 月之暗面 (Kimi)     ║</Text></Box>
-          <Box><Text bold color="blue">║      .::::     ':::::::::::     ':. ║  > 百度文心            ║</Text></Box>
-          <Box><Text bold color="blue">║     .::::        ':::::::::::   ':. ║  > 阿里通义            ║</Text></Box>
-          <Box><Text bold color="blue">║     .::'            '::::::: :::.   ║  > 腾讯混元            ║</Text></Box>
-          <Box><Text bold color="blue">║  ..::::             :::::::::.':.   ║  > 字节豆包            ║</Text></Box>
-          <Box><Text bold color="blue">║ ....:'               ':::::::.      ║                        ║</Text></Box>
-          <Box><Text bold color="blue">╚═════════════════════════════════════╝════════════════════════╝</Text></Box>
+          <Text bold color="cyan">QooCode v{APP_VERSION} · AI Coding Assistant</Text>
+          <Text color="blue">当前模型: <Text bold color="green">{state.config.model}</Text></Text>
+          <Text color="gray">输入消息开始对话，或使用 </Text><Text bold color="green">/help</Text><Text color="gray"> 查看所有命令。</Text>
         </Box>
-      </Box>
-
-      <Box padding={1}>
-        <Text color="cyan">🚀 欢迎使用 qoocode！</Text>
-        <Text> 输入消息开始对话，或使用 </Text>
-        <Text bold color="green">/help</Text>
-        <Text> 查看所有命令。</Text>
       </Box>
 
       {/* 消息区域 */}

@@ -4,6 +4,7 @@ import chalk from 'chalk'
 import type { Message, AssistantMessage, StreamEvent } from '../../types/message.js'
 import { useAppState } from '../../state/AppState.js'
 import { createUserMessage } from '../../utils/messages.js'
+import { CollapsibleText } from '../CollapsibleText.js'
 import { query } from '../../query.js'
 import { getCommands } from '../../commands.js'
 import { findCommand } from '../../commands.js'
@@ -65,7 +66,7 @@ function MessageRenderer({ message }: { message: Message }) {
     return (
       <Box flexDirection="column" marginBottom={1} paddingLeft={2}>
         <Text dimColor>Tool Result</Text>
-        <Text dimColor>{message.content.slice(0, 500)}{message.content.length > 500 ? '...' : ''}</Text>
+        <CollapsibleText text={message.content} maxLines={20} dimColor />
       </Box>
     )
   }
@@ -84,7 +85,7 @@ function MessageRenderer({ message }: { message: Message }) {
             <Text bold color="green">
               {'>'} Assistant
             </Text>
-            <Text wrap="wrap">{textContent}</Text>
+            <CollapsibleText text={textContent} maxLines={30} />
           </Box>
         )}
         {toolCalls.map((tc) => (
@@ -114,7 +115,7 @@ function StreamingOutput() {
       {streamingText && (
         <Box flexDirection="column">
           <Text bold color="green">{'>'} Assistant</Text>
-          <Text wrap="wrap">{streamingText}<Text color="gray">▌</Text></Text>
+          <Text wrap="wrap">{streamingText.length > 4000 ? '...' + streamingText.slice(-3997) : streamingText}<Text color="gray">▌</Text></Text>
         </Box>
       )}
       {Array.from(activeToolCalls.entries()).map(([id, tc]) => (
@@ -136,11 +137,17 @@ function StreamingOutput() {
 
 function StatusBar() {
   const { state } = useAppState()
-  const { cost, config, isQuerying } = state
+  const { cost, config, isQuerying, planMode } = state
 
   const costStr = cost.totalCostUSD < 0.01
     ? `$${cost.totalCostUSD.toFixed(6)}`
     : `$${cost.totalCostUSD.toFixed(4)}`
+
+  const modeStr = planMode
+    ? chalk.cyan('plan mode')
+    : isQuerying
+      ? chalk.yellow('thinking...')
+      : chalk.green('ready')
 
   return (
     <Box borderStyle="single" borderColor="gray" paddingX={1}>
@@ -151,9 +158,7 @@ function StatusBar() {
         {' | '}
         {chalk.gray(`tokens: ${cost.totalTokens}`)}
         {' | '}
-        {isQuerying
-          ? chalk.yellow('thinking...')
-          : chalk.green('ready')}
+        {modeStr}
       </Text>
     </Box>
   )
@@ -173,7 +178,50 @@ export function REPL() {
   // Handle user input submission
   const handleSubmit = useCallback(
     async (text: string) => {
+      // 统一的 query 执行（支持 planMode 约束）
+      const runQuery = async (inputText: string, planMode: boolean) => {
+        const userMsg = createUserMessage(inputText)
+        dispatch({ type: 'ADD_MESSAGE', message: userMsg })
+        setInput('')
+        dispatch({ type: 'SET_QUERYING', isQuerying: true })
+        try {
+          const result = await query({
+            config: state.config,
+            messages: [...state.messages, userMsg],
+            cost: state.cost,
+            signal: undefined,
+            onStreamEvent,
+            planMode,
+          })
+          dispatch({ type: 'SET_MESSAGES', messages: result.messages })
+          dispatch({ type: 'SET_COST', cost: result.cost })
+        } catch (err: unknown) {
+          const error = err as Error
+          dispatch({ type: 'SET_ERROR', error: error.message })
+        } finally {
+          dispatch({ type: 'SET_QUERYING', isQuerying: false })
+        }
+      }
+
       const trimmed = text.trim()
+
+      // Plan mode 审批分支：空输入 = 批准并实施；/plan = 退出；其他非空 = 修订计划
+      if (state.planMode) {
+        if (!trimmed) {
+          dispatch({ type: 'SET_PLAN_MODE', planMode: false })
+          await runQuery('Plan approved. Please begin implementing the plan now.', false)
+          return
+        }
+        if (trimmed.startsWith('/plan')) {
+          dispatch({ type: 'SET_PLAN_MODE', planMode: false })
+          dispatch({ type: 'ADD_MESSAGE', message: { role: 'assistant', content: 'Exited plan mode.' } })
+          setInput('')
+          return
+        }
+        await runQuery(trimmed, true)
+        return
+      }
+
       if (!trimmed) return
 
       // Check for slash commands
@@ -238,6 +286,30 @@ export function REPL() {
                 type: 'ADD_MESSAGE',
                 message: { role: 'assistant', content: costMessage },
               })
+            } else if (typeof result === 'string' && result.startsWith('__ENTER_PLAN_MODE__:')) {
+              const taskDesc = result.slice('__ENTER_PLAN_MODE__:'.length)
+              if (taskDesc.trim() === '') {
+                // toggle：已在 plan mode 则退出，否则提示用法
+                if (state.planMode) {
+                  dispatch({ type: 'SET_PLAN_MODE', planMode: false })
+                  dispatch({ type: 'ADD_MESSAGE', message: { role: 'assistant', content: 'Exited plan mode.' } })
+                } else {
+                  dispatch({ type: 'ADD_MESSAGE', message: createUserMessage(trimmed) })
+                  dispatch({
+                    type: 'ADD_MESSAGE',
+                    message: {
+                      role: 'assistant',
+                      content:
+                        'Usage: /plan <task-description>\n\nPlan mode helps break down complex tasks. Describe the task, then review and approve the plan (press Enter) before any changes are made.\n\nExample: /plan Create a user authentication system',
+                    },
+                  })
+                }
+              } else {
+                dispatch({ type: 'SET_PLAN_MODE', planMode: true })
+                await runQuery(taskDesc, true)
+              }
+              setInput('')
+              return
             } else if (typeof result === 'string') {
               dispatch({ type: 'ADD_MESSAGE', message: createUserMessage(trimmed) })
               dispatch({
@@ -251,33 +323,10 @@ export function REPL() {
         }
       }
 
-      // Add user message
-      const userMsg = createUserMessage(trimmed)
-      dispatch({ type: 'ADD_MESSAGE', message: userMsg })
-      setInput('')
-
-      // Start query
-      dispatch({ type: 'SET_QUERYING', isQuerying: true })
-
-      try {
-        const result = await query({
-          config: state.config,
-          messages: [...state.messages, userMsg],
-          cost: state.cost,
-          signal: undefined,
-          onStreamEvent,
-        })
-
-        dispatch({ type: 'SET_MESSAGES', messages: result.messages })
-        dispatch({ type: 'SET_COST', cost: result.cost })
-      } catch (err: unknown) {
-        const error = err as Error
-        dispatch({ type: 'SET_ERROR', error: error.message })
-      } finally {
-        dispatch({ type: 'SET_QUERYING', isQuerying: false })
-      }
+      // 普通消息（planMode = false）
+      await runQuery(trimmed, false)
     },
-    [state.config, state.messages, state.cost, dispatch, onStreamEvent],
+    [state.config, state.messages, state.cost, state.planMode, dispatch, onStreamEvent],
   )
 
   // Keyboard input

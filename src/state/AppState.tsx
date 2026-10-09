@@ -21,6 +21,7 @@ export type AppState = {
   config: QoocodeConfig
   error: string | null
   todos: TodoItem[]  // Todo list for tracking tasks
+  planMode: boolean // Plan mode: read-only exploration + plan-approval workflow
 }
 
 export type AppAction =
@@ -42,6 +43,7 @@ export type AppAction =
   | { type: 'ADD_TODO'; todo: TodoItem }  // Add a new todo
   | { type: 'REMOVE_TODO'; index: number }  // Remove a todo by index
   | { type: 'CLEAR_TODOS' }  // Clear all todos
+  | { type: 'SET_PLAN_MODE'; planMode: boolean }  // Enter/exit plan mode
 
 // ============================================================
 // Initial State
@@ -57,6 +59,7 @@ export function createInitialState(config: QoocodeConfig): AppState {
     config,
     error: null,
     todos: [],
+    planMode: false,
   }
 }
 
@@ -122,6 +125,8 @@ export function appReducer(state: AppState, action: AppAction): AppState {
     }
     case 'CLEAR_TODOS':
       return { ...state, todos: [] }
+    case 'SET_PLAN_MODE':
+      return { ...state, planMode: action.planMode }
     default:
       return state
   }
